@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField/TextField';
 import Grid from 'material-ui/Grid/Grid';
 import Lesson from './Lesson';
 import Paper from 'material-ui/Paper/Paper';

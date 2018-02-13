@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField/TextField';
 import Grid from 'material-ui/Grid/Grid';
 import Day from './Day';
 import { reduxForm } from 'redux-form';
