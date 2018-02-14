@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { FirebaseAuth } from 'react-firebaseui';
 import firebase from 'firebase';
 import { auth } from '../fb-app';
+import Button from 'material-ui/Button/Button';
+
 
 const uiConfig = {
     signInFlow: 'popup',
@@ -22,7 +24,7 @@ export default class LoginWidget extends Component {
             return <div>{auth.currentUser.displayName}</div>;
         } else {
             if (isLink) {
-                return <a href="/auth">Login</a>;
+                return <Button color="inherit" href="/auth">Login</Button>;
             }
             return <FirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />;
         }
