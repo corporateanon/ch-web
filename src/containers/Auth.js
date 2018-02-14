@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import withStyles from 'material-ui/styles/withStyles';
@@ -16,7 +16,6 @@ const styles = {};
 
 class Auth extends Component {
     render() {
-        const { props: { classes } } = this;
         return <LoginWidget />;
     }
 }

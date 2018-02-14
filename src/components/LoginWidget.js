@@ -5,7 +5,7 @@ import { auth } from '../fb-app';
 
 const uiConfig = {
     signInFlow: 'popup',
-    signInSuccessUrl: '/auth',
+    signInSuccessUrl: '/',
     signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID]
 };
 
@@ -17,10 +17,13 @@ export default class LoginWidget extends Component {
             .onAuthStateChanged(user => this.setState({ signedIn: !!user }));
     }
     render() {
-        const { state: { signedIn } } = this;
+        const { state: { signedIn }, props: { isLink } } = this;
         if (signedIn) {
-            return <div>Welcome, {auth.currentUser.displayName}</div>;
+            return <div>{auth.currentUser.displayName}</div>;
         } else {
+            if (isLink) {
+                return <a href="/auth">Login</a>;
+            }
             return <FirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />;
         }
     }
