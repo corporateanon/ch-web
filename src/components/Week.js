@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Grid from 'material-ui/Grid/Grid';
 import Day from './Day';
 import { reduxForm } from 'redux-form';
+import { compose } from 'recompose';
 
 class Week extends Component {
     render() {
@@ -21,6 +22,9 @@ class Week extends Component {
     }
 }
 
-export default reduxForm({
-    form: 'currentWeek'
-})(Week);
+export default compose(
+    reduxForm({
+        form: 'currentWeek',
+        enableReinitialize: true
+    })
+)(Week);

@@ -1,0 +1,28 @@
+{
+    "days": [
+        {
+            "lessons": [
+                {
+                    "lessonName": "First",
+                    "taskText": "Aaa"
+                },
+                {
+                    "lessonName": "Second",
+                    "taskText": "Bbb"
+                }
+            ]
+        },
+        {
+            "lessons": [
+                {
+                    "lessonName": "!First",
+                    "taskText": "!Aaa"
+                },
+                {
+                    "lessonName": "!Second",
+                    "taskText": "!Bbb"
+                }
+            ]
+        }
+    ]
+}
