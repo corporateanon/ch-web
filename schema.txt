@@ -1,0 +1,14 @@
+/tasks
+  /{yearAndWeek}
+    /{dayOfWeek}
+      /{lesson}
+        /name
+        /task
+/schedule
+  /{dayOfWeek}
+    /{lesson}
+/users
+  /{uid}
+    /permissions
+      /manageSchedule
+      /manageUsers
