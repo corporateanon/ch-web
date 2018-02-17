@@ -7,9 +7,7 @@ import withStyles from 'material-ui/styles/withStyles';
 import { compose } from 'recompose';
 
 const mapStateToProps = (state, props) => {
-    return {
-        data: state.SyncReducer
-    };
+    return {};
 };
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({}, dispatch);
@@ -25,12 +23,12 @@ const styles = theme => ({
 
 class Page extends Component {
     render() {
-        const { props: { classes, data } } = this;
+        const { props: { classes } } = this;
         return (
             <Fragment>
                 <Bar />
                 <div className={classes.main}>
-                    <Week initialValues={data} />
+                    <Week />
                 </div>
             </Fragment>
         );

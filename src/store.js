@@ -2,18 +2,22 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
-import { readFromDb, writeToDb } from './db/sync';
+import createSagaMiddleware from 'redux-saga';
 
 import reducers from './reducers';
+import rootSaga from './saga';
+
 const history = createHistory();
 
-const middleware = [routerMiddleware(history), writeToDb];
+const sagaMiddleware = createSagaMiddleware();
+
+const middleware = [routerMiddleware(history), sagaMiddleware];
 
 const store = createStore(
     reducers,
     composeWithDevTools(applyMiddleware(...middleware))
 );
 
-readFromDb(store.dispatch.bind(store));
+sagaMiddleware.run(rootSaga);
 
 export default store;
