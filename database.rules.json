@@ -1,18 +1,20 @@
 {
-  "rules": {
-    "schedule": {
-      ".read":"true",
-      ".write":"auth != null && root.child('/users/' + auth.uid + '/permissions/manageSchedule').val() === true"
-    },
-    "days": {
-        ".read":"true",
-        ".write":"auth != null"
-    },
-    "users": {
-      "$uid": {
-        ".read":"$uid === auth.uid",
-        ".write":false
-      }
+    "rules": {
+        "schedule": {
+            ".read": "true",
+            ".write":
+                "auth != null && root.child('/users/' + auth.uid + '/permissions/manageSchedule').val() === true"
+        },
+        "days": {
+            ".read": "true",
+            ".write": "auth != null"
+        },
+        "users": {
+            "$uid": {
+                ".read": "$uid === auth.uid",
+                ".write":
+                    "auth != null && root.child('/users/' + auth.uid + '/permissions/manageUsers').val() === true"
+            }
+        }
     }
-  }
 }
