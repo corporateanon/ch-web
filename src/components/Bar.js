@@ -7,6 +7,7 @@ import MenuIcon from 'material-ui-icons/Menu';
 import LoginWidget from './LoginWidget';
 import { compose } from 'recompose';
 import withStyles from 'material-ui/styles/withStyles';
+import SideMenu from './SideMenu';
 
 const styles = {
     flex: {
@@ -15,12 +16,32 @@ const styles = {
 };
 
 class Bar extends Component {
+    state = {
+        sideMenuOpen: false
+    };
+
+    handleButtonClick = () => {
+        this.setState({ sideMenuOpen: true });
+    };
+    handleDrawerClose = () => {
+        this.setState({ sideMenuOpen: false });
+    };
+
     render() {
-        const { props: { classes } } = this;
+        const {
+            props: { classes },
+            state: { sideMenuOpen },
+            handleButtonClick,
+            handleDrawerClose
+        } = this;
         return (
             <AppBar>
                 <Toolbar>
-                    <IconButton color="inherit" aria-label="Menu">
+                    <IconButton
+                        color="inherit"
+                        aria-label="Menu"
+                        onClick={handleButtonClick}
+                    >
                         <MenuIcon />
                     </IconButton>
                     <Typography
@@ -32,6 +53,7 @@ class Bar extends Component {
                     </Typography>
                     <LoginWidget isLink />
                 </Toolbar>
+                <SideMenu open={sideMenuOpen} onClose={handleDrawerClose} />
             </AppBar>
         );
     }

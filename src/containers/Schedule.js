@@ -5,9 +5,12 @@ import Week from '../components/Week';
 import Bar from '../components/Bar';
 import withStyles from 'material-ui/styles/withStyles';
 import { compose } from 'recompose';
+import ScheduleForm from '../components/ScheduleForm';
 
 const mapStateToProps = (state, props) => {
-    return {};
+    return {
+        data: state.SyncReducer
+    };
 };
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({}, dispatch);
@@ -21,14 +24,14 @@ const styles = theme => ({
     }
 });
 
-class Index extends Component {
+class Schedule extends Component {
     render() {
-        const { props: { classes } } = this;
+        const { props: { classes, data } } = this;
         return (
             <Fragment>
                 <Bar />
                 <div className={classes.main}>
-                    <Week />
+                    <ScheduleForm />
                 </div>
             </Fragment>
         );
@@ -38,4 +41,4 @@ class Index extends Component {
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     withStyles(styles)
-)(Index);
+)(Schedule);
