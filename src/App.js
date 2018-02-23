@@ -7,8 +7,9 @@ import store from './store';
 import { Provider } from 'react-redux';
 
 import createHistory from 'history/createBrowserHistory';
+import { BrowserRouter } from 'react-router-dom';
+
 import { Route, Switch } from 'react-router';
-import { ConnectedRouter } from 'react-router-redux';
 
 const history = createHistory();
 
@@ -16,13 +17,13 @@ class App extends Component {
     render() {
         return (
             <Provider store={store}>
-                <ConnectedRouter history={history}>
+                <BrowserRouter>
                     <Switch>
                         <Route exact path="/" component={Index} />
                         <Route path="/auth" component={Auth} />
                         <Route path="/schedule" component={Schedule} />
                     </Switch>
-                </ConnectedRouter>
+                </BrowserRouter>
             </Provider>
         );
     }

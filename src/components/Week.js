@@ -25,6 +25,7 @@ class Week extends Component {
 export default compose(
     reduxForm({
         form: 'currentWeek',
-        enableReinitialize: true
+        enableReinitialize: true,
+        destroyOnUnmount: false
     })
 )(Week);

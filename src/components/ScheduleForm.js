@@ -7,6 +7,7 @@ import { number, string } from 'prop-types';
 import { FieldArray, reduxForm } from 'redux-form';
 import { range } from 'lodash';
 import { compose } from 'recompose';
+import ScheduleDay from './ScheduleDay';
 
 const styles = theme => ({
     // root: {
@@ -14,25 +15,19 @@ const styles = theme => ({
     // }
 });
 
-const Day = ({ day }) => <Paper>day {day}</Paper>;
-
-
 class ScheduleForm extends Component {
     static propTypes = {};
     render() {
         const { props: { title, classes, day } } = this;
-        return (
-            <Paper elevation={10}>
-                {range(0, 7).map(d => <Day key={d} day={d} />)}
-            </Paper>
-        );
+        return range(0, 7).map(d => <ScheduleDay key={d} day={d} />);
     }
 }
 
 export default compose(
     reduxForm({
         form: 'schedule',
-        enableReinitialize: true
+        enableReinitialize: true,
+        destroyOnUnmount: false
     }),
     withStyles(styles)
 )(ScheduleForm);

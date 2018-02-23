@@ -19,8 +19,9 @@ const mapDispatchToProps = dispatch => {
 const styles = theme => ({
     main: {
         marginTop: 100,
-        marginLeft: 20,
-        marginRight: 20
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        maxWidth: 600
     }
 });
 

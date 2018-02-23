@@ -11,23 +11,30 @@ import { compose } from 'recompose';
 import withStyles from 'material-ui/styles/withStyles';
 import Drawer from 'material-ui/Drawer';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import { push } from 'react-router-redux';
-
+import { withRouter } from 'react-router-dom';
 const mapStateToProps = (state, props) => {
     return {};
 };
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ push }, dispatch);
+    return bindActionCreators({}, dispatch);
 };
 
 const styles = {};
 
 class SideMenu extends Component {
+    push = url => {
+        const { props: { history } } = this;
+        history.push(url);
+    };
+
     render() {
-        const { props: { open, onClose, push } } = this;
+        const { props: { open, onClose }, push } = this;
         return (
             <Drawer open={open} onClose={onClose}>
                 <List component="nav">
+                    <ListItem button onClick={() => push('/')}>
+                        <ListItemText primary="Home" />
+                    </ListItem>
                     <ListItem button onClick={() => push('/schedule')}>
                         <ListItemText primary="Manage Schedule" />
                     </ListItem>
@@ -38,6 +45,7 @@ class SideMenu extends Component {
 }
 
 export default compose(
+    withRouter,
     connect(mapStateToProps, mapDispatchToProps),
     withStyles(styles)
 )(SideMenu);
