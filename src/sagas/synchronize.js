@@ -47,6 +47,7 @@ const readChannel = path => {
         });
 
         return () => {
+            console.log(`unsubscribing from ${path}`);
             database.ref(path).off('value');
         };
     });
@@ -63,5 +64,6 @@ export function* readFromDb(form, path, makeData) {
             yield put(initialize(form, makeData(value)));
         }
     } finally {
+        chan.close();
     }
 }

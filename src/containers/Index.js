@@ -67,7 +67,7 @@ class Index extends Component {
                         component="div"
                         className={classes.tabContainer}
                     >
-                        <Week />
+                        <Week week={currentWeekId} />
                     </Typography>
                 </div>
             </Fragment>
