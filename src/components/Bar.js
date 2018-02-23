@@ -45,7 +45,7 @@ class Bar extends Component {
                         <MenuIcon />
                     </IconButton>
                     <Typography
-                        type="title"
+                        variant="title"
                         color="inherit"
                         className={classes.flex}
                     >

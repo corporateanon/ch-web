@@ -13,7 +13,7 @@ export default class Lesson extends Component {
     };
     render() {
         const { props: { day, lesson } } = this;
-        const prefix = `days[${day}].lessons[${lesson}]`;
+        const prefix = `[${day}].lessons[${lesson}]`;
         const lessonNameKey = `${prefix}.lessonName`;
         const taskTextKey = `${prefix}.taskText`;
         return (

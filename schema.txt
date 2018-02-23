@@ -1,5 +1,5 @@
 /tasks
-  /{yearAndWeek}
+  /{weekId}
     /{dayOfWeek}
       /{lesson}
         /name
