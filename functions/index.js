@@ -13,7 +13,9 @@ exports.createUserRecord = functions.auth.user().onCreate(event => {
             uid,
             permissions: {
                 manageSchedule: false,
-                manageUsers: false
+                manageUsers: false,
+                manageTasks: false,
+                manageTasksLessons: false,
             }
         });
 });
