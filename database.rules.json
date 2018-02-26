@@ -5,9 +5,22 @@
             ".write":
                 "auth != null && root.child('/users/' + auth.uid + '/permissions/manageSchedule').val() === true"
         },
-        "days": {
+        "tasks": {
             ".read": "true",
-            ".write": "auth != null"
+            "$weekId": {
+                "$dayOfWeek": {
+                    "$lesson": {
+                        "taskText": {
+                            ".write":
+                                "auth != null && root.child('/users/' + auth.uid + '/permissions/manageTasks').val() === true"
+                        },
+                        "lessonName": {
+                            ".write":
+                                "auth != null && root.child('/users/' + auth.uid + '/permissions/manageTasksLessons').val() === true"
+                        }
+                    }
+                }
+            }
         },
         "users": {
             "$uid": {

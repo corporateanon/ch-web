@@ -43,10 +43,11 @@ export function* writeFormFieldToDb(form, fieldRegex, makeEntry) {
 const readChannel = path => {
     return eventChannel(emitter => {
         database.ref(path).on('value', snapshot => {
-            emitter(snapshot.val());
+            emitter({ value: snapshot.val() });
         });
 
         return () => {
+            console.log(`unsubscribing from ${path}`);
             database.ref(path).off('value');
         };
     });
@@ -55,12 +56,14 @@ const readChannel = path => {
 export function* readFromDb(form, path, makeData) {
     const chan = yield call(readChannel, path);
 
+    console.log(`subscribing form "${form}" to path "${path}"`);
     try {
         while (true) {
-            let value = yield take(chan);
+            let { value } = yield take(chan);
             console.log('DB read:', path, value);
             yield put(initialize(form, makeData(value)));
         }
     } finally {
+        chan.close();
     }
 }

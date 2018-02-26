@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Grid from 'material-ui/Grid/Grid';
 import Day from './Day';
-import { reduxForm } from 'redux-form';
+import { reduxForm, FormSection } from 'redux-form';
 import { compose } from 'recompose';
 
 class Week extends Component {
     render() {
+        const { props: { week } } = this;
         return (
             <Grid container>
                 <Grid item xs={12} sm={6}>
@@ -25,6 +26,7 @@ class Week extends Component {
 export default compose(
     reduxForm({
         form: 'currentWeek',
-        enableReinitialize: true
+        enableReinitialize: true,
+        destroyOnUnmount: false
     })
 )(Week);
