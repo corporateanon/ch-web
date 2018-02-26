@@ -8,6 +8,18 @@ import LoginWidget from './LoginWidget';
 import { compose } from 'recompose';
 import withStyles from 'material-ui/styles/withStyles';
 import SideMenu from './SideMenu';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getTitle } from '../ducks/Navigation';
+
+const mapStateToProps = (state, props) => {
+    return {
+        title: getTitle(state)
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+};
 
 const styles = {
     flex: {
@@ -29,7 +41,7 @@ class Bar extends Component {
 
     render() {
         const {
-            props: { classes },
+            props: { classes, title },
             state: { sideMenuOpen },
             handleButtonClick,
             handleDrawerClose
@@ -49,7 +61,7 @@ class Bar extends Component {
                         color="inherit"
                         className={classes.flex}
                     >
-                        Title
+                        {title}
                     </Typography>
                     <LoginWidget isLink />
                 </Toolbar>
@@ -59,4 +71,7 @@ class Bar extends Component {
     }
 }
 
-export default compose(withStyles(styles))(Bar);
+export default compose(
+    withStyles(styles),
+    connect(mapStateToProps, mapDispatchToProps)
+)(Bar);

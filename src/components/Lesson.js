@@ -6,17 +6,19 @@ import { Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getWeek } from '../ducks/Week';
+import { canManageTasks, canManageTasksLessons } from '../ducks/Auth';
+import RFTextField from './RFTextField';
 
 const mapStateToProps = (state, props) => {
     return {
-        week: getWeek(state)
+        week: getWeek(state),
+        canManageTasks: canManageTasks(state),
+        canManageTasksLessons: canManageTasksLessons(state)
     };
 };
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({}, dispatch);
 };
-
-const RFTextField = field => <TextField fullWidth {...field.input} />;
 
 class Lesson extends Component {
     static propTypes = {
@@ -24,7 +26,9 @@ class Lesson extends Component {
         day: number.isRequired
     };
     render() {
-        const { props: { day, lesson, week } } = this;
+        const {
+            props: { day, lesson, week, canManageTasks, canManageTasksLessons }
+        } = this;
         const prefix = `tasks.${week}.${day}.${lesson}`;
         const lessonNameKey = `${prefix}.lessonName`;
         const taskTextKey = `${prefix}.taskText`;
@@ -32,6 +36,7 @@ class Lesson extends Component {
             <Fragment>
                 <Grid item xs={3}>
                     <Field
+                        disabled={!canManageTasksLessons}
                         week={week}
                         name={lessonNameKey}
                         component={RFTextField}
@@ -39,6 +44,7 @@ class Lesson extends Component {
                 </Grid>
                 <Grid item xs={9}>
                     <Field
+                        disabled={!canManageTasks}
                         week={week}
                         name={taskTextKey}
                         component={RFTextField}

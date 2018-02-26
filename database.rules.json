@@ -8,8 +8,14 @@
         "tasks": {
             ".read": "true",
             "$weekId": {
+                ".write":
+                    "auth != null && root.child('/users/' + auth.uid + '/permissions/manageTasksLessons').val() === true",
                 "$dayOfWeek": {
+                    ".write":
+                        "auth != null && root.child('/users/' + auth.uid + '/permissions/manageTasksLessons').val() === true",
                     "$lesson": {
+                        ".write":
+                            "auth != null && root.child('/users/' + auth.uid + '/permissions/manageTasksLessons').val() === true",
                         "taskText": {
                             ".write":
                                 "auth != null && root.child('/users/' + auth.uid + '/permissions/manageTasks').val() === true"

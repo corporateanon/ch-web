@@ -3,11 +3,38 @@ import Grid from 'material-ui/Grid/Grid';
 import Day from './Day';
 import { reduxForm, FormSection } from 'redux-form';
 import { compose } from 'recompose';
+import ClosedWeek from './ClosedWeek';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getFormValues } from 'redux-form';
+import { FillSchedule } from '../ducks/Schedule';
+import { canManageTasksLessons } from '../ducks/Auth';
+
+const mapStateToProps = (state, props) => {
+    const values = getFormValues('currentWeek')(state);
+    const { week } = props;
+    const { tasks: { [week]: weekValues = null } = {} } = values || {};
+    return {
+        formValues: getFormValues('currentWeek')(state),
+        weekValues,
+        canManageTasksLessons: canManageTasksLessons(state)
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ FillSchedule }, dispatch);
+};
 
 class Week extends Component {
+    handleFillSchedule = () => {
+        const { props: { week, FillSchedule } } = this;
+        FillSchedule(week);
+    };
     render() {
-        const { props: { week } } = this;
-        return (
+        const {
+            props: { weekValues, canManageTasksLessons },
+            handleFillSchedule
+        } = this;
+        return weekValues ? (
             <Grid container>
                 <Grid item xs={12} sm={6}>
                     <Day day={0} title="Понедельник" />
@@ -19,6 +46,11 @@ class Week extends Component {
                     <Day day={4} title="Пятница" />
                 </Grid>
             </Grid>
+        ) : (
+            <ClosedWeek
+                canFill={canManageTasksLessons}
+                onFillSchedule={handleFillSchedule}
+            />
         );
     }
 }
@@ -28,5 +60,6 @@ export default compose(
         form: 'currentWeek',
         enableReinitialize: true,
         destroyOnUnmount: false
-    })
+    }),
+    connect(mapStateToProps, mapDispatchToProps)
 )(Week);

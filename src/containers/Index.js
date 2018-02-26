@@ -10,6 +10,7 @@ import { currentWeekId as getCurrentWeek } from '../lib/dateUtils';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import AppBar from 'material-ui/AppBar/AppBar';
 import Typography from 'material-ui/Typography/Typography';
+import { SetTitle } from '../ducks/Navigation';
 
 const mapStateToProps = (state, props) => {
     return {
@@ -21,7 +22,8 @@ const mapDispatchToProps = dispatch => {
         {
             SetPresentWeek,
             SetNextWeek,
-            SetWeek
+            SetWeek,
+            SetTitle
         },
         dispatch
     );
@@ -41,6 +43,7 @@ const styles = theme => ({
 class Index extends Component {
     componentDidMount() {
         this.props.SetPresentWeek();
+        this.props.SetTitle('Домашние задания');
     }
     handleWeekChange = (e, weekId) => {
         this.props.SetWeek(weekId);

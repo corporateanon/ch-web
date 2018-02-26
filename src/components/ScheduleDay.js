@@ -8,10 +8,22 @@ import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 import Typography from 'material-ui/Typography/Typography';
 import weekDays from '../lib/weekDays';
+import RFTextField from './RFTextField';
+import { compose } from 'recompose';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { canManageSchedule } from '../ducks/Auth';
+
+const mapStateToProps = (state, props) => {
+    return { canManageSchedule: canManageSchedule(state) };
+};
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({}, dispatch);
+};
 
 const styles = theme => {
     return {
-        textField: {},
         paper: {
             padding: 4 * theme.spacing.unit,
             marginBottom: theme.spacing.unit
@@ -22,14 +34,10 @@ const styles = theme => {
     };
 };
 
-const RFTextField = props => (
-    <TextField fullWidth {...props} {...props.input} />
-);
-
 class ScheduleLesson extends Component {
     addLesson = fields => fields.push('');
     render() {
-        const { props: { fields, classes }, addLesson } = this;
+        const { props: { fields, classes, readonly }, addLesson } = this;
 
         return (
             <Fragment>
@@ -45,6 +53,7 @@ class ScheduleLesson extends Component {
                     return (
                         <Grid item xs={12} key={field}>
                             <Field
+                                disabled={readonly}
                                 component={RFTextField}
                                 className={classes.textField}
                                 name={field}
@@ -57,9 +66,11 @@ class ScheduleLesson extends Component {
                 <Grid item xs={12}>
                     <Grid container justify="flex-end">
                         <Grid item xs={3}>
-                            <Button onClick={addLesson.bind(null, fields)}>
-                                Добавить
-                            </Button>
+                            {!readonly && (
+                                <Button onClick={addLesson.bind(null, fields)}>
+                                    Добавить
+                                </Button>
+                            )}
                         </Grid>
                     </Grid>
                 </Grid>
@@ -72,7 +83,7 @@ const StyledScheduleLesson = withStyles(styles)(ScheduleLesson);
 
 class ScheduleDay extends Component {
     render() {
-        const { props: { day, classes } } = this;
+        const { props: { day, classes, canManageSchedule } } = this;
         return (
             <Paper className={classes.paper}>
                 <Grid container>
@@ -83,6 +94,7 @@ class ScheduleDay extends Component {
                     </Grid>
                     <FieldArray
                         name={`schedule[${day}]`}
+                        readonly={!canManageSchedule}
                         component={StyledScheduleLesson}
                     />
                 </Grid>
@@ -91,4 +103,7 @@ class ScheduleDay extends Component {
     }
 }
 
-export default withStyles(styles)(ScheduleDay);
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withStyles(styles)
+)(ScheduleDay);

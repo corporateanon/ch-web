@@ -6,6 +6,7 @@ import Bar from '../components/Bar';
 import withStyles from 'material-ui/styles/withStyles';
 import { compose } from 'recompose';
 import ScheduleForm from '../components/ScheduleForm';
+import { SetTitle } from '../ducks/Navigation';
 
 const mapStateToProps = (state, props) => {
     return {
@@ -13,7 +14,7 @@ const mapStateToProps = (state, props) => {
     };
 };
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ SetTitle }, dispatch);
 };
 
 const styles = theme => ({
@@ -26,6 +27,10 @@ const styles = theme => ({
 });
 
 class Schedule extends Component {
+    componentDidMount() {
+        this.props.SetTitle('Расписание');
+    }
+
     render() {
         const { props: { classes, data } } = this;
         return (
