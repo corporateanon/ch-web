@@ -44,7 +44,7 @@ module.exports = {
                 '.read': '$uid === auth.uid',
                 '.write': all(
                     authenticated(),
-                    hasPermission('manageTasksLessons')
+                    hasPermission('manageUsers')
                 )
             }
         }
