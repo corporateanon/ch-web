@@ -7086,10 +7086,6 @@ websocket-extensions@>=0.1.1:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
 
-week-identifier@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/week-identifier/-/week-identifier-1.0.0.tgz#9694d41ed55c8d08e63fb5b8cbd9bcfc14a87170"
-
 whatwg-encoding@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/whatwg-encoding/-/whatwg-encoding-1.0.3.tgz#57c235bc8657e914d24e1a397d3c82daee0a6ba3"
