@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import { getFormValues } from 'redux-form';
 import { FillSchedule } from '../ducks/Schedule';
 import { canManageTasksLessons } from '../ducks/Auth';
+import { isFormSyncing } from '../ducks/Sync';
 
 const mapStateToProps = (state, props) => {
     const values = getFormValues('currentWeek')(state);
@@ -17,7 +18,8 @@ const mapStateToProps = (state, props) => {
     return {
         formValues: getFormValues('currentWeek')(state),
         weekValues,
-        canManageTasksLessons: canManageTasksLessons(state)
+        canManageTasksLessons: canManageTasksLessons(state),
+        isSyncing: isFormSyncing('currentWeek')(state)
     };
 };
 const mapDispatchToProps = dispatch => {
@@ -31,9 +33,12 @@ class Week extends Component {
     };
     render() {
         const {
-            props: { weekValues, canManageTasksLessons },
+            props: { weekValues, canManageTasksLessons, isSyncing },
             handleFillSchedule
         } = this;
+        if (isSyncing) {
+            return '';
+        }
         return weekValues ? (
             <Grid container>
                 <Grid item xs={12} sm={6}>

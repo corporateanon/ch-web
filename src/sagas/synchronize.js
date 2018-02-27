@@ -4,6 +4,7 @@ import { actionTypes, getFormInitialValues, initialize } from 'redux-form';
 import { get, partialRight } from 'lodash';
 import { compose } from 'recompose';
 import { database } from '../fb-app';
+import { SyncStarted, SyncCompleted } from '../ducks/Sync';
 
 const normalizeEmpty = value => {
     if (value === null || value === undefined || value === '') {
@@ -57,11 +58,13 @@ export function* readFromDb(form, path, makeData) {
     const chan = yield call(readChannel, path);
 
     console.log(`subscribing form "${form}" to path "${path}"`);
+    yield put(SyncStarted(form, path));
     try {
         while (true) {
             let { value } = yield take(chan);
             console.log('DB read:', path, value);
             yield put(initialize(form, makeData(value)));
+            yield put(SyncCompleted(form, path));
         }
     } finally {
         chan.close();
