@@ -30,7 +30,7 @@ class SideMenu extends Component {
                         <ListItemText primary="Домашние задания" />
                     </ListItem>
                     <ListItem button onClick={() => push('/schedule')}>
-                        <ListItemText primary="Управление расписанием" />
+                        <ListItemText primary="Расписание" />
                     </ListItem>
                 </List>
             </Drawer>
