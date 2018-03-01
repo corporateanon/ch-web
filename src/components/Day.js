@@ -24,7 +24,7 @@ class Day extends Component {
         const { props: { classes, day, week } } = this;
         const date = weekAndDayToDate(week, day);
         const weekDayStr = moment(date).format('dddd');
-        const dateStr = moment(date).format('dddd, D MMMM');
+        const dateStr = moment(date).format('D MMMM');
         return (
             <Paper className={classes.root} elevation={10}>
                 <Grid container>
