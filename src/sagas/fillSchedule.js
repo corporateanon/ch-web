@@ -2,6 +2,7 @@ import { take, call } from 'redux-saga/effects';
 import { FILL_SCHEDULE } from '../ducks/Schedule';
 import { USER_METADATA_LOADED } from '../ducks/Auth';
 import { database } from '../fb-app';
+import * as ref from '../lib/ref';
 
 const makeTasksFromSchedule = schedule => {
     return Object.keys(schedule).map(dayOfWeek => {
@@ -14,7 +15,7 @@ const makeTasksFromSchedule = schedule => {
 
 function* writeScheduleToDatabase(weekId) {
     const weekTasks = (yield call(() =>
-        database.ref(`/tasks/${weekId}`).once('value')
+        database.ref(ref.tasksByWeek(weekId)).once('value')
     )).val();
 
     if (weekTasks) {
@@ -22,14 +23,14 @@ function* writeScheduleToDatabase(weekId) {
     }
 
     const schedule = (yield call(() =>
-        database.ref('/schedule').once('value')
+        database.ref(ref.schedule()).once('value')
     )).val();
     if (!schedule || !Object.keys(schedule).length) {
         throw new Error('EMPTY_SOURCE');
     }
 
     const newTasks = makeTasksFromSchedule(schedule);
-    yield call(() => database.ref(`/tasks/${weekId}`).set(newTasks));
+    yield call(() => database.ref(ref.tasksByWeek(weekId)).set(newTasks));
 }
 
 export default function* syncDays() {
