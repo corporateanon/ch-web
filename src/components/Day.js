@@ -5,6 +5,8 @@ import Paper from 'material-ui/Paper/Paper';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import { number, string } from 'prop-types';
+import { weekAndDayToDate } from '../lib/dateUtils';
+import moment from 'moment';
 
 const styles = theme => ({
     root: {
@@ -16,15 +18,19 @@ const styles = theme => ({
 class Day extends Component {
     static propTypes = {
         day: number.isRequired,
-        title: string.isRequired
+        week: number.isRequired
     };
     render() {
-        const { props: { title, classes, day } } = this;
+        const { props: { classes, day, week } } = this;
+        const date = weekAndDayToDate(week, day);
+        const dateStr = moment(date).format('dddd, D MMMM');
         return (
             <Paper className={classes.root} elevation={10}>
                 <Grid container>
                     <Grid item xs={12}>
-                        <Typography variant="title">{title}</Typography>
+                        <Typography variant="title">
+                            {dateStr}
+                        </Typography>
                     </Grid>
                     <Lesson day={day} lesson={0} />
                     <Lesson day={day} lesson={1} />

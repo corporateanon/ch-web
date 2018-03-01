@@ -33,7 +33,7 @@ class Week extends Component {
     };
     render() {
         const {
-            props: { weekValues, canManageTasksLessons, isSyncing },
+            props: { week, weekValues, canManageTasksLessons, isSyncing },
             handleFillSchedule
         } = this;
         if (isSyncing) {
@@ -42,13 +42,13 @@ class Week extends Component {
         return weekValues ? (
             <Grid container>
                 <Grid item xs={12} sm={6}>
-                    <Day day={0} title="Понедельник" />
-                    <Day day={1} title="Вторник" />
-                    <Day day={2} title="Среда" />
+                    <Day day={0} week={week} />
+                    <Day day={1} week={week} />
+                    <Day day={2} week={week} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <Day day={3} title="Четверг" />
-                    <Day day={4} title="Пятница" />
+                    <Day day={3} week={week} />
+                    <Day day={4} week={week} />
                 </Grid>
             </Grid>
         ) : (
