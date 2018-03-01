@@ -1,3 +1,8 @@
+const dateA = new Date(
+    new Date('January 5, 1970 00:00:00 +0000').getTime() +
+        new Date().getTimezoneOffset() * 60000
+);
+
 export function weekIdentifier(date) {
     var instance;
 
@@ -11,11 +16,10 @@ export function weekIdentifier(date) {
     // Create a copy of this date object
     var target = new Date(instance.valueOf());
     // Starting date point for our sequence
-    var lastDayOfWeekZero = new Date('January 5, 1970 00:00:00');
+    var lastDayOfWeekZero = dateA.getTime() - 1;
     // Number of week from our starting date
     var weekNumberdiff = Math.ceil(
-        (target.getTime() - lastDayOfWeekZero.getTime() - 1) /
-            (24 * 3600 * 1000 * 7)
+        (target.getTime() - lastDayOfWeekZero) / (24 * 3600 * 1000 * 7)
     );
 
     return weekNumberdiff;
@@ -27,7 +31,7 @@ export function dateFromWeek(weekIdentifier) {
     } else {
         // Starting date point for our sequence
         var firstDayOfWeekOne, mondayOfWeek;
-        mondayOfWeek = firstDayOfWeekOne = new Date('January 5, 1970 00:00:00');
+        mondayOfWeek = firstDayOfWeekOne = new Date(dateA);
         if (weekIdentifier > 0) {
             mondayOfWeek = new Date(
                 (weekIdentifier - 1) * (24 * 3600 * 1000 * 7) +

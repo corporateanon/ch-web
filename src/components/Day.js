@@ -4,7 +4,7 @@ import Lesson from './Lesson';
 import Paper from 'material-ui/Paper/Paper';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
-import { number, string } from 'prop-types';
+import { number } from 'prop-types';
 import { weekAndDayToDate } from '../lib/dateUtils';
 import moment from 'moment';
 
@@ -23,14 +23,14 @@ class Day extends Component {
     render() {
         const { props: { classes, day, week } } = this;
         const date = weekAndDayToDate(week, day);
+        const weekDayStr = moment(date).format('dddd');
         const dateStr = moment(date).format('dddd, D MMMM');
         return (
             <Paper className={classes.root} elevation={10}>
                 <Grid container>
                     <Grid item xs={12}>
-                        <Typography variant="title">
-                            {dateStr}
-                        </Typography>
+                        <Typography variant="title">{weekDayStr}</Typography>
+                        <Typography variant="caption">{dateStr}</Typography>
                     </Grid>
                     <Lesson day={day} lesson={0} />
                     <Lesson day={day} lesson={1} />
