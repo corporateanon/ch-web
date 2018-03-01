@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Week from '../components/Week';
 import Bar from '../components/Bar';
 import withStyles from 'material-ui/styles/withStyles';
 import { compose } from 'recompose';
@@ -32,7 +31,7 @@ class Schedule extends Component {
     }
 
     render() {
-        const { props: { classes, data } } = this;
+        const { props: { classes } } = this;
         return (
             <Fragment>
                 <Bar />

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Grid from 'material-ui/Grid/Grid';
 import Day from './Day';
-import { reduxForm, FormSection } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import { compose } from 'recompose';
 import ClosedWeek from './ClosedWeek';
 import { connect } from 'react-redux';

@@ -19,7 +19,7 @@ export default function reducer(state = initialState, action) {
             const { payload: { permissions = {} } = {} } = action;
             return {
                 ...state,
-                permissions: action.payload.permissions
+                permissions
             };
         }
         default: {

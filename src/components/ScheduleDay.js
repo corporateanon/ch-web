@@ -1,11 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import Paper from 'material-ui/Paper/Paper';
 import { FieldArray, Field } from 'redux-form';
-import TextField from 'material-ui/TextField/TextField';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid/Grid';
 import Button from 'material-ui/Button';
-import AddIcon from 'material-ui-icons/Add';
 import Typography from 'material-ui/Typography/Typography';
 import weekDays from '../lib/weekDays';
 import RFTextField from './RFTextField';

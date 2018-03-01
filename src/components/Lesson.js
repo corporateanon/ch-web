@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import TextField from 'material-ui/TextField/TextField';
 import Grid from 'material-ui/Grid/Grid';
 import { number } from 'prop-types';
 import { Field } from 'redux-form';
