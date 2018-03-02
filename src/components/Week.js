@@ -49,6 +49,7 @@ class Week extends Component {
                 <Grid item xs={12} sm={6}>
                     <Day day={3} week={week} />
                     <Day day={4} week={week} />
+                    <Day day={5} week={week} />
                 </Grid>
             </Grid>
         ) : (
