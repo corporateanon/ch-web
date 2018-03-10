@@ -1,6 +1,10 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-admin.initializeApp(functions.config().firebase);
+
+const creds = functions.config().firebase;
+creds.credential = admin.credential.cert(require('./service-account.json'));
+
+admin.initializeApp(creds);
 
 exports.createUserRecord = functions.auth.user().onCreate(event => {
     const { email, displayName, uid } = event.data;
@@ -15,7 +19,7 @@ exports.createUserRecord = functions.auth.user().onCreate(event => {
                 manageSchedule: false,
                 manageUsers: false,
                 manageTasks: false,
-                manageTasksLessons: false,
+                manageTasksLessons: false
             }
         });
 });

@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "cool-homeworks"
+    "production": "cool-homeworks",
+    "staging": "cool-homeworks-staging"
   }
 }

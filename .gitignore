@@ -24,3 +24,5 @@ yarn-error.log*
 # configs
 firebase-config.json
 database.rules.json
+keys/
+functions/service-account.json
