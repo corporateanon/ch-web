@@ -10,11 +10,12 @@ import { currentWeekId as getCurrentWeek } from '../lib/dateUtils';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import AppBar from 'material-ui/AppBar/AppBar';
 import Typography from 'material-ui/Typography/Typography';
-import { SetTitle } from '../ducks/Navigation';
+import { SetTitle, getRouteUrl } from '../ducks/Navigation';
 
 const mapStateToProps = (state, props) => {
     return {
-        currentWeekId: getWeek(state)
+        currentWeekId: getWeek(state),
+        routeUrl: getRouteUrl(state)
     };
 };
 const mapDispatchToProps = dispatch => {
@@ -42,28 +43,35 @@ const styles = theme => ({
 
 class Index extends Component {
     componentDidMount() {
-        this.props.SetPresentWeek();
+        // this.props.SetPresentWeek();
         this.props.SetTitle('Домашние задания');
     }
-    handleWeekChange = (e, weekId) => {
-        this.props.SetWeek(weekId);
+    handleTab = (e, url) => {
+        // this.props.SetWeek(weekId);
+        this.props.history.push(url);
     };
     render() {
         const {
-            props: { classes, currentWeekId = getCurrentWeek() },
-            handleWeekChange
+            props: {
+                classes,
+                currentWeekId = getCurrentWeek(),
+                match: { url }
+            },
+            handleTab
         } = this;
         return (
             <Fragment>
                 <Bar />
                 <div className={classes.main}>
                     <AppBar position="static">
-                        <Tabs value={currentWeekId} onChange={handleWeekChange}>
-                            <Tab value={getCurrentWeek()} label="Эта неделя" />
-                            <Tab
+                        <Tabs value={url} onChange={handleTab}>
+                            <Tab value="/" label="This Week" />
+                            <Tab value="/next" label="Next Week" />
+                            {/* <Tab value={getCurrentWeek()} label="Эта неделя" /> */}
+                            {/* <Tab
                                 value={getCurrentWeek() + 1}
                                 label="Следующая неделя"
-                            />
+                            /> */}
                         </Tabs>
                     </AppBar>
                     <Typography

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
+import moment from 'moment';
 import Grid from 'material-ui/Grid/Grid';
 import Lesson from './Lesson';
 import Paper from 'material-ui/Paper/Paper';
@@ -6,7 +8,6 @@ import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import { number } from 'prop-types';
 import { weekAndDayToDate } from '../lib/dateUtils';
-import moment from 'moment';
 
 const styles = theme => ({
     root: {
@@ -29,7 +30,9 @@ class Day extends Component {
             <Paper className={classes.root} elevation={10}>
                 <Grid container>
                     <Grid item xs={12}>
-                        <Typography variant="title">{weekDayStr}</Typography>
+                        <Typography variant="title">
+                            <Link to={`/tasks/week/${week}/day/${day}`}>{weekDayStr}</Link>
+                        </Typography>
                         <Typography variant="caption">{dateStr}</Typography>
                     </Grid>
                     <Lesson day={day} lesson={0} />
