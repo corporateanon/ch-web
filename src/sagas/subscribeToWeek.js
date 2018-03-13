@@ -1,6 +1,5 @@
 import { put, fork, takeEvery } from 'redux-saga/effects';
 import { readFromDb } from './synchronize';
-import { SET_WEEK } from '../ducks/Week';
 import * as ref from '../lib/ref';
 import { currentWeekId as getCurrentWeek } from '../lib/dateUtils';
 import { SetWeek } from '../ducks/Week';

@@ -16,8 +16,7 @@ const mapStateToProps = (state, props) => {
     const { week } = props;
     const { tasks: { [week]: weekValues = null } = {} } = values || {};
     return {
-        formValues: getFormValues('currentWeek')(state),
-        weekValues,
+        isClosedWeek: !weekValues,
         canManageTasksLessons: canManageTasksLessons(state),
         isSyncing: isFormSyncing('currentWeek')(state)
     };
@@ -33,13 +32,18 @@ class Week extends Component {
     };
     render() {
         const {
-            props: { week, weekValues, canManageTasksLessons, isSyncing },
+            props: { week, isClosedWeek, canManageTasksLessons, isSyncing },
             handleFillSchedule
         } = this;
         if (isSyncing) {
             return '';
         }
-        return weekValues ? (
+        return isClosedWeek ? (
+            <ClosedWeek
+                canFill={canManageTasksLessons}
+                onFillSchedule={handleFillSchedule}
+            />
+        ) : (
             <Grid container>
                 <Grid item xs={12} md={6}>
                     <Day day={0} week={week} />
@@ -52,11 +56,6 @@ class Week extends Component {
                     <Day day={5} week={week} />
                 </Grid>
             </Grid>
-        ) : (
-            <ClosedWeek
-                canFill={canManageTasksLessons}
-                onFillSchedule={handleFillSchedule}
-            />
         );
     }
 }
