@@ -5,19 +5,26 @@ import Week from '../components/Week';
 import Bar from '../components/Bar';
 import withStyles from 'material-ui/styles/withStyles';
 import { compose } from 'recompose';
-import { getWeek } from '../ducks/Week';
+import { getWeek, isClosedWeek } from '../ducks/Week';
 import { currentWeekId as getCurrentWeek } from '../lib/dateUtils';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import AppBar from 'material-ui/AppBar/AppBar';
 import Typography from 'material-ui/Typography/Typography';
+import { canManageTasks, canManageTasksLessons } from '../ducks/Auth';
+import { isFormSyncing } from '../ducks/Sync';
+import { FillSchedule } from '../ducks/Schedule';
 
 const mapStateToProps = (state, props) => {
     return {
-        currentWeekId: getWeek(state)
+        currentWeekId: getWeek(state),
+        canManageTasks: canManageTasks(state),
+        canManageTasksLessons: canManageTasksLessons(state),
+        isClosedWeek: isClosedWeek(state),
+        isSyncing: isFormSyncing('currentWeek')(state)
     };
 };
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ FillSchedule }, dispatch);
 };
 
 const styles = theme => ({
@@ -39,8 +46,13 @@ class Index extends Component {
         const {
             props: {
                 classes,
+                canManageTasks,
+                canManageTasksLessons,
                 currentWeekId = getCurrentWeek(),
-                match: { url }
+                isClosedWeek,
+                isSyncing,
+                match: { url },
+                FillSchedule
             },
             handleTab
         } = this;
@@ -58,7 +70,14 @@ class Index extends Component {
                         component="div"
                         className={classes.tabContainer}
                     >
-                        <Week week={currentWeekId} />
+                        <Week
+                            week={currentWeekId}
+                            isClosedWeek={isClosedWeek}
+                            isSyncing={isSyncing}
+                            isTaskTextEditable={canManageTasks}
+                            isLessonNameEditable={canManageTasksLessons}
+                            onFillSchedule={FillSchedule}
+                        />
                     </Typography>
                 </div>
             </Fragment>

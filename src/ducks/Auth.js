@@ -42,17 +42,17 @@ export const UserMetadataLoaded = user => ({
 // Selectors
 
 export const canManageSchedule = state => {
-    return state.auth.permissions.manageSchedule;
+    return !!state.auth.permissions.manageSchedule;
 };
 
 export const canManageTasks = state => {
-    return state.auth.permissions.manageTasks;
+    return !!state.auth.permissions.manageTasks;
 };
 
 export const canManageUsers = state => {
-    return state.auth.permissions.manageUsers;
+    return !!state.auth.permissions.manageUsers;
 };
 
 export const canManageTasksLessons = state => {
-    return state.auth.permissions.manageTasksLessons;
+    return !!state.auth.permissions.manageTasksLessons;
 };

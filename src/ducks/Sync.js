@@ -42,5 +42,5 @@ export const SyncCompleted = (form, path) => ({
 //Selectors:
 
 export const isFormSyncing = form => state => {
-    return !!state.sync.formsSyncing[form];
+    return state.sync.formsSyncing[form] !== false;
 };
