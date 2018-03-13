@@ -19,6 +19,8 @@ export default function* subscribeToWeek() {
             weekId = getCurrentWeek() + 1;
         } else if (name === 'Day') {
             weekId = parseInt(week, 10);
+        } else {
+            return;
         }
 
         if (currentWeekId !== weekId) {

@@ -13,7 +13,7 @@ const mapStateToProps = (state, props) => {
     };
 };
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ SetTitle }, dispatch);
+    return bindActionCreators({}, dispatch);
 };
 
 const styles = theme => ({
@@ -26,15 +26,11 @@ const styles = theme => ({
 });
 
 class Schedule extends Component {
-    componentDidMount() {
-        this.props.SetTitle('Расписание');
-    }
-
     render() {
         const { props: { classes } } = this;
         return (
             <Fragment>
-                <Bar />
+                <Bar title="Расписание" />
                 <div className={classes.main}>
                     <ScheduleForm />
                 </div>
