@@ -22,7 +22,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # configs
-firebase-config.json
+config.json
 database.rules.json
 keys/
 functions/service-account.json

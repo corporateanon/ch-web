@@ -5,6 +5,7 @@ import syncSchedule from './sagas/syncSchedule';
 import pullUserMetadata from './sagas/pullUserMetadata';
 import subscribeToWeek from './sagas/subscribeToWeek';
 import fillSchedule from './sagas/fillSchedule';
+import notifyMixpanel from './sagas/notifyMixpanel';
 
 // notice how we now only export the rootSaga
 // single entry point to start all Sagas at once
@@ -14,6 +15,7 @@ export default function* rootSaga() {
         syncDays(),
         syncSchedule(),
         pullUserMetadata(),
-        subscribeToWeek()
+        subscribeToWeek(),
+        notifyMixpanel()
     ]);
 }
