@@ -1,4 +1,6 @@
 import { dateToWeekId } from '../lib/dateUtils';
+import { getFormValues } from 'redux-form';
+import { isFormSyncing } from './Sync';
 
 // Actions
 export const SET_WEEK = 'Week/SET_WEEK';
@@ -30,6 +32,18 @@ export function SetNextWeek() {
 
 // Selectors
 
-export function getWeek(state) {
+export const getWeek = state => {
     return state.week.currentWeek;
-}
+};
+
+export const getWeekValues = state => {
+    const formValues = getFormValues('currentWeek')(state);
+    const week = getWeek(state);
+    return formValues
+        ? formValues.tasks ? formValues.tasks[week] : undefined
+        : undefined;
+};
+
+export const isClosedWeek = state => {
+    return getWeekValues(state) === null;
+};

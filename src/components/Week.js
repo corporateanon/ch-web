@@ -1,62 +1,82 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Grid from 'material-ui/Grid/Grid';
 import Day from './Day';
 import { reduxForm } from 'redux-form';
 import { compose } from 'recompose';
 import ClosedWeek from './ClosedWeek';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { getFormValues } from 'redux-form';
-import { FillSchedule } from '../ducks/Schedule';
-import { canManageTasksLessons } from '../ducks/Auth';
-import { isFormSyncing } from '../ducks/Sync';
-
-const mapStateToProps = (state, props) => {
-    const values = getFormValues('currentWeek')(state);
-    const { week } = props;
-    const { tasks: { [week]: weekValues = null } = {} } = values || {};
-    return {
-        formValues: getFormValues('currentWeek')(state),
-        weekValues,
-        canManageTasksLessons: canManageTasksLessons(state),
-        isSyncing: isFormSyncing('currentWeek')(state)
-    };
-};
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ FillSchedule }, dispatch);
-};
+import { number, bool, func } from 'prop-types';
 
 class Week extends Component {
-    handleFillSchedule = () => {
-        const { props: { week, FillSchedule } } = this;
-        FillSchedule(week);
+    static propTypes = {
+        week: number.isRequired,
+        isClosedWeek: bool.isRequired,
+        isSyncing: bool.isRequired,
+        isTaskTextEditable: bool.isRequired,
+        isLessonNameEditable: bool.isRequired,
+        onFillSchedule: func.isRequired,
+        showSingleDay: bool,
+        day: number
     };
+
+    handleFillSchedule = () => {
+        const { props: { week, onFillSchedule } } = this;
+        onFillSchedule(week);
+    };
+
     render() {
         const {
-            props: { week, weekValues, canManageTasksLessons, isSyncing },
+            props: {
+                week,
+                isClosedWeek,
+                isSyncing,
+                isTaskTextEditable,
+                isLessonNameEditable,
+                showSingleDay,
+                day
+            },
             handleFillSchedule
         } = this;
         if (isSyncing) {
             return '';
         }
-        return weekValues ? (
-            <Grid container>
-                <Grid item xs={12} sm={6}>
-                    <Day day={0} week={week} />
-                    <Day day={1} week={week} />
-                    <Day day={2} week={week} />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <Day day={3} week={week} />
-                    <Day day={4} week={week} />
-                    <Day day={5} week={week} />
-                </Grid>
-            </Grid>
-        ) : (
+        if (showSingleDay && day > 7) {
+            return 'День не найден';
+        }
+        if (isClosedWeek && showSingleDay) {
+            return 'День не найден';
+        }
+        const dayProps = {
+            isTaskTextEditable,
+            isLessonNameEditable,
+            week,
+            isExpanded: showSingleDay
+        };
+        return isClosedWeek ? (
             <ClosedWeek
-                canFill={canManageTasksLessons}
+                canFill={isTaskTextEditable}
                 onFillSchedule={handleFillSchedule}
             />
+        ) : (
+            <Grid container>
+                {showSingleDay ? (
+                    <Grid item xs={12}>
+                        <Day {...dayProps} day={day} />
+                    </Grid>
+                ) : (
+                    <Fragment>
+                        <Grid item xs={12} md={6}>
+                            <Day {...dayProps} day={0} />
+                            <Day {...dayProps} day={1} />
+                            <Day {...dayProps} day={2} />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <Day {...dayProps} day={3} />
+                            <Day {...dayProps} day={4} />
+                            <Day {...dayProps} day={5} />
+                        </Grid>
+                    </Fragment>
+                )}
+            </Grid>
         );
     }
 }
@@ -66,6 +86,5 @@ export default compose(
         form: 'currentWeek',
         enableReinitialize: true,
         destroyOnUnmount: false
-    }),
-    connect(mapStateToProps, mapDispatchToProps)
+    })
 )(Week);

@@ -1,16 +1,29 @@
-import { fork, takeEvery } from 'redux-saga/effects';
+import { put, fork, takeEvery } from 'redux-saga/effects';
 import { readFromDb } from './synchronize';
-import { SET_WEEK } from '../ducks/Week';
 import * as ref from '../lib/ref';
+import { currentWeekId as getCurrentWeek } from '../lib/dateUtils';
+import { SetWeek } from '../ducks/Week';
 
 export default function* subscribeToWeek() {
     let currentWeekId = null;
     let currentWeekDataReader = null;
 
-    yield takeEvery(SET_WEEK, function*({ payload: weekId }) {
+    yield takeEvery('ROUTE_CHANGED', function*({
+        payload: { name, match: { params: { week } } }
+    }) {
+        let weekId;
+        if (name === 'ThisWeek') {
+            weekId = getCurrentWeek();
+        } else if (name === 'NextWeek') {
+            weekId = getCurrentWeek() + 1;
+        } else if (name === 'Day') {
+            weekId = parseInt(week, 10);
+        } else {
+            return;
+        }
+
         if (currentWeekId !== weekId) {
             currentWeekId = weekId;
-            console.log('Week changed to:', weekId);
 
             if (currentWeekDataReader) {
                 currentWeekDataReader.cancel();
@@ -24,6 +37,7 @@ export default function* subscribeToWeek() {
                     tasks: { [weekId]: days }
                 })
             );
+            yield put(SetWeek(weekId));
         }
     });
 }

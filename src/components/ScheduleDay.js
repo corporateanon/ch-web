@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Paper from 'material-ui/Paper/Paper';
-import { FieldArray, Field } from 'redux-form';
+import { FieldArray } from 'redux-form';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid/Grid';
 import Button from 'material-ui/Button';
@@ -50,9 +50,8 @@ class ScheduleLesson extends Component {
                     const label = `Lesson ${index + 1}`;
                     return (
                         <Grid item xs={12} key={field}>
-                            <Field
+                            <RFTextField
                                 disabled={readonly}
-                                component={RFTextField}
                                 className={classes.textField}
                                 name={field}
                                 label={label}

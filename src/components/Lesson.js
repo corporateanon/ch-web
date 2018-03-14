@@ -1,52 +1,41 @@
 import React, { Component, Fragment } from 'react';
 import Grid from 'material-ui/Grid/Grid';
-import { number } from 'prop-types';
-import { Field } from 'redux-form';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { getWeek } from '../ducks/Week';
-import { canManageTasks, canManageTasksLessons } from '../ducks/Auth';
+import Paper from 'material-ui/Paper/Paper';
+import { number, bool } from 'prop-types';
 import RFTextField from './RFTextField';
-
-const mapStateToProps = (state, props) => {
-    return {
-        week: getWeek(state),
-        canManageTasks: canManageTasks(state),
-        canManageTasksLessons: canManageTasksLessons(state)
-    };
-};
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
-};
 
 class Lesson extends Component {
     static propTypes = {
         lesson: number.isRequired,
-        day: number.isRequired
+        day: number.isRequired,
+        week: number.isRequired,
+        isTaskTextEditable: bool.isRequired,
+        isLessonNameEditable: bool.isRequired
+    };
+    getLessonNameKey = () => {
+        const { props: { day, lesson, week } } = this;
+        return `tasks.${week}.${day}.${lesson}.lessonName`;
+    };
+    getTaskTextKey = () => {
+        const { props: { day, lesson, week } } = this;
+        return `tasks.${week}.${day}.${lesson}.taskText`;
     };
     render() {
-        const {
-            props: { day, lesson, week, canManageTasks, canManageTasksLessons }
-        } = this;
-        const prefix = `tasks.${week}.${day}.${lesson}`;
-        const lessonNameKey = `${prefix}.lessonName`;
-        const taskTextKey = `${prefix}.taskText`;
+        const { props: { isTaskTextEditable, isLessonNameEditable } } = this;
+        const lessonNameKey = this.getLessonNameKey();
+        const taskTextKey = this.getTaskTextKey();
         return (
             <Fragment>
                 <Grid item xs={3}>
-                    <Field
-                        disabled={!canManageTasksLessons}
-                        week={week}
+                    <RFTextField
+                        disabled={!isLessonNameEditable}
                         name={lessonNameKey}
-                        component={RFTextField}
                     />
                 </Grid>
                 <Grid item xs={9}>
-                    <Field
-                        disabled={!canManageTasks}
-                        week={week}
+                    <RFTextField
+                        disabled={!isTaskTextEditable}
                         name={taskTextKey}
-                        component={RFTextField}
                     />
                 </Grid>
             </Fragment>
@@ -54,4 +43,26 @@ class Lesson extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Lesson);
+class ExpandedLesson extends Lesson {
+    render() {
+        const { props: { isTaskTextEditable, isLessonNameEditable } } = this;
+        const lessonNameKey = this.getLessonNameKey();
+        const taskTextKey = this.getTaskTextKey();
+        return (
+            <Grid item xs={12}>
+                <RFTextField
+                    multiline
+                    disabled={!isTaskTextEditable}
+                    name={taskTextKey}
+                    labelName={lessonNameKey}
+                    InputLabelProps={{
+                        shrink: true
+                    }}
+                />
+            </Grid>
+        );
+    }
+}
+
+export { ExpandedLesson };
+export default Lesson;

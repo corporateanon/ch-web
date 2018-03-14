@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { Route, Switch } from 'react-router';
+import { Switch } from 'react-router';
 import Index from './containers/Index';
 import Auth from './containers/Auth';
 import Schedule from './containers/Schedule';
 import './index.css';
 import store from './store';
+import Route from './components/router/TrackableRoute';
 
 class App extends Component {
     render() {
@@ -14,9 +15,20 @@ class App extends Component {
             <Provider store={store}>
                 <BrowserRouter>
                     <Switch>
-                        <Route exact path="/" component={Index} />
-                        <Route path="/auth" component={Auth} />
-                        <Route path="/schedule" component={Schedule} />
+                        <Route exact path="/" component={Index} name="ThisWeek" />
+                        <Route exact path="/next" component={Index} name="NextWeek" />
+                        <Route
+                            exact
+                            path="/tasks/week/:week/day/:day"
+                            component={Index}
+                            name="Day"
+                        />
+                        <Route path="/auth" component={Auth} name="Auth" />
+                        <Route
+                            path="/schedule"
+                            component={Schedule}
+                            name="Schedule"
+                        />
                     </Switch>
                 </BrowserRouter>
             </Provider>
