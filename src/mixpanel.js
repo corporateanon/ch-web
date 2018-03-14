@@ -10,4 +10,14 @@ const track = (...args) => {
         mixpanel.track(...args);
     }
 };
-export default track;
+const identify = (...args) => {
+    if (config.mixpanel && config.mixpanel.token) {
+        mixpanel.identify(...args);
+    }
+};
+const peopleSet = (...args) => {
+    if (config.mixpanel && config.mixpanel.token) {
+        mixpanel.people.set(...args);
+    }
+};
+export { track, identify, peopleSet };
