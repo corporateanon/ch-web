@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import Grid from 'material-ui/Grid/Grid';
+import Paper from 'material-ui/Paper/Paper';
 import { number, bool } from 'prop-types';
-import { Field } from 'redux-form';
 import RFTextField from './RFTextField';
 
 class Lesson extends Component {
@@ -12,35 +12,30 @@ class Lesson extends Component {
         isTaskTextEditable: bool.isRequired,
         isLessonNameEditable: bool.isRequired
     };
+    getLessonNameKey = () => {
+        const { props: { day, lesson, week } } = this;
+        return `tasks.${week}.${day}.${lesson}.lessonName`;
+    };
+    getTaskTextKey = () => {
+        const { props: { day, lesson, week } } = this;
+        return `tasks.${week}.${day}.${lesson}.taskText`;
+    };
     render() {
-        const {
-            props: {
-                day,
-                lesson,
-                week,
-                isTaskTextEditable,
-                isLessonNameEditable
-            }
-        } = this;
-        const prefix = `tasks.${week}.${day}.${lesson}`;
-        const lessonNameKey = `${prefix}.lessonName`;
-        const taskTextKey = `${prefix}.taskText`;
+        const { props: { isTaskTextEditable, isLessonNameEditable } } = this;
+        const lessonNameKey = this.getLessonNameKey();
+        const taskTextKey = this.getTaskTextKey();
         return (
             <Fragment>
                 <Grid item xs={3}>
-                    <Field
+                    <RFTextField
                         disabled={!isLessonNameEditable}
-                        week={week}
                         name={lessonNameKey}
-                        component={RFTextField}
                     />
                 </Grid>
                 <Grid item xs={9}>
-                    <Field
+                    <RFTextField
                         disabled={!isTaskTextEditable}
-                        week={week}
                         name={taskTextKey}
-                        component={RFTextField}
                     />
                 </Grid>
             </Fragment>
@@ -48,4 +43,26 @@ class Lesson extends Component {
     }
 }
 
+class ExpandedLesson extends Lesson {
+    render() {
+        const { props: { isTaskTextEditable, isLessonNameEditable } } = this;
+        const lessonNameKey = this.getLessonNameKey();
+        const taskTextKey = this.getTaskTextKey();
+        return (
+            <Grid item xs={12}>
+                <RFTextField
+                    multiline
+                    disabled={!isTaskTextEditable}
+                    name={taskTextKey}
+                    labelName={lessonNameKey}
+                    InputLabelProps={{
+                        shrink: true
+                    }}
+                />
+            </Grid>
+        );
+    }
+}
+
+export { ExpandedLesson };
 export default Lesson;

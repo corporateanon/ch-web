@@ -12,7 +12,6 @@ class TrackableRoute extends Component {
                 {...rest}
                 render={route => {
                     const { match } = route;
-                    console.log('R', name, match);
                     setImmediate(_ => RouteChanged(name, match));
                     return <C {...route} />;
                 }}

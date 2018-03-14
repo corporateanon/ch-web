@@ -1,35 +1,24 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { compose } from 'recompose';
 import withStyles from 'material-ui/styles/withStyles';
 import Drawer from 'material-ui/Drawer';
 import List, { ListItem, ListItemText } from 'material-ui/List';
-import { withRouter } from 'react-router-dom';
-const mapStateToProps = (state, props) => {
-    return {};
-};
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
-};
+import { Link } from 'react-router-dom';
 
 const styles = {};
 
-class SideMenu extends Component {
-    push = url => {
-        const { props: { history } } = this;
-        history.push(url);
-    };
+const LinkItem = props => <Link {...props} />;
 
+class SideMenu extends Component {
     render() {
-        const { props: { open, onClose }, push } = this;
+        const { props: { open, onClose } } = this;
         return (
             <Drawer open={open} onClose={onClose}>
                 <List component="nav">
-                    <ListItem button onClick={() => push('/')}>
+                    <ListItem component={LinkItem} button to="/">
                         <ListItemText primary="Домашние задания" />
                     </ListItem>
-                    <ListItem button onClick={() => push('/schedule')}>
+                    <ListItem component={LinkItem} button to="/schedule">
                         <ListItemText primary="Расписание" />
                     </ListItem>
                 </List>
@@ -38,8 +27,4 @@ class SideMenu extends Component {
     }
 }
 
-export default compose(
-    withRouter,
-    connect(mapStateToProps, mapDispatchToProps),
-    withStyles(styles)
-)(SideMenu);
+export default compose(withStyles(styles))(SideMenu);

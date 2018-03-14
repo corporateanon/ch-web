@@ -10,7 +10,7 @@ import withStyles from 'material-ui/styles/withStyles';
 import SideMenu from './SideMenu';
 
 const styles = {
-    flex: {
+    title: {
         flex: 1
     }
 };
@@ -47,7 +47,7 @@ class Bar extends Component {
                     <Typography
                         variant="title"
                         color="inherit"
-                        className={classes.flex}
+                        className={classes.title}
                     >
                         {title}
                     </Typography>

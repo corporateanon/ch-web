@@ -1,6 +1,8 @@
 import React from 'react';
 import TextField from 'material-ui/TextField/TextField';
 import { withStyles } from 'material-ui/styles';
+import { Field } from 'redux-form';
+import RFLabel from './RFLabel';
 
 const styles = theme => ({
     textFieldInput: {
@@ -8,14 +10,27 @@ const styles = theme => ({
     }
 });
 
-const RFTextField = props => {
-    const { disabled, classes } = props;
+const TextFieldInput = props => {
+    const { classes, input, ...rest } = props;
     return (
         <TextField
             fullWidth
             inputProps={{ className: classes.textFieldInput }}
-            {...{ disabled }}
+            {...rest}
             {...props.input}
+        />
+    );
+};
+
+const RFTextField = props => {
+    const { name, label, labelName, ...rest } = props;
+    const fieldLabel = labelName ? <RFLabel name={labelName} /> : label;
+    return (
+        <Field
+            name={name}
+            label={fieldLabel}
+            component={TextFieldInput}
+            {...rest}
         />
     );
 };
