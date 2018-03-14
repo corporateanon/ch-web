@@ -9,9 +9,11 @@ function* watchRoute() {
 }
 
 function* watchAuth() {
-    yield takeEvery(USER_AUTHENTICATED, function({
-        payload: { uid, displayName, email }
-    }) {
+    yield takeEvery(USER_AUTHENTICATED, function({ payload }) {
+        if (!payload) {
+            return;
+        }
+        const { uid, displayName, email } = payload;
         identify(uid);
         peopleSet({ $email: email, $distinct_id: uid, $name: displayName });
     });
