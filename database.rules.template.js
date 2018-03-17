@@ -1,4 +1,4 @@
-const { all, authenticated, hasPermission } = require('./db-rules/helpers');
+const { all, authenticated, hasPermission, equalsMyUid } = require('./db-rules/helpers');
 
 module.exports = {
     rules: {
@@ -23,6 +23,13 @@ module.exports = {
                             authenticated(),
                             hasPermission('manageTasksLessons')
                         ),
+                        taskTextLastUid: {
+                            '.write': all(
+                                authenticated(),
+                                equalsMyUid(),
+                                hasPermission('manageTasks')
+                            )
+                        },
                         taskText: {
                             '.write': all(
                                 authenticated(),

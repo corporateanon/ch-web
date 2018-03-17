@@ -3,14 +3,13 @@ import { writeFormFieldToDb, readFromDb } from './synchronize';
 
 export default function* syncDays() {
     yield all([
-        writeFormFieldToDb(
-            'schedule',
-            /^schedule\[(\d+)\]\[(\d+)\]$/,
-            (value, day, lesson) => ({
-                key: `/schedule/${day}/${lesson}`,
-                value
+        writeFormFieldToDb({
+            form: 'schedule',
+            fieldRegex: /^schedule\[(\d+)\]\[(\d+)\]$/,
+            update: (state, value, day, lesson) => ({
+                [`/schedule/${day}/${lesson}`]: value
             })
-        ),
+        }),
         readFromDb('schedule', '/schedule', schedule => ({ schedule }))
     ]);
 }
