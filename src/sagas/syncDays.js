@@ -15,7 +15,6 @@ export default function* syncDays() {
             fieldRegex: /^tasks\.(\d+)\.(\d+)\.(\d+)\.taskText$/,
             update: (state, value, week, day, lesson) => {
                 const { auth: { user: { uid } = {} } } = state;
-                debugger;
                 return {
                     [`/tasks/${week}/${day}/${lesson}/taskText`]: value,
                     [`/tasks/${week}/${day}/${lesson}/taskTextLastUid`]: uid

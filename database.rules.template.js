@@ -1,7 +1,15 @@
-const { all, authenticated, hasPermission, equalsMyUid } = require('./db-rules/helpers');
+const {
+    all,
+    authenticated,
+    hasPermission,
+    equalsMyUid
+} = require('./db-rules/helpers');
 
 module.exports = {
     rules: {
+        history: {
+            '.read': true
+        },
         schedule: {
             '.read': true,
             '.write': all(authenticated(), hasPermission('manageSchedule'))
@@ -49,10 +57,7 @@ module.exports = {
         users: {
             $uid: {
                 '.read': '$uid === auth.uid',
-                '.write': all(
-                    authenticated(),
-                    hasPermission('manageUsers')
-                )
+                '.write': all(authenticated(), hasPermission('manageUsers'))
             }
         }
     }
