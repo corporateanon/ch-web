@@ -1,6 +1,7 @@
 import { takeEvery, all, call, put } from 'redux-saga/effects';
 import { database } from '../fb-app';
 import { HistoryFetched } from '../ducks/History';
+import { historyByWeekAndDay } from '../lib/ref';
 
 function* watchRoute() {
     yield takeEvery('ROUTE_CHANGED', function*({ payload: { name, match } }) {
@@ -11,7 +12,7 @@ function* watchRoute() {
         const { week, day } = match.params;
         const dayHistory = yield call(() =>
             database
-                .ref(`/history/${week}/${day}`)
+                .ref(historyByWeekAndDay(week, day))
                 .once('value')
                 .then(_ => _.val())
         );
