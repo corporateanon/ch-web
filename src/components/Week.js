@@ -15,7 +15,8 @@ class Week extends Component {
         isLessonNameEditable: bool.isRequired,
         onFillSchedule: func.isRequired,
         showSingleDay: bool,
-        day: number
+        day: number,
+        onLessonMore: func
     };
 
     handleFillSchedule = () => {
@@ -32,7 +33,8 @@ class Week extends Component {
                 isTaskTextEditable,
                 isLessonNameEditable,
                 showSingleDay,
-                day
+                day,
+                onLessonMore
             },
             handleFillSchedule
         } = this;
@@ -49,7 +51,8 @@ class Week extends Component {
             isTaskTextEditable,
             isLessonNameEditable,
             week,
-            isExpanded: showSingleDay
+            isExpanded: showSingleDay,
+            onLessonMore
         };
         return isClosedWeek ? (
             <ClosedWeek

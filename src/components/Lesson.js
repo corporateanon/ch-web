@@ -2,10 +2,11 @@ import React, { Component, Fragment } from 'react';
 import IconButton from 'material-ui/IconButton';
 import Grid from 'material-ui/Grid/Grid';
 import Paper from 'material-ui/Paper/Paper';
-import { number, bool } from 'prop-types';
+import { number, bool, func } from 'prop-types';
 import RFTextField from './RFTextField';
-import ListIcon from 'material-ui-icons/List';
+import MoreIcon from 'material-ui-icons/MoreVert';
 import { withStyles } from 'material-ui/styles';
+import Dialog from 'material-ui/Dialog';
 
 class Lesson extends Component {
     static propTypes = {
@@ -13,7 +14,8 @@ class Lesson extends Component {
         day: number.isRequired,
         week: number.isRequired,
         isTaskTextEditable: bool.isRequired,
-        isLessonNameEditable: bool.isRequired
+        isLessonNameEditable: bool.isRequired,
+        onMore: func
     };
     getLessonNameKey = () => {
         const { props: { day, lesson, week } } = this;
@@ -57,8 +59,15 @@ const ExpandedLesson = withStyles(theme => ({
     }
 }))(
     class extends Lesson {
+        handleMoreClick = () => {
+            const { props: { onMore, week, day, lesson } } = this;
+            onMore && onMore({ week, day, lesson });
+        };
         render() {
-            const { props: { isTaskTextEditable, classes } } = this;
+            const {
+                props: { isTaskTextEditable, classes },
+                handleMoreClick
+            } = this;
             const lessonNameKey = this.getLessonNameKey();
             const taskTextKey = this.getTaskTextKey();
             return (
@@ -74,8 +83,11 @@ const ExpandedLesson = withStyles(theme => ({
                                 shrink: true
                             }}
                         />
-                        <IconButton className={classes.icon}>
-                            <ListIcon />
+                        <IconButton
+                            className={classes.icon}
+                            onClick={handleMoreClick}
+                        >
+                            <MoreIcon />
                         </IconButton>
                     </div>
                 </Grid>

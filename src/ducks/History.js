@@ -1,16 +1,29 @@
-import immutable from 'object-path-immutable';
+import { set } from 'object-path-immutable';
+import { get } from 'lodash';
 // Actions
 const HISTORY_FETCHED = 'History/HISTORY_FETCHED';
+const OPEN_DIALOG = 'History/OPEN_DIALOG';
+const CLOSE_DIALOG = 'History/CLOSE_DIALOG';
 
 // Reducer
 const defaultState = {
-    items: {}
+    items: {},
+    current: null,
+    dialogOpen: false
 };
 export default function reducer(state = defaultState, action) {
     switch (action.type) {
         case HISTORY_FETCHED: {
             const { week, day, value } = action.payload;
-            return immutable.set(state, `items.${week}.${day}`, value);
+            return set(state, `items.${week}.${day}`, value);
+        }
+        case OPEN_DIALOG: {
+            const { week, day, lesson } = action.payload;
+            const current = get(state, `items.${week}.${day}.${lesson}`);
+            return { ...state, current, dialogOpen: true };
+        }
+        case CLOSE_DIALOG: {
+            return { ...state, current: null, dialogClose: true };
         }
         default:
             return state;
@@ -26,3 +39,16 @@ export const HistoryFetched = (week, day, value) => ({
         value
     }
 });
+
+export const OpenDialog = (week, day, lesson) => ({
+    type: OPEN_DIALOG,
+    payload: { week, day, lesson }
+});
+
+export const CloseDialog = (week, day, lesson) => ({
+    type: CLOSE_DIALOG
+});
+
+export const isDialogOpen = state => {
+    return state.history.dialogOpen;
+};

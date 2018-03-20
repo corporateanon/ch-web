@@ -6,7 +6,7 @@ import Lesson, { ExpandedLesson } from './Lesson';
 import Paper from 'material-ui/Paper/Paper';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
-import { number, bool } from 'prop-types';
+import { number, bool, func } from 'prop-types';
 import { weekAndDayToDate } from '../lib/dateUtils';
 
 const styles = theme => ({
@@ -28,7 +28,8 @@ class Day extends Component {
         week: number.isRequired,
         isLessonNameEditable: bool.isRequired,
         isTaskTextEditable: bool.isRequired,
-        isExpanded: bool
+        isExpanded: bool,
+        onLessonMore: func
     };
     render() {
         const {
@@ -38,7 +39,8 @@ class Day extends Component {
                 week,
                 isLessonNameEditable,
                 isTaskTextEditable,
-                isExpanded
+                isExpanded,
+                onLessonMore
             }
         } = this;
         const date = weekAndDayToDate(week, day);
@@ -48,7 +50,8 @@ class Day extends Component {
             week,
             day,
             isLessonNameEditable,
-            isTaskTextEditable
+            isTaskTextEditable,
+            onMore: onLessonMore
         };
 
         const LessonComponent = isExpanded ? ExpandedLesson : Lesson;

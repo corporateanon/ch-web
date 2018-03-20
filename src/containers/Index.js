@@ -13,10 +13,12 @@ import { getWeek, isClosedWeek } from '../ducks/Week';
 import { canManageTasks, canManageTasksLessons } from '../ducks/Auth';
 import { isFormSyncing } from '../ducks/Sync';
 import { FillSchedule } from '../ducks/Schedule';
+import { OpenDialog } from '../ducks/History';
 
 import Week from '../components/Week';
 import Day from '../components/Day';
 import Bar from '../components/Bar';
+import HistoryDialog from './HistoryDialog';
 
 const mapStateToProps = (state, props) => {
     return {
@@ -28,7 +30,7 @@ const mapStateToProps = (state, props) => {
     };
 };
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ FillSchedule }, dispatch);
+    return bindActionCreators({ FillSchedule, OpenDialog }, dispatch);
 };
 
 const styles = theme => ({
@@ -46,6 +48,12 @@ class Index extends Component {
     handleTab = (e, url) => {
         this.props.history.push(url);
     };
+
+    onLessonMore = ({ week, day, lesson }) => {
+        const { props: { OpenDialog } } = this;
+        OpenDialog(week, day, lesson);
+    };
+
     render() {
         const {
             props: {
@@ -58,7 +66,8 @@ class Index extends Component {
                 match: { url, params: { day } },
                 FillSchedule
             },
-            handleTab
+            handleTab,
+            onLessonMore
         } = this;
 
         const onlyDay = day ? parseInt(day, 10) : null;
@@ -67,6 +76,7 @@ class Index extends Component {
         return (
             <Fragment>
                 <Bar title="Домашние задания" />
+                <HistoryDialog />
                 <div className={classes.main}>
                     <AppBar position="static" color="default">
                         <Tabs value={url} onChange={handleTab}>
@@ -87,6 +97,7 @@ class Index extends Component {
                             isTaskTextEditable={canManageTasks}
                             isLessonNameEditable={canManageTasksLessons}
                             onFillSchedule={FillSchedule}
+                            onLessonMore={onLessonMore}
                         />
                     </Typography>
                 </div>
