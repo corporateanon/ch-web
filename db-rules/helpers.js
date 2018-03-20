@@ -14,4 +14,8 @@ const hasPermission = permission => {
     return `root.child('/users/' + auth.uid + '/permissions/${permission}').val() === true`;
 };
 
-module.exports = { all, any, authenticated, hasPermission };
+const equalsMyUid = () => {
+    return 'newData.val() === auth.uid';
+};
+
+module.exports = { all, any, authenticated, hasPermission, equalsMyUid };

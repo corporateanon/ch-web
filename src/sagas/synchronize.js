@@ -13,7 +13,7 @@ const normalizeEmpty = value => {
     return value;
 };
 
-export function* writeFormFieldToDb(form, fieldRegex, makeEntry) {
+export function* writeFormFieldToDb({ form, fieldRegex, update }) {
     yield takeEvery(actionTypes.BLUR, function*({ payload, meta }) {
         if (meta.form !== form) {
             return;
@@ -33,11 +33,11 @@ export function* writeFormFieldToDb(form, fieldRegex, makeEntry) {
         if (normalizeEmpty(initial) === normalizeEmpty(payload)) {
             return;
         }
+        const state = yield select();
+        const entry = update(state, payload, ...matches);
+        console.log('DB write:', entry);
 
-        const entry = makeEntry(payload, ...matches);
-        console.log('DB write:', entry.key, entry.value);
-
-        database.ref(entry.key).set(entry.value);
+        database.ref().update(entry);
     });
 }
 
