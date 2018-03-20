@@ -2,7 +2,9 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
 const creds = functions.config().firebase;
-creds.credential = admin.credential.cert(require('./service-account.json'));
+const env = functions.config().application.env;
+console.log('Starting with aplication.env=' + env);
+creds.credential = admin.credential.cert(require('./keys/' + env + '.json'));
 
 admin.initializeApp(creds);
 
