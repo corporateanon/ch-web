@@ -1,5 +1,6 @@
 import { set } from 'object-path-immutable';
-import { get } from 'lodash';
+import { get, map, orderBy } from 'lodash';
+import moment from 'moment';
 // Actions
 const HISTORY_FETCHED = 'History/HISTORY_FETCHED';
 const OPEN_DIALOG = 'History/OPEN_DIALOG';
@@ -23,7 +24,7 @@ export default function reducer(state = defaultState, action) {
             return { ...state, current, dialogOpen: true };
         }
         case CLOSE_DIALOG: {
-            return { ...state, current: null, dialogClose: true };
+            return { ...state, dialogOpen: false };
         }
         default:
             return state;
@@ -51,4 +52,17 @@ export const CloseDialog = (week, day, lesson) => ({
 
 export const isDialogOpen = state => {
     return state.history.dialogOpen;
+};
+
+export const getCurrentLessonHistory = state => {
+    return orderBy(
+        map(state.history.current, (item, id) => ({
+            item: {
+                ...item,
+                dateStr: moment(item.timestamp).format('DD MMM HH:mm')
+            },
+            id
+        })),
+        [({ item }) => -item.timestamp]
+    );
 };

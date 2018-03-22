@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 import Dialog, { DialogTitle } from 'material-ui/Dialog';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { isDialogOpen, CloseDialog } from '../ducks/History';
+import {
+    isDialogOpen,
+    CloseDialog,
+    getCurrentLessonHistory
+} from '../ducks/History';
+import HistoryLog from '../components/HistoryLog';
 
 const mapStateToProps = (state, props) => {
     return {
-        isOpen: isDialogOpen(state)
+        isOpen: isDialogOpen(state),
+        current: getCurrentLessonHistory(state)
     };
 };
 const mapDispatchToProps = dispatch => {
@@ -20,11 +26,11 @@ const mapDispatchToProps = dispatch => {
 
 class HistoryDialog extends Component {
     render() {
-        const { props: { isOpen, onClose } } = this;
+        const { props: { isOpen, onClose, current } } = this;
         return (
             <Dialog open={isOpen} onClose={onClose}>
-                <DialogTitle>История правок</DialogTitle>
-                asd
+                <DialogTitle>История изменений</DialogTitle>
+                <HistoryLog history={current} />
             </Dialog>
         );
     }
