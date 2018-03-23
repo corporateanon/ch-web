@@ -8,10 +8,11 @@ import Table, {
 } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
+import withStyles from 'material-ui/styles/withStyles';
 
-export default class HistoryLog extends Component {
+class HistoryLog extends Component {
     render() {
-        const { props: { history } } = this;
+        const { props: { history, classes } } = this;
 
         const items =
             history && history.length ? (
@@ -34,7 +35,7 @@ export default class HistoryLog extends Component {
                 </TableRow>
             );
         return (
-            <Paper>
+            <Paper className={classes.paper}>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -49,3 +50,10 @@ export default class HistoryLog extends Component {
         );
     }
 }
+
+export default withStyles(theme => ({
+    paper: {
+        width: '100%',
+        overflowX: 'auto'
+    }
+}))(HistoryLog);
