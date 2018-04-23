@@ -65,7 +65,7 @@ exports.createTaskHistoryRecord = functions.database
                     `Task Updated by '${
                         user.displayName
                     }': w:${week}, d:${day}, l:${lesson} CHANGE '${
-                        prevValue.taskText
+                        prevTaskText
                     }' -> '${value.taskText}'`
                 );
 
