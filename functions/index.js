@@ -1,12 +1,14 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
-const creds = functions.config().firebase;
-const env = functions.config().application.env;
-console.log('Starting with aplication.env=' + env);
-creds.credential = admin.credential.cert(require('./keys/' + env + '.json'));
+// const creds = functions.config().firebase;
+// const env = functions.config().application.env;
+// console.log('Starting with aplication.env=' + env);
+// creds.credential = admin.credential.cert(require('./keys/' + env + '.json'));
+console.log('Starting my shiny new functions!');
 
-admin.initializeApp(creds);
+// admin.initializeApp(creds);
+admin.initializeApp();
 
 exports.createUserRecord = functions.auth.user().onCreate(event => {
     const { email, displayName, uid } = event.data;
@@ -28,10 +30,10 @@ exports.createUserRecord = functions.auth.user().onCreate(event => {
 
 exports.createTaskHistoryRecord = functions.database
     .ref('/tasks/{week}/{day}/{lesson}')
-    .onWrite(event => {
-        const { week, day, lesson } = event.params;
-        const value = event.data.val();
-        const prevValue = event.data.previous.val();
+    .onWrite((change, context) => {
+        const { week, day, lesson } = context.params;
+        const value = change.after.val();
+        const prevValue = change.before.val()
 
         if (value === null || value === undefined) {
             console.log('value is null');
