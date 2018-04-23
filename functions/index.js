@@ -10,8 +10,8 @@ console.log('Starting my shiny new functions!');
 // admin.initializeApp(creds);
 admin.initializeApp();
 
-exports.createUserRecord = functions.auth.user().onCreate(event => {
-    const { email, displayName, uid } = event.data;
+exports.createUserRecord = functions.auth.user().onCreate(user => {
+    const { email, displayName, uid } = user;
     return admin
         .database()
         .ref(`/users/${uid}`)
