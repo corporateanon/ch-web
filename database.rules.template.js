@@ -10,6 +10,9 @@ module.exports = {
         history: {
             '.read': true
         },
+        globalHistory: {
+            '.read': true
+        },
         schedule: {
             '.read': true,
             '.write': all(authenticated(), hasPermission('manageSchedule'))
