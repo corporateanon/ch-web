@@ -1,12 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import IconButton from 'material-ui/IconButton';
 import Grid from 'material-ui/Grid/Grid';
-import Paper from 'material-ui/Paper/Paper';
 import { number, bool, func } from 'prop-types';
 import RFTextField from './RFTextField';
 import MoreIcon from 'material-ui-icons/MoreVert';
 import { withStyles } from 'material-ui/styles';
-import Dialog from 'material-ui/Dialog';
 
 class Lesson extends Component {
     static propTypes = {

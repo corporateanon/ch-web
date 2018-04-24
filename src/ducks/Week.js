@@ -1,6 +1,5 @@
 import { dateToWeekId } from '../lib/dateUtils';
 import { getFormValues } from 'redux-form';
-import { isFormSyncing } from './Sync';
 
 // Actions
 export const SET_WEEK = 'Week/SET_WEEK';

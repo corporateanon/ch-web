@@ -5,7 +5,6 @@ import Bar from '../components/Bar';
 import withStyles from 'material-ui/styles/withStyles';
 import { compose } from 'recompose';
 import ScheduleForm from '../components/ScheduleForm';
-import { SetTitle } from '../ducks/Navigation';
 
 const mapStateToProps = (state, props) => {
     return {

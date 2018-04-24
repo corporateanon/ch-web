@@ -16,7 +16,6 @@ import { FillSchedule } from '../ducks/Schedule';
 import { OpenDialog } from '../ducks/History';
 
 import Week from '../components/Week';
-import Day from '../components/Day';
 import Bar from '../components/Bar';
 import HistoryDialog from './HistoryDialog';
 

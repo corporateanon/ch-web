@@ -7,7 +7,6 @@ import Table, {
     TableRow
 } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
 
 class HistoryLog extends Component {
