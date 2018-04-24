@@ -20,6 +20,10 @@ const writeToLocalHistory = ({
             prevValue: prevTaskText || '',
             uid: user.uid,
             displayName: user.displayName || ''
+        })
+        .then(() => {
+            console.log('Local history record created');
+            return null;
         });
 };
 
@@ -37,6 +41,7 @@ const writeToGlobalHistory = ({
         .ref(`/globalHistory`)
         .push()
         .set({
+            type: 'UPDATE_TASK',
             timestamp: admin.database.ServerValue.TIMESTAMP,
             field: 'taskText',
             value: taskText || '',
@@ -46,6 +51,10 @@ const writeToGlobalHistory = ({
             week,
             day,
             lesson
+        })
+        .then(() => {
+            console.log('Global history record created');
+            return null;
         });
 };
 
