@@ -1,13 +1,8 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
-// const creds = functions.config().firebase;
-// const env = functions.config().application.env;
-// console.log('Starting with aplication.env=' + env);
-// creds.credential = admin.credential.cert(require('./keys/' + env + '.json'));
 console.log('Starting my shiny new functions!');
 
-// admin.initializeApp(creds);
 admin.initializeApp();
 
 exports.createUserRecord = functions.auth.user().onCreate(user => {
