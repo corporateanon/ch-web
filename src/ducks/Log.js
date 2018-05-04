@@ -1,19 +1,21 @@
-import { orderBy, curryRight } from 'lodash';
+import { orderBy } from 'lodash';
 import { compose } from 'recompose';
 
-const orderLogItems = compose(
-    Object.values,
-    _ => orderBy(_, ['timestamp'], ['desc']) //  curryRight(orderBy)(['timestamp'], ['desc'])
+const orderLogItems = compose(Object.values, _ =>
+    orderBy(_, ['timestamp'], ['desc'])
 );
 
 // Actions
 export const LOG_LOADED = 'Log/LOG_LOADED';
 
 // Reducer
-export default function reducer(state = {}, action) {
+const defaultState = {
+    items: []
+};
+
+export default function reducer(state = defaultState, action) {
     switch (action.type) {
         case LOG_LOADED:
-            debugger;
             return { ...state, items: orderLogItems(action.payload) };
         default:
             return state;
