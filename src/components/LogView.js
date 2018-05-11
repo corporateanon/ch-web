@@ -15,7 +15,7 @@ const AuthorLine = props => (
     <Fragment>
         <span>{props.displayName}</span>{' '}
         <span title={moment(props.timestamp).toLocaleString()}>
-            {moment(props.timestamp).format('hh:mm')}
+            {moment(props.timestamp).format('HH:mm')}
         </span>
     </Fragment>
 );
