@@ -5,11 +5,12 @@ import Drawer from 'material-ui/Drawer';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { canManageSchedule } from '../ducks/Auth';
+import { canManageSchedule, canViewLog } from '../ducks/Auth';
 
 const styles = {};
 const mapStateToProps = state => ({
-    canManageSchedule: canManageSchedule(state)
+    canManageSchedule: canManageSchedule(state),
+    canViewLog: canViewLog(state)
 });
 
 const LinkItem = props => <Link {...props} />;
@@ -17,7 +18,7 @@ const LinkItem = props => <Link {...props} />;
 class SideMenu extends Component {
     render() {
         const {
-            props: { open, onClose, canManageSchedule }
+            props: { open, onClose, canManageSchedule, canViewLog }
         } = this;
         return (
             <Drawer open={open} onClose={onClose}>
@@ -30,9 +31,11 @@ class SideMenu extends Component {
                             <ListItemText primary="Расписание" />
                         </ListItem>
                     )}
-                    <ListItem component={LinkItem} button to="/log">
-                        <ListItemText primary="Лог" />
-                    </ListItem>
+                    {canViewLog && (
+                        <ListItem component={LinkItem} button to="/log">
+                            <ListItemText primary="Лог" />
+                        </ListItem>
+                    )}
                 </List>
             </Drawer>
         );

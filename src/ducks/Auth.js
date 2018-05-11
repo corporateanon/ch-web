@@ -56,3 +56,7 @@ export const canManageUsers = state => {
 export const canManageTasksLessons = state => {
     return !!state.auth.permissions.manageTasksLessons;
 };
+
+export const canViewLog = state => {
+    return !!state.auth.permissions.viewLog;
+};
