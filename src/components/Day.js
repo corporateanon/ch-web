@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import Grid from '@material-ui/core/Grid/Grid';
-import Lesson, { ExpandedLesson } from './Lesson';
+import Lesson from './Lesson';
 import Paper from '@material-ui/core/Paper/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -54,7 +54,6 @@ class Day extends Component {
             onMore: onLessonMore
         };
 
-        const LessonComponent = isExpanded ? ExpandedLesson : Lesson;
         const dayClasses = isExpanded ? classes.expandedDay : classes.day;
         return (
             <Paper className={dayClasses} elevation={10}>
@@ -71,13 +70,13 @@ class Day extends Component {
                         </Typography>
                         <Typography variant="caption">{dateStr}</Typography>
                     </Grid>
-                    <LessonComponent {...lessonProps} lesson={0} />
-                    <LessonComponent {...lessonProps} lesson={1} />
-                    <LessonComponent {...lessonProps} lesson={2} />
-                    <LessonComponent {...lessonProps} lesson={3} />
-                    <LessonComponent {...lessonProps} lesson={4} />
-                    <LessonComponent {...lessonProps} lesson={5} />
-                    <LessonComponent {...lessonProps} lesson={6} />
+                    <Lesson {...lessonProps} lesson={0} />
+                    <Lesson {...lessonProps} lesson={1} />
+                    <Lesson {...lessonProps} lesson={2} />
+                    <Lesson {...lessonProps} lesson={3} />
+                    <Lesson {...lessonProps} lesson={4} />
+                    <Lesson {...lessonProps} lesson={5} />
+                    <Lesson {...lessonProps} lesson={6} />
                 </Grid>
             </Paper>
         );

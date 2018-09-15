@@ -6,48 +6,8 @@ import RFTextField from './RFTextField';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { withStyles } from '@material-ui/core/styles';
 
-class Lesson extends Component {
-    static propTypes = {
-        lesson: number.isRequired,
-        day: number.isRequired,
-        week: number.isRequired,
-        isTaskTextEditable: bool.isRequired,
-        isLessonNameEditable: bool.isRequired,
-        onMore: func
-    };
-    getLessonNameKey = () => {
-        const { props: { day, lesson, week } } = this;
-        return `tasks.${week}.${day}.${lesson}.lessonName`;
-    };
-    getTaskTextKey = () => {
-        const { props: { day, lesson, week } } = this;
-        return `tasks.${week}.${day}.${lesson}.taskText`;
-    };
-    render() {
-        const { props: { isTaskTextEditable, isLessonNameEditable } } = this;
-        const lessonNameKey = this.getLessonNameKey();
-        const taskTextKey = this.getTaskTextKey();
-        return (
-            <Fragment>
-                <Grid item xs={3}>
-                    <RFTextField
-                        disabled={!isLessonNameEditable}
-                        name={lessonNameKey}
-                    />
-                </Grid>
-                <Grid item xs={9}>
-                    <RFTextField
-                        disabled={!isTaskTextEditable}
-                        name={taskTextKey}
-                    />
-                </Grid>
-            </Fragment>
-        );
-    }
-}
-
-const ExpandedLesson = withStyles(theme => ({
-    hbox: { display: 'flex' },
+const Lesson = withStyles(theme => ({
+    hbox: { display: 'flex', marginTop: theme.spacing.unit * 4 },
     icon: {
         alignSelf: 'flex-end',
         marginLeft: theme.spacing.unit
@@ -56,9 +16,31 @@ const ExpandedLesson = withStyles(theme => ({
         flex: 1
     }
 }))(
-    class extends Lesson {
+    class extends Component     {
+        static propTypes = {
+            lesson: number.isRequired,
+            day: number.isRequired,
+            week: number.isRequired,
+            isTaskTextEditable: bool.isRequired,
+            isLessonNameEditable: bool.isRequired,
+            onMore: func
+        };
+        getLessonNameKey = () => {
+            const {
+                props: { day, lesson, week }
+            } = this;
+            return `tasks.${week}.${day}.${lesson}.lessonName`;
+        };
+        getTaskTextKey = () => {
+            const {
+                props: { day, lesson, week }
+            } = this;
+            return `tasks.${week}.${day}.${lesson}.taskText`;
+        };
         handleMoreClick = () => {
-            const { props: { onMore, week, day, lesson } } = this;
+            const {
+                props: { onMore, week, day, lesson }
+            } = this;
             onMore && onMore({ week, day, lesson });
         };
         render() {
@@ -94,5 +76,4 @@ const ExpandedLesson = withStyles(theme => ({
     }
 );
 
-export { ExpandedLesson };
 export default Lesson;
