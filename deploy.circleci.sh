@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash -e
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
@@ -9,12 +9,12 @@ echo "======================================"
 echo
 
 if [ "$BRANCH" = "deploy/production" ]; then 
-    ./deploy.production.sh
+    ./deploy.production.sh || exit 1
     exit 0
 fi;
 
 if [ "$BRANCH" = "deploy/staging" ]; then 
-    ./deploy.staging.sh
+    ./deploy.staging.sh || exit 1
     exit 0
 fi;
 
