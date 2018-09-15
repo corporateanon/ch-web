@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import Grid from 'material-ui/Grid/Grid';
+import Grid from '@material-ui/core/Grid/Grid';
 import Lesson, { ExpandedLesson } from './Lesson';
-import Paper from 'material-ui/Paper/Paper';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
+import Paper from '@material-ui/core/Paper/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import { number, bool, func } from 'prop-types';
 import { weekAndDayToDate } from '../lib/dateUtils';
 

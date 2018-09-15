@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FirebaseAuth } from 'react-firebaseui';
 import firebase from 'firebase';
 import { auth } from '../fb-app';
-import Button from 'material-ui/Button/Button';
+import Button from '@material-ui/core/Button/Button';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { UserAuthenticated } from '../ducks/Auth';

@@ -2,11 +2,13 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { compose } from 'recompose';
-import withStyles from 'material-ui/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import Tabs, { Tab } from 'material-ui/Tabs';
-import AppBar from 'material-ui/AppBar/AppBar';
-import Typography from 'material-ui/Typography/Typography';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+
+import AppBar from '@material-ui/core/AppBar/AppBar';
+import Typography from '@material-ui/core/Typography/Typography';
 
 import { currentWeekId as getCurrentWeek } from '../lib/dateUtils';
 import { getWeek, isClosedWeek } from '../ducks/Week';

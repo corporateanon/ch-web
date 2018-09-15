@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { map } from 'lodash';
-import Table, {
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow
-} from 'material-ui/Table';
-import Paper from 'material-ui/Paper';
-import withStyles from 'material-ui/styles/withStyles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 class HistoryLog extends Component {
     render() {
-        const { props: { history, classes } } = this;
+        const {
+            props: { history, classes }
+        } = this;
 
         const items =
             history && history.length ? (

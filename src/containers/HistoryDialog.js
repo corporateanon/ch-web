@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Dialog, { DialogTitle } from 'material-ui/Dialog';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -26,7 +27,9 @@ const mapDispatchToProps = dispatch => {
 
 class HistoryDialog extends Component {
     render() {
-        const { props: { isOpen, onClose, current } } = this;
+        const {
+            props: { isOpen, onClose, current }
+        } = this;
         return (
             <Dialog open={isOpen} onClose={onClose}>
                 <DialogTitle>История изменений</DialogTitle>
@@ -36,4 +39,7 @@ class HistoryDialog extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HistoryDialog);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(HistoryDialog);
