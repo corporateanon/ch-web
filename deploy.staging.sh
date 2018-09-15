@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eo pipefail
 
 REACT_APP_ENV=staging npm run build
 firebase --project=staging functions:config:set application.env=staging

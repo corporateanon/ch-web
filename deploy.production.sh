@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eo pipefail
 
 REACT_APP_ENV=production npm run build
 firebase --project=production functions:config:set application.env=production
