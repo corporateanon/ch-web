@@ -19,6 +19,9 @@ jobs:
     steps:
       - checkout
 
+      # Download the Firebase deployment keys
+      - run: git clone git@bitbucket.org:cool-homeworks/ch-deploy-secrets.git
+
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -34,5 +37,5 @@ jobs:
             - functions/node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
         
-      # run tests!
-      - run: yarn test
+      # Build
+      - run: yarn build
