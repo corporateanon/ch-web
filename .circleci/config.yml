@@ -37,5 +37,5 @@ jobs:
             - functions/node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
         
-      # Build
-      - run: yarn build
+      # Buid, deploy, etc
+      - run: yarn deploy-circleci

@@ -34,6 +34,7 @@
     "eject": "react-scripts eject",
     "build-database-rules": "node ./db-rules/dump > database.rules.json",
     "deploy-production": "./deploy.production.sh",
-    "deploy-staging": "./deploy.staging.sh"
+    "deploy-staging": "./deploy.staging.sh",
+    "deploy-circleci": "./deploy.circleci.sh"
   }
 }
