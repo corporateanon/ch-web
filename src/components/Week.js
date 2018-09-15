@@ -67,12 +67,12 @@ class Week extends Component {
                     </Grid>
                 ) : (
                     <Fragment>
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12}>
                             <Day {...dayProps} day={0} />
                             <Day {...dayProps} day={1} />
                             <Day {...dayProps} day={2} />
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12}>
                             <Day {...dayProps} day={3} />
                             <Day {...dayProps} day={4} />
                             <Day {...dayProps} day={5} />

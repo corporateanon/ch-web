@@ -35,8 +35,9 @@ const mapDispatchToProps = dispatch => {
 const styles = theme => ({
     main: {
         marginTop: 70,
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        maxWidth: 1200
     },
     tabContainer: {
         marginTop: 3 * theme.spacing.unit
