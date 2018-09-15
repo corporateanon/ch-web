@@ -29,7 +29,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "npm run build-database-rules && react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test_": "react-scripts test --env=jsdom",
+    "test": "echo NO TESTS SPECIFIED",
     "eject": "react-scripts eject",
     "build-database-rules": "node ./db-rules/dump > database.rules.json",
     "deploy-production": "./deploy.production.sh",
