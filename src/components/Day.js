@@ -77,6 +77,7 @@ class Day extends Component {
                     <LessonComponent {...lessonProps} lesson={3} />
                     <LessonComponent {...lessonProps} lesson={4} />
                     <LessonComponent {...lessonProps} lesson={5} />
+                    <LessonComponent {...lessonProps} lesson={6} />
                 </Grid>
             </Paper>
         );

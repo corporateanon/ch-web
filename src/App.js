@@ -8,6 +8,7 @@ import Schedule from './containers/Schedule';
 import './index.css';
 import store from './store';
 import Route from './components/router/TrackableRoute';
+import Log from './containers/Log';
 
 class App extends Component {
     render() {
@@ -15,8 +16,18 @@ class App extends Component {
             <Provider store={store}>
                 <BrowserRouter>
                     <Switch>
-                        <Route exact path="/" component={Index} name="ThisWeek" />
-                        <Route exact path="/next" component={Index} name="NextWeek" />
+                        <Route
+                            exact
+                            path="/"
+                            component={Index}
+                            name="ThisWeek"
+                        />
+                        <Route
+                            exact
+                            path="/next"
+                            component={Index}
+                            name="NextWeek"
+                        />
                         <Route
                             exact
                             path="/tasks/week/:week/day/:day"
@@ -29,6 +40,7 @@ class App extends Component {
                             component={Schedule}
                             name="Schedule"
                         />
+                        <Route path="/log" component={Log} name="Log" />
                     </Switch>
                 </BrowserRouter>
             </Provider>

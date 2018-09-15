@@ -6,6 +6,7 @@ import week from './ducks/Week';
 import navigation from './ducks/Navigation';
 import sync from './ducks/Sync';
 import history from './ducks/History';
+import log from './ducks/Log';
 
 export default combineReducers({
     form: formReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
     week,
     navigation,
     sync,
-    history
+    history,
+    log
 });

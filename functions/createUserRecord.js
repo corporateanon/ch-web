@@ -14,7 +14,8 @@ module.exports = admin =>
                     manageSchedule: false,
                     manageUsers: false,
                     manageTasks: false,
-                    manageTasksLessons: false
+                    manageTasksLessons: false,
+                    viewLog: false
                 }
             });
     });
