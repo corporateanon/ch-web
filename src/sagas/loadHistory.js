@@ -1,4 +1,4 @@
-import { takeEvery, all, call, put } from 'redux-saga/effects';
+import { takeEvery, call, put } from 'redux-saga/effects';
 import { database } from '../fb-app';
 import { HistoryFetched, OPEN_DIALOG } from '../ducks/History';
 import { historyByWeekDayLesson } from '../lib/ref';
