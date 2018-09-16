@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { reduxForm } from 'redux-form';
 import { range } from 'lodash';
 import { compose } from 'recompose';

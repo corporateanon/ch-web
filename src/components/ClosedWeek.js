@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Paper from 'material-ui/Paper/Paper';
-import Typography from 'material-ui/Typography';
-import LockOutlineIcon from 'material-ui-icons/LockOutline';
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button/Button';
+import Paper from '@material-ui/core/Paper/Paper';
+import Typography from '@material-ui/core/Typography';
+import LockOutlineIcon from '@material-ui/icons/LockOutlined';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button/Button';
 
 const styles = theme => ({
     root: { padding: theme.spacing.unit * 4 },

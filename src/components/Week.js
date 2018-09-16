@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import Grid from 'material-ui/Grid/Grid';
+import Grid from '@material-ui/core/Grid/Grid';
 import Day from './Day';
 import { reduxForm } from 'redux-form';
 import { compose } from 'recompose';

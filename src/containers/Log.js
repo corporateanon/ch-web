@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Bar from '../components/Bar';
-import withStyles from 'material-ui/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { selectLogItems } from '../ducks/Log';

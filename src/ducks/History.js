@@ -2,26 +2,29 @@ import { set } from 'object-path-immutable';
 import { get, map, orderBy } from 'lodash';
 import moment from 'moment';
 // Actions
-const HISTORY_FETCHED = 'History/HISTORY_FETCHED';
-const OPEN_DIALOG = 'History/OPEN_DIALOG';
-const CLOSE_DIALOG = 'History/CLOSE_DIALOG';
+export const HISTORY_FETCHED = 'History/HISTORY_FETCHED';
+export const OPEN_DIALOG = 'History/OPEN_DIALOG';
+export const CLOSE_DIALOG = 'History/CLOSE_DIALOG';
 
 // Reducer
 const defaultState = {
     items: {},
-    current: null,
+    currentWDL: null,
     dialogOpen: false
 };
 export default function reducer(state = defaultState, action) {
     switch (action.type) {
         case HISTORY_FETCHED: {
-            const { week, day, value } = action.payload;
-            return set(state, `items.${week}.${day}`, value);
+            const { week, day, lesson, value } = action.payload;
+            return set(state, `items.${week}.${day}.${lesson}`, value);
         }
         case OPEN_DIALOG: {
             const { week, day, lesson } = action.payload;
-            const current = get(state, `items.${week}.${day}.${lesson}`);
-            return { ...state, current, dialogOpen: true };
+            return {
+                ...state,
+                dialogOpen: true,
+                currentWDL: `${week}.${day}.${lesson}`
+            };
         }
         case CLOSE_DIALOG: {
             return { ...state, dialogOpen: false };
@@ -32,11 +35,12 @@ export default function reducer(state = defaultState, action) {
 }
 
 // Action Creators
-export const HistoryFetched = (week, day, value) => ({
+export const HistoryFetched = (week, day, lesson, value) => ({
     type: HISTORY_FETCHED,
     payload: {
         week,
         day,
+        lesson,
         value
     }
 });
@@ -55,8 +59,11 @@ export const isDialogOpen = state => {
 };
 
 export const getCurrentLessonHistory = state => {
+    if (!state.history.currentWDL) {
+        return [];
+    }
     return orderBy(
-        map(state.history.current, (item, id) => ({
+        map(get(state.history.items, state.history.currentWDL), (item, id) => ({
             item: {
                 ...item,
                 dateStr: moment(item.timestamp).format('DD MMM HH:mm')

@@ -1,6 +1,6 @@
 import React from 'react';
-import TextField from 'material-ui/TextField/TextField';
-import { withStyles } from 'material-ui/styles';
+import TextField from '@material-ui/core/TextField/TextField';
+import { withStyles } from '@material-ui/core/styles';
 import { Field } from 'redux-form';
 import RFLabel from './RFLabel';
 

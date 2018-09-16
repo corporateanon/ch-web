@@ -1,76 +1,97 @@
-import React, { Component, Fragment } from 'react';
-import IconButton from 'material-ui/IconButton';
-import Grid from 'material-ui/Grid/Grid';
+import React, { Component } from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid/Grid';
 import { number, bool, func } from 'prop-types';
 import RFTextField from './RFTextField';
-import MoreIcon from 'material-ui-icons/MoreVert';
-import { withStyles } from 'material-ui/styles';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import { withStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import MenuButton from './MenuButton';
+import { Button } from '@material-ui/core';
 
-class Lesson extends Component {
-    static propTypes = {
-        lesson: number.isRequired,
-        day: number.isRequired,
-        week: number.isRequired,
-        isTaskTextEditable: bool.isRequired,
-        isLessonNameEditable: bool.isRequired,
-        onMore: func
-    };
-    getLessonNameKey = () => {
-        const { props: { day, lesson, week } } = this;
-        return `tasks.${week}.${day}.${lesson}.lessonName`;
-    };
-    getTaskTextKey = () => {
-        const { props: { day, lesson, week } } = this;
-        return `tasks.${week}.${day}.${lesson}.taskText`;
-    };
-    render() {
-        const { props: { isTaskTextEditable, isLessonNameEditable } } = this;
-        const lessonNameKey = this.getLessonNameKey();
-        const taskTextKey = this.getTaskTextKey();
-        return (
-            <Fragment>
-                <Grid item xs={3}>
-                    <RFTextField
-                        disabled={!isLessonNameEditable}
-                        name={lessonNameKey}
-                    />
-                </Grid>
-                <Grid item xs={9}>
-                    <RFTextField
-                        disabled={!isTaskTextEditable}
-                        name={taskTextKey}
-                    />
-                </Grid>
-            </Fragment>
-        );
-    }
-}
-
-const ExpandedLesson = withStyles(theme => ({
-    hbox: { display: 'flex' },
+const Lesson = withStyles(theme => ({
+    hbox: { display: 'flex', marginTop: theme.spacing.unit * 4 },
     icon: {
         alignSelf: 'flex-end',
         marginLeft: theme.spacing.unit
     },
     textarea: {
         flex: 1
+    },
+    lessonName: {
+        color: 'black',
+        fontSize: theme.spacing.unit * 3
     }
 }))(
-    class extends Lesson {
-        handleMoreClick = () => {
-            const { props: { onMore, week, day, lesson } } = this;
+    class extends Component {
+        static propTypes = {
+            lesson: number.isRequired,
+            day: number.isRequired,
+            week: number.isRequired,
+            isTaskTextEditable: bool.isRequired,
+            isLessonNameEditable: bool.isRequired,
+            onMore: func
+        };
+        state = {
+            editingLesson: false
+        };
+        getLessonNameKey = () => {
+            const {
+                props: { day, lesson, week }
+            } = this;
+            return `tasks.${week}.${day}.${lesson}.lessonName`;
+        };
+        getTaskTextKey = () => {
+            const {
+                props: { day, lesson, week }
+            } = this;
+            return `tasks.${week}.${day}.${lesson}.taskText`;
+        };
+        handleHistoryClick = () => {
+            const {
+                props: { onMore, week, day, lesson }
+            } = this;
             onMore && onMore({ week, day, lesson });
+        };
+        handleLessonEditClick = () => {
+            this.setState({ editingLesson: true });
+        };
+        handleEditDialogClose = () => {
+            this.setState({ editingLesson: false });
         };
         render() {
             const {
-                props: { isTaskTextEditable, classes },
-                handleMoreClick
+                props: { isTaskTextEditable, isLessonNameEditable, classes },
+                state: { editingLesson },
+                handleHistoryClick,
+                handleLessonEditClick,
+                handleEditDialogClose
             } = this;
             const lessonNameKey = this.getLessonNameKey();
             const taskTextKey = this.getTaskTextKey();
             return (
                 <Grid item xs={12}>
                     <div className={classes.hbox}>
+                        <Dialog
+                            open={editingLesson}
+                            onClose={handleEditDialogClose}
+                        >
+                            <DialogContent>
+                                <RFTextField name={lessonNameKey} />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button
+                                    onClick={handleEditDialogClose}
+                                    color="primary"
+                                >
+                                    Закрыть
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+
                         <RFTextField
                             multiline
                             className={classes.textarea}
@@ -78,15 +99,39 @@ const ExpandedLesson = withStyles(theme => ({
                             name={taskTextKey}
                             labelName={lessonNameKey}
                             InputLabelProps={{
-                                shrink: true
+                                shrink: true,
+                                className: classes.lessonName
                             }}
                         />
-                        <IconButton
-                            className={classes.icon}
-                            onClick={handleMoreClick}
+                        <MenuButton
+                            button={onClick => (
+                                <IconButton
+                                    className={classes.icon}
+                                    onClick={onClick}
+                                >
+                                    <MoreIcon />
+                                </IconButton>
+                            )}
                         >
-                            <MoreIcon />
-                        </IconButton>
+                            {withClose => [
+                                <MenuItem
+                                    key={0}
+                                    onClick={withClose(handleHistoryClick)}
+                                >
+                                    История изменений
+                                </MenuItem>,
+                                isLessonNameEditable ? (
+                                    <MenuItem
+                                        key={1}
+                                        onClick={withClose(
+                                            handleLessonEditClick
+                                        )}
+                                    >
+                                        Изменить название урока
+                                    </MenuItem>
+                                ) : null
+                            ]}
+                        </MenuButton>
                     </div>
                 </Grid>
             );
@@ -94,5 +139,4 @@ const ExpandedLesson = withStyles(theme => ({
     }
 );
 
-export { ExpandedLesson };
 export default Lesson;

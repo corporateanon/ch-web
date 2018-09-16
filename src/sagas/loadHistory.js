@@ -1,25 +1,16 @@
-import { takeEvery, all, call, put } from 'redux-saga/effects';
+import { takeEvery, call, put } from 'redux-saga/effects';
 import { database } from '../fb-app';
-import { HistoryFetched } from '../ducks/History';
-import { historyByWeekAndDay } from '../lib/ref';
+import { HistoryFetched, OPEN_DIALOG } from '../ducks/History';
+import { historyByWeekDayLesson } from '../lib/ref';
 
-function* watchRoute() {
-    yield takeEvery('ROUTE_CHANGED', function*({ payload: { name, match } }) {
-        if (name !== 'Day') {
-            return;
-        }
-
-        const { week, day } = match.params;
-        const dayHistory = yield call(() =>
+export default function* loadHistory() {
+    yield takeEvery(OPEN_DIALOG, function*({ payload: { week, day, lesson } }) {
+        const lessonHistory = yield call(() =>
             database
-                .ref(historyByWeekAndDay(week, day))
+                .ref(historyByWeekDayLesson(week, day, lesson))
                 .once('value')
                 .then(_ => _.val())
         );
-        yield put(HistoryFetched(week, day, dayHistory));
+        yield put(HistoryFetched(week, day, lesson, lessonHistory));
     });
-}
-
-export default function* loadHistory() {
-    yield all([watchRoute()]);
 }

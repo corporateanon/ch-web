@@ -26,8 +26,8 @@ export const schedule = () => {
     return `/schedule`;
 };
 
-export const historyByWeekAndDay = (week, day) => {
-    return `/history/${week}/${day}`;
+export const historyByWeekDayLesson = (week, day, lesson) => {
+    return `/history/${week}/${day}/${lesson}`;
 };
 
 export const log = _ => '/globalHistory';

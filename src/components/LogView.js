@@ -1,14 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import {
-    List,
-    ListItem,
-    ListItemText,
-    Paper,
-    Divider,
-    ListSubheader
-} from 'material-ui';
 import moment from 'moment';
 import _ from 'lodash';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
+import ListSubheader from '@material-ui/core/ListSubheader';
 
 const DiffLine = props => props.value;
 const AuthorLine = props => (

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-import withStyles from 'material-ui/styles/withStyles';
-import Drawer from 'material-ui/Drawer';
-import List, { ListItem, ListItemText } from 'material-ui/List';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { canManageSchedule, canViewLog } from '../ducks/Auth';
