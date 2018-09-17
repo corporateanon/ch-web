@@ -22,8 +22,8 @@ const Lesson = withStyles(theme => ({
         flex: 1
     },
     lessonName: {
-        color: 'black',
-        fontSize: theme.spacing.unit * 3
+        fontSize: theme.spacing.unit * 3,
+        fontWeight: 500
     }
 }))(
     class extends Component {
