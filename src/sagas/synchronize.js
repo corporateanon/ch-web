@@ -13,6 +13,13 @@ const normalizeEmpty = value => {
     return value;
 };
 
+const trim = value => {
+    if (typeof value === 'string') {
+        return value.trim();
+    }
+    return value;
+};
+
 export function* writeFormFieldToDb({ form, fieldRegex, update }) {
     yield takeEvery(actionTypes.BLUR, function*({ payload, meta }) {
         if (meta.form !== form) {
@@ -34,7 +41,8 @@ export function* writeFormFieldToDb({ form, fieldRegex, update }) {
             return;
         }
         const state = yield select();
-        const entry = update(state, payload, ...matches);
+
+        const entry = update(state, trim(payload), ...matches);
         console.log('DB write:', entry);
 
         database.ref().update(entry);
