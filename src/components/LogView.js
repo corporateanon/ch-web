@@ -9,8 +9,11 @@ import Divider from '@material-ui/core/Divider';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { withStyles } from '@material-ui/core/styles';
 import { weekAndDayToDate } from '../lib/dateUtils';
+import Diff from './Diff';
 
-const DiffLine = props => props.value;
+const DiffLine = ({ prevValue, value }) => (
+    <Diff prev={prevValue} next={value} />
+);
 
 const ContextLine = withStyles(theme => ({
     main: {
