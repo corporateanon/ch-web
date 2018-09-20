@@ -7,11 +7,33 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import { withStyles } from '@material-ui/core/styles';
+import { weekAndDayToDate } from '../lib/dateUtils';
+import Diff from './Diff';
 
-const DiffLine = props => props.value;
+const DiffLine = ({ prevValue, value }) => (
+    <Diff prev={prevValue} next={value} />
+);
+
+const ContextLine = withStyles(theme => ({
+    main: {
+        color: '#888',
+        fontSize: 'smaller'
+    }
+}))(({ week, day, lesson, lessonName, classes: { main } }) => {
+    const date = weekAndDayToDate(week, day);
+    return (
+        <div className={main}>
+            {lessonName} ({lesson | (0 + 1)} урок) на{' '}
+            {moment(date).format('dddd D MMMM')}
+        </div>
+    );
+});
+
 const AuthorLine = props => (
     <Fragment>
-        <span>{props.displayName}</span>{' '}
+        <span>{props.displayName}</span>
+        {' в '}
         <span title={moment(props.timestamp).toLocaleString()}>
             {moment(props.timestamp).format('HH:mm')}
         </span>
@@ -44,9 +66,11 @@ export default class LogView extends Component {
                                 <Fragment key={i}>
                                     <ListItem>
                                         <ListItemText
-                                            primary={<DiffLine {...item} />}
                                             secondary={<AuthorLine {...item} />}
-                                        />
+                                        >
+                                            <ContextLine {...item} />
+                                            <DiffLine {...item} />
+                                        </ListItemText>
                                     </ListItem>
                                 </Fragment>
                             ))}

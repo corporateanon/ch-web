@@ -36,7 +36,7 @@ class LoginWidget extends Component {
             if (isLink) {
                 return (
                     <Button color="inherit" href="/auth">
-                        Login
+                        Вход
                     </Button>
                 );
             }
