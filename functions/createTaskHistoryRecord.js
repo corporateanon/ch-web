@@ -32,6 +32,7 @@ const writeToGlobalHistory = ({
     week,
     day,
     lesson,
+    lessonName,
     taskText,
     prevTaskText,
     user
@@ -50,7 +51,8 @@ const writeToGlobalHistory = ({
             displayName: user.displayName || '',
             week,
             day,
-            lesson
+            lesson,
+            lessonName
         })
         .then(() => {
             console.log('Global history record created');
@@ -70,7 +72,7 @@ module.exports = admin =>
                 console.log('value is null');
                 return Promise.resolve();
             }
-            const { taskText, taskTextLastUid } = value;
+            const { taskText, taskTextLastUid, lessonName } = value;
             const { taskText: prevTaskText } = prevValue || {};
             if (taskText === prevTaskText) {
                 console.log('taskText is not changed');
@@ -115,6 +117,7 @@ module.exports = admin =>
                             week,
                             day,
                             lesson,
+                            lessonName,
                             taskText,
                             prevTaskText,
                             user

@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Diff from './Diff';
 
 class HistoryLog extends Component {
     render() {
@@ -25,7 +26,9 @@ class HistoryLog extends Component {
                             <TableCell padding="dense">
                                 {item.displayName}
                             </TableCell>
-                            <TableCell padding="dense">{item.value}</TableCell>
+                            <TableCell padding="dense">
+                                <Diff prev={item.prevValue} next={item.value} />
+                            </TableCell>
                         </TableRow>
                     );
                 })
