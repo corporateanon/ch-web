@@ -39,10 +39,17 @@ export const getWeekValues = state => {
     const formValues = getFormValues('currentWeek')(state);
     const week = getWeek(state);
     return formValues
-        ? formValues.tasks ? formValues.tasks[week] : undefined
+        ? formValues.tasks
+            ? formValues.tasks[week]
+            : undefined
         : undefined;
 };
 
 export const isClosedWeek = state => {
     return getWeekValues(state) === null;
+};
+
+export const getWeekLessonsPerDay = state => {
+    const weekValues = getWeekValues(state);
+    return (weekValues || []).map(_ => (_ ? _.length : 0));
 };

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { range } from 'lodash';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import Grid from '@material-ui/core/Grid/Grid';
@@ -29,7 +30,8 @@ class Day extends Component {
         isLessonNameEditable: bool.isRequired,
         isTaskTextEditable: bool.isRequired,
         isExpanded: bool,
-        onLessonMore: func
+        onLessonMore: func,
+        lessonsCount: number
     };
     render() {
         const {
@@ -40,7 +42,8 @@ class Day extends Component {
                 isLessonNameEditable,
                 isTaskTextEditable,
                 isExpanded,
-                onLessonMore
+                onLessonMore,
+                lessonsCount
             }
         } = this;
         const date = weekAndDayToDate(week, day);
@@ -70,13 +73,9 @@ class Day extends Component {
                         </Typography>
                         <Typography variant="caption">{dateStr}</Typography>
                     </Grid>
-                    <Lesson {...lessonProps} lesson={0} />
-                    <Lesson {...lessonProps} lesson={1} />
-                    <Lesson {...lessonProps} lesson={2} />
-                    <Lesson {...lessonProps} lesson={3} />
-                    <Lesson {...lessonProps} lesson={4} />
-                    <Lesson {...lessonProps} lesson={5} />
-                    <Lesson {...lessonProps} lesson={6} />
+                    {range(0, lessonsCount).map(lesson => (
+                        <Lesson {...lessonProps} key={lesson} lesson={lesson} />
+                    ))}
                 </Grid>
             </Paper>
         );

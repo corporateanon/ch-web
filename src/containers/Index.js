@@ -11,7 +11,7 @@ import AppBar from '@material-ui/core/AppBar/AppBar';
 import Typography from '@material-ui/core/Typography/Typography';
 
 import { currentWeekId as getCurrentWeek } from '../lib/dateUtils';
-import { getWeek, isClosedWeek } from '../ducks/Week';
+import { getWeek, isClosedWeek, getWeekLessonsPerDay } from '../ducks/Week';
 import { canManageTasks, canManageTasksLessons } from '../ducks/Auth';
 import { isFormSyncing } from '../ducks/Sync';
 import { FillSchedule } from '../ducks/Schedule';
@@ -27,7 +27,8 @@ const mapStateToProps = (state, props) => {
         canManageTasks: canManageTasks(state),
         canManageTasksLessons: canManageTasksLessons(state),
         isClosedWeek: isClosedWeek(state),
-        isSyncing: isFormSyncing('currentWeek')(state)
+        isSyncing: isFormSyncing('currentWeek')(state),
+        weekLessonsPerDay: getWeekLessonsPerDay(state)
     };
 };
 const mapDispatchToProps = dispatch => {
@@ -52,7 +53,9 @@ class Index extends Component {
     };
 
     onLessonMore = ({ week, day, lesson }) => {
-        const { props: { OpenDialog } } = this;
+        const {
+            props: { OpenDialog }
+        } = this;
         OpenDialog(week, day, lesson);
     };
 
@@ -65,7 +68,11 @@ class Index extends Component {
                 currentWeekId = getCurrentWeek(),
                 isClosedWeek,
                 isSyncing,
-                match: { url, params: { day } },
+                weekLessonsPerDay,
+                match: {
+                    url,
+                    params: { day }
+                },
                 FillSchedule
             },
             handleTab,
@@ -100,6 +107,7 @@ class Index extends Component {
                             isLessonNameEditable={canManageTasksLessons}
                             onFillSchedule={FillSchedule}
                             onLessonMore={onLessonMore}
+                            lessonsPerDay={weekLessonsPerDay}
                         />
                     </Typography>
                 </div>
@@ -109,6 +117,9 @@ class Index extends Component {
 }
 
 export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
     withStyles(styles)
 )(Index);

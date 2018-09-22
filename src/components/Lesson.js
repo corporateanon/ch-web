@@ -12,6 +12,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import MenuButton from './MenuButton';
 import { Button } from '@material-ui/core';
 
+const labelFormat = lesson => value => `${(lesson | 0) + 1}. ${value || ''}`;
+
 const Lesson = withStyles(theme => ({
     hbox: { display: 'flex', marginTop: theme.spacing.unit * 4 },
     icon: {
@@ -64,7 +66,12 @@ const Lesson = withStyles(theme => ({
         };
         render() {
             const {
-                props: { isTaskTextEditable, isLessonNameEditable, classes },
+                props: {
+                    isTaskTextEditable,
+                    isLessonNameEditable,
+                    classes,
+                    lesson
+                },
                 state: { editingLesson },
                 handleHistoryClick,
                 handleLessonEditClick,
@@ -98,6 +105,7 @@ const Lesson = withStyles(theme => ({
                             disabled={!isTaskTextEditable}
                             name={taskTextKey}
                             labelName={lessonNameKey}
+                            labelFormat={labelFormat(lesson)}
                             InputLabelProps={{
                                 shrink: true,
                                 className: classes.lessonName
