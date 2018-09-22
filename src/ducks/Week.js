@@ -3,6 +3,8 @@ import { getFormValues } from 'redux-form';
 
 // Actions
 export const SET_WEEK = 'Week/SET_WEEK';
+export const ADD_LESSON = 'Week/ADD_LESSON';
+export const DELETE_LESSON = 'Week/DELETE_LESSON';
 
 // Reducer
 export default function reducer(state = {}, action) {
@@ -27,6 +29,12 @@ export function SetPresentWeek() {
 }
 export function SetNextWeek() {
     return { type: SET_WEEK, payload: dateToWeekId(new Date()) + 1 };
+}
+export function AddLesson(week, day) {
+    return { type: ADD_LESSON, payload: { week, day } };
+}
+export function DeleteLesson(week, day, lesson) {
+    return { type: DELETE_LESSON, payload: { week, day, lesson } };
 }
 
 // Selectors

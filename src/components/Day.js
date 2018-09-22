@@ -9,6 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { number, bool, func } from 'prop-types';
 import { weekAndDayToDate } from '../lib/dateUtils';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     day: {
@@ -31,8 +32,18 @@ class Day extends Component {
         isTaskTextEditable: bool.isRequired,
         isExpanded: bool,
         onLessonMore: func,
-        lessonsCount: number
+        onDeleteLesson: func,
+        lessonsCount: number,
+        onAddLesson: func
     };
+
+    handleAddLesson = () => {
+        const {
+            props: { week, day, onAddLesson }
+        } = this;
+        onAddLesson(week, day);
+    };
+
     render() {
         const {
             props: {
@@ -43,8 +54,10 @@ class Day extends Component {
                 isTaskTextEditable,
                 isExpanded,
                 onLessonMore,
+                onDeleteLesson,
                 lessonsCount
-            }
+            },
+            handleAddLesson
         } = this;
         const date = weekAndDayToDate(week, day);
         const weekDayStr = moment(date).format('dddd');
@@ -54,7 +67,8 @@ class Day extends Component {
             day,
             isLessonNameEditable,
             isTaskTextEditable,
-            onMore: onLessonMore
+            onMore: onLessonMore,
+            onDeleteLesson
         };
 
         const dayClasses = isExpanded ? classes.expandedDay : classes.day;
@@ -76,6 +90,15 @@ class Day extends Component {
                     {range(0, lessonsCount).map(lesson => (
                         <Lesson {...lessonProps} key={lesson} lesson={lesson} />
                     ))}
+                    {isLessonNameEditable && (
+                        <Grid item xs={12}>
+                            <Grid container justify="flex-end">
+                                <Button onClick={handleAddLesson}>
+                                    Добавить урок
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    )}
                 </Grid>
             </Paper>
         );

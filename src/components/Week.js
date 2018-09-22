@@ -38,6 +38,8 @@ class Week extends Component {
                 isTaskTextEditable,
                 lessonsPerDay,
                 onLessonMore,
+                onDeleteLesson,
+                onAddLesson,
                 showSingleDay,
                 week
             },
@@ -57,7 +59,9 @@ class Week extends Component {
             isLessonNameEditable,
             week,
             isExpanded: showSingleDay,
-            onLessonMore
+            onLessonMore,
+            onDeleteLesson,
+            onAddLesson
         };
         return isClosedWeek ? (
             <ClosedWeek
@@ -73,7 +77,7 @@ class Week extends Component {
                 ) : (
                     <Fragment>
                         <Grid item xs={12}>
-                            {range(0, 5).map(day => (
+                            {range(0, 7).map(day => (
                                 <Day
                                     key={day}
                                     {...dayProps}

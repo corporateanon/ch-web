@@ -11,7 +11,13 @@ import AppBar from '@material-ui/core/AppBar/AppBar';
 import Typography from '@material-ui/core/Typography/Typography';
 
 import { currentWeekId as getCurrentWeek } from '../lib/dateUtils';
-import { getWeek, isClosedWeek, getWeekLessonsPerDay } from '../ducks/Week';
+import {
+    getWeek,
+    isClosedWeek,
+    getWeekLessonsPerDay,
+    AddLesson,
+    DeleteLesson
+} from '../ducks/Week';
 import { canManageTasks, canManageTasksLessons } from '../ducks/Auth';
 import { isFormSyncing } from '../ducks/Sync';
 import { FillSchedule } from '../ducks/Schedule';
@@ -32,7 +38,10 @@ const mapStateToProps = (state, props) => {
     };
 };
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ FillSchedule, OpenDialog }, dispatch);
+    return bindActionCreators(
+        { FillSchedule, OpenDialog, AddLesson, DeleteLesson },
+        dispatch
+    );
 };
 
 const styles = theme => ({
@@ -73,7 +82,9 @@ class Index extends Component {
                     url,
                     params: { day }
                 },
-                FillSchedule
+                FillSchedule,
+                AddLesson,
+                DeleteLesson
             },
             handleTab,
             onLessonMore
@@ -107,6 +118,8 @@ class Index extends Component {
                             isLessonNameEditable={canManageTasksLessons}
                             onFillSchedule={FillSchedule}
                             onLessonMore={onLessonMore}
+                            onDeleteLesson={DeleteLesson}
+                            onAddLesson={AddLesson}
                             lessonsPerDay={weekLessonsPerDay}
                         />
                     </Typography>

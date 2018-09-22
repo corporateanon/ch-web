@@ -10,7 +10,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import MenuButton from './MenuButton';
-import { Button } from '@material-ui/core';
+import { Button, ListItemIcon, ListItemText } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import HistoryIcon from '@material-ui/icons/History';
+import EditIcon from '@material-ui/icons/Edit';
 
 const labelFormat = lesson => value => `${(lesson | 0) + 1}. ${value || ''}`;
 
@@ -35,7 +38,8 @@ const Lesson = withStyles(theme => ({
             week: number.isRequired,
             isTaskTextEditable: bool.isRequired,
             isLessonNameEditable: bool.isRequired,
-            onMore: func
+            onMore: func,
+            onDeleteLesson: func
         };
         state = {
             editingLesson: false
@@ -61,6 +65,12 @@ const Lesson = withStyles(theme => ({
         handleLessonEditClick = () => {
             this.setState({ editingLesson: true });
         };
+        handleLessonDeleteClick = () => {
+            const {
+                props: { onDeleteLesson, week, day, lesson }
+            } = this;
+            onDeleteLesson && onDeleteLesson(week, day, lesson);
+        };
         handleEditDialogClose = () => {
             this.setState({ editingLesson: false });
         };
@@ -75,7 +85,8 @@ const Lesson = withStyles(theme => ({
                 state: { editingLesson },
                 handleHistoryClick,
                 handleLessonEditClick,
-                handleEditDialogClose
+                handleEditDialogClose,
+                handleLessonDeleteClick
             } = this;
             const lessonNameKey = this.getLessonNameKey();
             const taskTextKey = this.getTaskTextKey();
@@ -126,7 +137,12 @@ const Lesson = withStyles(theme => ({
                                     key={0}
                                     onClick={withClose(handleHistoryClick)}
                                 >
-                                    История изменений
+                                    <ListItemIcon>
+                                        <HistoryIcon />
+                                    </ListItemIcon>
+                                    <ListItemText>
+                                        История изменений
+                                    </ListItemText>
                                 </MenuItem>,
                                 isLessonNameEditable ? (
                                     <MenuItem
@@ -135,7 +151,27 @@ const Lesson = withStyles(theme => ({
                                             handleLessonEditClick
                                         )}
                                     >
-                                        Изменить название урока
+                                        <ListItemIcon>
+                                            <EditIcon />
+                                        </ListItemIcon>
+                                        <ListItemText>
+                                            Изменить название урока
+                                        </ListItemText>
+                                    </MenuItem>
+                                ) : null,
+                                isLessonNameEditable ? (
+                                    <MenuItem
+                                        key={2}
+                                        onClick={withClose(
+                                            handleLessonDeleteClick
+                                        )}
+                                    >
+                                        <ListItemIcon>
+                                            <DeleteIcon />
+                                        </ListItemIcon>
+                                        <ListItemText>
+                                            Удалить урок
+                                        </ListItemText>
                                     </MenuItem>
                                 ) : null
                             ]}
