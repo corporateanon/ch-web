@@ -33,7 +33,7 @@ function* writeScheduleToDatabase(weekId) {
     yield call(() => database.ref(ref.tasksByWeek(weekId)).set(newTasks));
 }
 
-export default function* syncDays() {
+export default function* fillSchedule() {
     yield take(USER_METADATA_LOADED);
     while (true) {
         const { payload: weekId } = yield take(FILL_SCHEDULE);
