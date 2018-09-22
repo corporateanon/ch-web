@@ -16,9 +16,10 @@ class Diff extends Component {
             }
         } = this;
         const diff = diffChars(prev, next);
-        const chain = diff.map(({ value, added, removed }) => {
+        const chain = diff.map(({ value, added, removed }, i) => {
             return (
                 <span
+                    key={i}
                     style={{
                         backgroundColor: added
                             ? GREEN

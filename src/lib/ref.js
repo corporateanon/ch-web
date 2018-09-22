@@ -2,7 +2,7 @@ import assert from 'assert';
 
 const assertNum = v => {
     assert.equal(typeof v, 'number');
-    assert.ok(v > 0);
+    assert.ok(v >= 0);
 };
 
 const assertStr = v => {
@@ -15,6 +15,12 @@ const assertStr = v => {
 export const tasksByWeek = weekId => {
     assertNum(weekId);
     return `/tasks/${weekId}`;
+};
+export const taskByWeekDayLesson = (weekId, day, lesson) => {
+    assertNum(weekId);
+    assertNum(day);
+    assertNum(lesson);
+    return `/tasks/${weekId}/${day}/${lesson}`;
 };
 
 export const userByUid = uid => {

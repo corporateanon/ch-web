@@ -23,8 +23,12 @@ const TextFieldInput = props => {
 };
 
 const RFTextField = props => {
-    const { name, label, labelName, ...rest } = props;
-    const fieldLabel = labelName ? <RFLabel name={labelName} /> : label;
+    const { name, label, labelName, labelFormat, ...rest } = props;
+    const fieldLabel = labelName ? (
+        <RFLabel format={labelFormat} name={labelName} />
+    ) : (
+        label
+    );
     return (
         <Field
             name={name}

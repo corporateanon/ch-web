@@ -4,7 +4,8 @@ import Day from './Day';
 import { reduxForm } from 'redux-form';
 import { compose } from 'recompose';
 import ClosedWeek from './ClosedWeek';
-import { number, bool, func } from 'prop-types';
+import { number, bool, func, arrayOf } from 'prop-types';
+import { range } from 'lodash';
 
 class Week extends Component {
     static propTypes = {
@@ -16,25 +17,31 @@ class Week extends Component {
         onFillSchedule: func.isRequired,
         showSingleDay: bool,
         day: number,
-        onLessonMore: func
+        onLessonMore: func,
+        lessonsPerDay: arrayOf(number)
     };
 
     handleFillSchedule = () => {
-        const { props: { week, onFillSchedule } } = this;
+        const {
+            props: { week, onFillSchedule }
+        } = this;
         onFillSchedule(week);
     };
 
     render() {
         const {
             props: {
-                week,
+                day,
                 isClosedWeek,
+                isLessonNameEditable,
                 isSyncing,
                 isTaskTextEditable,
-                isLessonNameEditable,
+                lessonsPerDay,
+                onLessonMore,
+                onDeleteLesson,
+                onAddLesson,
                 showSingleDay,
-                day,
-                onLessonMore
+                week
             },
             handleFillSchedule
         } = this;
@@ -52,7 +59,9 @@ class Week extends Component {
             isLessonNameEditable,
             week,
             isExpanded: showSingleDay,
-            onLessonMore
+            onLessonMore,
+            onDeleteLesson,
+            onAddLesson
         };
         return isClosedWeek ? (
             <ClosedWeek
@@ -68,14 +77,14 @@ class Week extends Component {
                 ) : (
                     <Fragment>
                         <Grid item xs={12}>
-                            <Day {...dayProps} day={0} />
-                            <Day {...dayProps} day={1} />
-                            <Day {...dayProps} day={2} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Day {...dayProps} day={3} />
-                            <Day {...dayProps} day={4} />
-                            <Day {...dayProps} day={5} />
+                            {range(0, 7).map(day => (
+                                <Day
+                                    key={day}
+                                    {...dayProps}
+                                    day={day}
+                                    lessonsCount={lessonsPerDay[day]}
+                                />
+                            ))}
                         </Grid>
                     </Fragment>
                 )}
