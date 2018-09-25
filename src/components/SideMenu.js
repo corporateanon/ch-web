@@ -7,12 +7,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { canManageSchedule, canViewLog } from '../ducks/Auth';
+import { canManageSchedule, canViewLog, canManageUsers } from '../ducks/Auth';
 
 const styles = {};
 const mapStateToProps = state => ({
     canManageSchedule: canManageSchedule(state),
-    canViewLog: canViewLog(state)
+    canViewLog: canViewLog(state),
+    canManageUsers: canManageUsers(state)
 });
 
 const LinkItem = props => <Link {...props} />;
@@ -33,6 +34,11 @@ class SideMenu extends Component {
                             <ListItemText primary="Расписание" />
                         </ListItem>
                     )}
+                    {canManageUsers && (
+                        <ListItem component={LinkItem} button to="/users">
+                            <ListItemText primary="Пользователи" />
+                        </ListItem>
+                    )}
                     {canViewLog && (
                         <ListItem component={LinkItem} button to="/log">
                             <ListItemText primary="Лог" />
@@ -44,4 +50,7 @@ class SideMenu extends Component {
     }
 }
 
-export default compose(withStyles(styles), connect(mapStateToProps))(SideMenu);
+export default compose(
+    withStyles(styles),
+    connect(mapStateToProps)
+)(SideMenu);
