@@ -72,7 +72,11 @@ class Week extends Component {
             <Grid container>
                 {showSingleDay ? (
                     <Grid item xs={12}>
-                        <Day {...dayProps} day={day} />
+                        <Day
+                            {...dayProps}
+                            day={day}
+                            lessonsCount={lessonsPerDay[day]}
+                        />
                     </Grid>
                 ) : (
                     <Fragment>
