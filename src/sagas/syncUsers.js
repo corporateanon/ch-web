@@ -1,14 +1,25 @@
 import { all } from 'redux-saga/effects';
-import { writeFormFieldToDb, readFromDb } from './synchronize';
+import { writeFormFieldToDb, readFromDb, actionTypes } from './synchronize';
 
 export default function* syncUsers() {
     yield all([
         writeFormFieldToDb({
             form: 'users',
-            fieldRegex: /^users\.(.+)$/,
-            update: (state, value, path) => {
+            actionType: actionTypes.BLUR,
+            fieldPath: 'users.:uid.:field',
+            update: (state, value, uid, field) => {
                 return {
-                    [`/users/${path.replace(/\./g, '/')}`]: value
+                    [`/users/${uid}/${field}`]: value
+                };
+            }
+        }),
+        writeFormFieldToDb({
+            form: 'users',
+            actionType: actionTypes.CHANGE,
+            fieldPath: 'users.:uid.permissions.:field',
+            update: (state, value, uid, field) => {
+                return {
+                    [`/users/${uid}/permissions/${field}`]: value
                 };
             }
         }),

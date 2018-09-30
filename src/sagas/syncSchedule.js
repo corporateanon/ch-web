@@ -5,7 +5,7 @@ export default function* syncDays() {
     yield all([
         writeFormFieldToDb({
             form: 'schedule',
-            fieldRegex: /^schedule\[(\d+)\]\[(\d+)\]$/,
+            fieldPath: 'schedule[:day][:lesson]',
             update: (state, value, day, lesson) => ({
                 [`/schedule/${day}/${lesson}`]: value
             })
