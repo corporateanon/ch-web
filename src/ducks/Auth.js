@@ -60,3 +60,7 @@ export const canManageTasksLessons = state => {
 export const canViewLog = state => {
     return !!state.auth.permissions.viewLog;
 };
+
+export const getUid = state => {
+    return state.auth.user ? state.auth.user.uid : null;
+};

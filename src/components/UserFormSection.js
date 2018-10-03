@@ -7,13 +7,15 @@ import { withStyles } from '@material-ui/core/styles';
 import { Grid, FormControlLabel } from '@material-ui/core';
 import RFSwitch from './RFSwitch';
 
-const UserFormSection = ({ id, classes }) => {
+const UserFormSection = ({ id, classes, myUid }) => {
+    const isMyself = myUid === id;
+
     return (
         <FormSection name={id}>
             <Paper className={classes.main}>
                 <Grid container spacing={24} direction="column">
                     <Grid item>
-                        <RFTextField label="Display Name" name="displayName" />
+                        <RFTextField label="Имя" name="displayName" />
                     </Grid>
                     <Grid item>
                         <RFTextField disabled label="Email" name="email" />
@@ -45,9 +47,23 @@ const UserFormSection = ({ id, classes }) => {
                             }
                         />
                         <FormControlLabel
-                            label="Управление пользователями"
+                            label="Управление событиями"
                             control={
-                                <RFSwitch name="permissions.manageUsers" />
+                                <RFSwitch name="permissions.manageEvents" />
+                            }
+                        />
+                        <FormControlLabel
+                            label="Управление пользователями"
+                            title={
+                                isMyself
+                                    ? 'Вы не можете выстрелить себе в ногу'
+                                    : null
+                            }
+                            control={
+                                <RFSwitch
+                                    disabled={isMyself}
+                                    name="permissions.manageUsers"
+                                />
                             }
                         />
                     </Grid>

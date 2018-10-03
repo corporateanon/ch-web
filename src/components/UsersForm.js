@@ -6,14 +6,14 @@ import UserFormSection from './UserFormSection';
 
 const styles = theme => ({});
 
-const UsersForm = ({ userIds }) => {
+const UsersForm = ({ userIds, myUid }) => {
     if (!userIds) {
         return null;
     }
     return (
         <FormSection name="users">
             {userIds.map(id => (
-                <UserFormSection id={id} key={id} />
+                <UserFormSection myUid={myUid} id={id} key={id} />
             ))}
         </FormSection>
     );

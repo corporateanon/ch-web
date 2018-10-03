@@ -5,10 +5,13 @@ import Bar from '../components/Bar';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { compose } from 'recompose';
 import UsersForm from '../components/UsersForm';
+import { canManageUsers, getUid } from '../ducks/Auth';
+import Page403 from './Page403';
 
 const mapStateToProps = (state, props) => {
     return {
-        data: state.SyncReducer
+        canManageUsers: canManageUsers(state),
+        myUid: getUid(state)
     };
 };
 const mapDispatchToProps = dispatch => {
@@ -27,15 +30,17 @@ const styles = theme => ({
 class Users extends Component {
     render() {
         const {
-            props: { classes }
+            props: { classes, canManageUsers, myUid }
         } = this;
-        return (
+        return canManageUsers ? (
             <Fragment>
                 <Bar title="Пользователи" />
                 <div className={classes.main}>
-                    <UsersForm />
+                    <UsersForm myUid={myUid} />
                 </div>
             </Fragment>
+        ) : (
+            <Page403 />
         );
     }
 }

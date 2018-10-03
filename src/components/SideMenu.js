@@ -21,7 +21,7 @@ const LinkItem = props => <Link {...props} />;
 class SideMenu extends Component {
     render() {
         const {
-            props: { open, onClose, canManageSchedule, canViewLog }
+            props: { open, onClose, canManageSchedule, canViewLog, canManageUsers }
         } = this;
         return (
             <Drawer open={open} onClose={onClose}>
