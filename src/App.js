@@ -9,6 +9,7 @@ import './index.css';
 import store from './store';
 import Route from './components/router/TrackableRoute';
 import Log from './containers/Log';
+import Users from './containers/Users';
 
 class App extends Component {
     render() {
@@ -41,6 +42,11 @@ class App extends Component {
                             name="Schedule"
                         />
                         <Route path="/log" component={Log} name="Log" />
+                        <Route
+                            path="/users"
+                            component={Users}
+                            name="Users"
+                        />
                     </Switch>
                 </BrowserRouter>
             </Provider>

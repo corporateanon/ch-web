@@ -9,6 +9,7 @@ import notifyMixpanel from './sagas/notifyMixpanel';
 import loadHistory from './sagas/loadHistory';
 import pullLog from './sagas/pullLog';
 import lessonOperations from './sagas/lessonOperations';
+import syncUsers from './sagas/syncUsers';
 
 // notice how we now only export the rootSaga
 // single entry point to start all Sagas at once
@@ -22,6 +23,7 @@ export default function* rootSaga() {
         notifyMixpanel(),
         loadHistory(),
         pullLog(),
-        lessonOperations()
+        lessonOperations(),
+        syncUsers()
     ]);
 }

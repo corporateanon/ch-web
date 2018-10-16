@@ -1,10 +1,17 @@
 import { select, takeEvery, call, put, take } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
-import { actionTypes, getFormInitialValues, initialize } from 'redux-form';
+import {
+    actionTypes as reduxFormActionTypes,
+    getFormInitialValues,
+    initialize
+} from 'redux-form';
 import { get, partialRight } from 'lodash';
 import { compose } from 'recompose';
 import { database } from '../fb-app';
 import { SyncStarted, SyncCompleted } from '../ducks/Sync';
+import p2re from 'path-to-regexp';
+
+const dotpathToRegexp = dotpath => p2re(dotpath, null, { delimiter: '.' });
 
 const normalizeEmpty = value => {
     if (value === null || value === undefined || value === '') {
@@ -20,12 +27,22 @@ const trim = value => {
     return value;
 };
 
-export function* writeFormFieldToDb({ form, fieldRegex, update }) {
-    yield takeEvery(actionTypes.BLUR, function*({ payload, meta }) {
+export function* writeFormFieldToDb({
+    form,
+    fieldRegex,
+    fieldPath = null,
+    update,
+    actionType = reduxFormActionTypes.BLUR
+}) {
+    const actualFieldRegex = fieldPath
+        ? dotpathToRegexp(fieldPath)
+        : fieldRegex;
+
+    yield takeEvery(actionType, function*({ payload, meta }) {
         if (meta.form !== form) {
             return;
         }
-        const matchResult = meta.field.match(fieldRegex);
+        const matchResult = meta.field.match(actualFieldRegex);
         if (!matchResult) {
             return;
         }
@@ -78,3 +95,8 @@ export function* readFromDb(form, path, makeData) {
         chan.close();
     }
 }
+
+export const actionTypes = {
+    BLUR: reduxFormActionTypes.BLUR,
+    CHANGE: reduxFormActionTypes.CHANGE
+};
