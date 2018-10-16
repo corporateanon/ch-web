@@ -58,10 +58,8 @@ module.exports = {
             }
         },
         users: {
-            $uid: {
-                '.read': '$uid === auth.uid',
-                '.write': all(authenticated(), hasPermission('manageUsers'))
-            }
+            '.read': true,
+            '.write': all(authenticated(), hasPermission('manageUsers'))
         }
     }
 };

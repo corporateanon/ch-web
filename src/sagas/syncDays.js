@@ -5,14 +5,14 @@ export default function* syncDays() {
     yield all([
         writeFormFieldToDb({
             form: 'currentWeek',
-            fieldRegex: /^tasks\.(\d+)\.(\d+)\.(\d+)\.lessonName$/,
+            fieldPath: 'tasks.:week.:day.:lesson.lessonName',
             update: (state, value, week, day, lesson) => ({
                 [`/tasks/${week}/${day}/${lesson}/lessonName`]: value
             })
         }),
         writeFormFieldToDb({
             form: 'currentWeek',
-            fieldRegex: /^tasks\.(\d+)\.(\d+)\.(\d+)\.taskText$/,
+            fieldPath: 'tasks.:week.:day.:lesson.taskText',
             update: (state, value, week, day, lesson) => {
                 const { auth: { user: { uid } = {} } } = state;
                 return {
