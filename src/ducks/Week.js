@@ -23,13 +23,6 @@ export default function reducer(state = {}, action) {
 export function SetWeek(weekId) {
     return { type: SET_WEEK, payload: weekId };
 }
-
-export function SetPresentWeek() {
-    return { type: SET_WEEK, payload: dateToWeekId(new Date()) };
-}
-export function SetNextWeek() {
-    return { type: SET_WEEK, payload: dateToWeekId(new Date()) + 1 };
-}
 export function AddLesson(week, day) {
     return { type: ADD_LESSON, payload: { week, day } };
 }

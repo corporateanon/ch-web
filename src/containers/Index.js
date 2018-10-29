@@ -100,6 +100,7 @@ class Index extends Component {
                 <div className={classes.main}>
                     <AppBar position="static" color="default">
                         <Tabs value={url} onChange={handleTab}>
+                            <Tab value="/prev" label="Прошлая неделя" />
                             <Tab value="/" label="Эта неделя" />
                             <Tab value="/next" label="Следующая неделя" />
                         </Tabs>
