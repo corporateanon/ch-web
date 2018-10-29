@@ -1,4 +1,3 @@
-import { dateToWeekId } from '../lib/dateUtils';
 import { getFormValues } from 'redux-form';
 
 // Actions
