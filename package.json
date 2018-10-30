@@ -32,11 +32,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm run build-database-rules && react-scripts build",
+    "build": "react-scripts build && npm run build-database-rules",
     "test_": "react-scripts test --env=jsdom",
     "test": "echo NO TESTS SPECIFIED",
     "eject": "react-scripts eject",
-    "build-database-rules": "node ./db-rules/dump > database.rules.json",
+    "build-database-rules": "mkdir -p ./build && node ./db-rules/dump > ./build/database.rules.json",
     "deploy-production": "./deploy.production.sh",
     "deploy-staging": "./deploy.staging.sh",
     "deploy-database-rules-staging": "npm run build-database-rules && ./deploy-dbrules.staging.sh",
