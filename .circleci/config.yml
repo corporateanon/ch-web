@@ -30,7 +30,7 @@ jobs:
                   key: v1-dependencies-{{ checksum "package.json" }}
 
             # Build
-            - run: yarn build
+            - run: REACT_APP_ENV=staging npm run build
 
             - persist_to_workspace:
                   root: .
@@ -44,7 +44,7 @@ jobs:
             - checkout
             - attach_workspace:
                   at: .
-            - run: ./fake-deploy.sh
+            - run: ./deploy_staging.sh
 
 workflows:
     version: 2
