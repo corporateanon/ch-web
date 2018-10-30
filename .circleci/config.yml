@@ -44,7 +44,7 @@ jobs:
             - checkout
             - attach_workspace:
                   at: .
-            - run: ./deploy_staging.sh
+            - run: ./deploy.staging.sh
 
 workflows:
     version: 2
