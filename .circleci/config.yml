@@ -48,4 +48,4 @@ workflows:
                       - build
             - deploy:
                   requires:
-                      - approval
+                      - approve
