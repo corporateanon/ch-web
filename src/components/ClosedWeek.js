@@ -19,7 +19,7 @@ class ClosedWeek extends Component {
         return (
             <Paper className={classes.root}>
                 <Typography variant="display3" align="center">
-                    <LockOutlineIcon fontSize />
+                    {/* <LockOutlineIcon fontSize /> */}
                 </Typography>
                 <Typography variant="display2" align="center">
                     Неделя ещё не открыта

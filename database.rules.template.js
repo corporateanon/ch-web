@@ -52,6 +52,12 @@ module.exports = {
                                 authenticated(),
                                 hasPermission('manageTasksLessons')
                             )
+                        },
+                        lessonLocation: {
+                            '.write': all(
+                                authenticated(),
+                                hasPermission('manageTasksLessons')
+                            )
                         }
                     }
                 }

@@ -35,7 +35,10 @@ const styles = theme => {
 class ScheduleLesson extends Component {
     addLesson = fields => fields.push('');
     render() {
-        const { props: { fields, classes, readonly }, addLesson } = this;
+        const {
+            props: { fields, classes, readonly },
+            addLesson
+        } = this;
 
         return (
             <Fragment>
@@ -47,16 +50,27 @@ class ScheduleLesson extends Component {
                     </Grid>
                 )}
                 {fields.map((field, index) => {
-                    const label = `Lesson ${index + 1}`;
+                    const label = `Урок ${index + 1}`;
                     return (
-                        <Grid item xs={12} key={field}>
-                            <RFTextField
-                                disabled={readonly}
-                                className={classes.textField}
-                                name={field}
-                                label={label}
-                            />
-                        </Grid>
+                        <>
+                            {' '}
+                            <Grid item xs={10} key={`${field}.lessonName`}>
+                                <RFTextField
+                                    disabled={readonly}
+                                    className={classes.textField}
+                                    name={`${field}.lessonName`}
+                                    label={label}
+                                />
+                            </Grid>
+                            <Grid item xs={2} key={`${field}.lessonLocation`}>
+                                <RFTextField
+                                    disabled={readonly}
+                                    className={classes.textField}
+                                    name={`${field}.lessonLocation`}
+                                    label="каб."
+                                />
+                            </Grid>
+                        </>
                     );
                 })}
 
@@ -80,7 +94,9 @@ const StyledScheduleLesson = withStyles(styles)(ScheduleLesson);
 
 class ScheduleDay extends Component {
     render() {
-        const { props: { day, classes, canManageSchedule } } = this;
+        const {
+            props: { day, classes, canManageSchedule }
+        } = this;
         return (
             <Paper className={classes.paper}>
                 <Grid container>
@@ -101,6 +117,9 @@ class ScheduleDay extends Component {
 }
 
 export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
     withStyles(styles)
 )(ScheduleDay);
