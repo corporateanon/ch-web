@@ -53,7 +53,6 @@ class ScheduleLesson extends Component {
                     const label = `Урок ${index + 1}`;
                     return (
                         <>
-                            {' '}
                             <Grid item xs={10} key={`${field}.lessonName`}>
                                 <RFTextField
                                     disabled={readonly}

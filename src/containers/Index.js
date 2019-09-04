@@ -26,6 +26,7 @@ import { OpenDialog } from '../ducks/History';
 import Week from '../components/Week';
 import Bar from '../components/Bar';
 import HistoryDialog from './HistoryDialog';
+import AppSpeedDial from '../components/AppSpeedDial';
 
 const mapStateToProps = (state, props) => {
     return {
@@ -125,6 +126,7 @@ class Index extends Component {
                         />
                     </Typography>
                 </div>
+                <AppSpeedDial></AppSpeedDial>
             </Fragment>
         );
     }

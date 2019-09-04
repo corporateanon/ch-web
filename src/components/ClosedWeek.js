@@ -15,11 +15,13 @@ const styles = theme => ({
 
 class ClosedWeek extends Component {
     render() {
-        const { props: { classes, onFillSchedule, canFill } } = this;
+        const {
+            props: { classes, onFillSchedule, canFill }
+        } = this;
         return (
             <Paper className={classes.root}>
                 <Typography variant="display3" align="center">
-                    {/* <LockOutlineIcon fontSize /> */}
+                    <LockOutlineIcon fontSize="large" />
                 </Typography>
                 <Typography variant="display2" align="center">
                     Неделя ещё не открыта

@@ -50,6 +50,12 @@ const Lesson = withStyles(theme => ({
             } = this;
             return `tasks.${week}.${day}.${lesson}.lessonName`;
         };
+        getLessonLocationKey = () => {
+            const {
+                props: { day, lesson, week }
+            } = this;
+            return `tasks.${week}.${day}.${lesson}.lessonLocation`;
+        };
         getTaskTextKey = () => {
             const {
                 props: { day, lesson, week }
@@ -89,16 +95,24 @@ const Lesson = withStyles(theme => ({
                 handleLessonDeleteClick
             } = this;
             const lessonNameKey = this.getLessonNameKey();
+            const lessonLocationKey = this.getLessonLocationKey();
             const taskTextKey = this.getTaskTextKey();
             return (
-                <Grid item xs={12}>
-                    <div className={classes.hbox}>
+                <>
+                    <Grid item xs={11}>
                         <Dialog
                             open={editingLesson}
                             onClose={handleEditDialogClose}
                         >
                             <DialogContent>
-                                <RFTextField name={lessonNameKey} />
+                                <RFTextField
+                                    name={lessonNameKey}
+                                    label="Урок"
+                                />
+                                <RFTextField
+                                    name={lessonLocationKey}
+                                    label="Кабинет"
+                                />
                             </DialogContent>
                             <DialogActions>
                                 <Button
@@ -122,6 +136,8 @@ const Lesson = withStyles(theme => ({
                                 className: classes.lessonName
                             }}
                         />
+                    </Grid>
+                    <Grid item xs={1}>
                         <MenuButton
                             button={onClick => (
                                 <IconButton
@@ -155,7 +171,7 @@ const Lesson = withStyles(theme => ({
                                             <EditIcon />
                                         </ListItemIcon>
                                         <ListItemText>
-                                            Изменить название урока
+                                            Изменить урок
                                         </ListItemText>
                                     </MenuItem>
                                 ) : null,
@@ -176,8 +192,8 @@ const Lesson = withStyles(theme => ({
                                 ) : null
                             ]}
                         </MenuButton>
-                    </div>
-                </Grid>
+                    </Grid>
+                </>
             );
         }
     }

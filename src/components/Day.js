@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { number, bool, func } from 'prop-types';
 import { weekAndDayToDate } from '../lib/dateUtils';
 import Button from '@material-ui/core/Button';
+import TasksDayTable from './TasksDayTable';
 
 const styles = theme => ({
     day: {
@@ -74,7 +75,12 @@ class Day extends Component {
         const dayClasses = isExpanded ? classes.expandedDay : classes.day;
         return (
             <Paper className={dayClasses} elevation={10}>
-                <Grid container>
+                <TasksDayTable
+                    day={day}
+                    week={week}
+                    lessonsCount={lessonsCount}
+                ></TasksDayTable>
+                {/* <Grid container>
                     <Grid item xs={12}>
                         <Typography variant="title">
                             {isExpanded ? (
@@ -99,7 +105,7 @@ class Day extends Component {
                             </Grid>
                         </Grid>
                     )}
-                </Grid>
+                </Grid> */}
             </Paper>
         );
     }
