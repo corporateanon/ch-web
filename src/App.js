@@ -31,6 +31,12 @@ class App extends Component {
                         />
                         <Route
                             exact
+                            path="/prev"
+                            component={Index}
+                            name="PrevWeek"
+                        />
+                        <Route
+                            exact
                             path="/tasks/week/:week/day/:day"
                             component={Index}
                             name="Day"
