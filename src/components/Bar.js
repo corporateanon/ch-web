@@ -35,8 +35,8 @@ class Bar extends Component {
             handleDrawerClose
         } = this;
         return (
-            <AppBar>
-                <Toolbar>
+            <AppBar color="primary">
+                <Toolbar color="primary">
                     <IconButton
                         color="inherit"
                         aria-label="Menu"
@@ -45,7 +45,7 @@ class Bar extends Component {
                         <MenuIcon />
                     </IconButton>
                     <Typography
-                        variant="title"
+                        variant="h6"
                         color="inherit"
                         className={classes.title}
                     >

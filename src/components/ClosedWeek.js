@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import Paper from '@material-ui/core/Paper/Paper';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import LockOutlineIcon from '@material-ui/icons/LockOutlined';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button/Button';
 
 const styles = theme => ({
-    root: { padding: theme.spacing.unit * 4 },
+    root: { padding: theme.spacing(4) },
     helpText: {
-        marginTop: theme.spacing.unit * 4,
-        marginBottom: theme.spacing.unit * 4
+        marginTop: theme.spacing(4),
+        marginBottom: theme.spacing(4)
     }
 });
 

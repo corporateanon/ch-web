@@ -1,34 +1,90 @@
 import { withStyles } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import DoneIcon from '@material-ui/icons/Done';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import React from 'react';
-import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import { bindActionCreators } from 'redux';
+import { SetEditMode, getEditMode } from '../ducks/Week';
+import { canManageTasksLessons, canManageTasks } from '../ducks/Auth';
 
-const AppSpeedDial = ({ classes, history }) => {
+const AppSpeedDial = ({
+    SetEditMode,
+    editMode,
+    classes,
+    canManageTasks,
+    canManageTasksLessons
+}) => {
     const [open, setOpen] = React.useState(false);
     const handleClick = () => {
-        setOpen(prevOpen => !prevOpen);
+        if (isEditing()) {
+            SetEditMode({});
+        } else {
+            setOpen(prevOpen => !prevOpen);
+        }
     };
 
     const handleOpen = () => {
+        if (isEditing()) {
+            return;
+        }
         setOpen(true);
     };
 
     const handleClose = () => {
+        if (isEditing()) {
+            return;
+        }
         setOpen(false);
     };
 
-    const handleEdit = () => {
-        history.push('?edit=1');
+    const handleEditTasks = () => {
+        SetEditMode({
+            tasks: true
+        });
     };
+    const handleEditFull = () => {
+        SetEditMode({
+            full: true
+        });
+    };
+
+    const isEditing = () => Object.values(editMode).some(flag => flag === true);
+
+    const isMenuEnabled = () => !isEditing();
+
+    const menuItems = [
+        {
+            name: 'Редактировать задания',
+            icon: <EditIcon />,
+            click: handleEditTasks,
+            visible: canManageTasks
+        },
+        {
+            name: 'Редактировать всё',
+            icon: <EditOutlinedIcon />,
+            click: handleEditFull,
+            visible: canManageTasksLessons
+        }
+    ].filter(item => item.visible);
+
+    if (menuItems.length === 0) {
+        return null;
+    }
 
     return (
         <SpeedDial
-            ariaLabel="SpeedDial openIcon example"
-            icon={<SpeedDialIcon openIcon={<EditIcon />} />}
+            ButtonProps={{ color: isEditing() ? 'secondary' : 'primary' }}
+            ariaLabel=""
+            icon={
+                <SpeedDialIcon
+                    openIcon={isEditing() ? <DoneIcon /> : <EditIcon />}
+                />
+            }
             className={classes.main}
             onBlur={handleClose}
             onClick={handleClick}
@@ -38,13 +94,17 @@ const AppSpeedDial = ({ classes, history }) => {
             onMouseLeave={handleClose}
             open={open}
         >
-            <SpeedDialAction
-                key={'edit'}
-                icon={<EditIcon />}
-                tooltipTitle={'Редактировать задания'}
-                tooltipOpen
-                onClick={handleEdit}
-            />
+            {isMenuEnabled()
+                ? menuItems.map((item, i) => (
+                      <SpeedDialAction
+                          key={i}
+                          icon={item.icon}
+                          tooltipTitle={item.name}
+                          onClick={item.click}
+                          tooltipOpen
+                      />
+                  ))
+                : []}
         </SpeedDial>
     );
 };
@@ -58,6 +118,19 @@ const styles = theme => ({
 });
 
 export default compose(
-    withRouter,
+    connect(
+        state => ({
+            editMode: getEditMode(state),
+            canManageTasksLessons: canManageTasksLessons(state),
+            canManageTasks: canManageTasks(state)
+        }),
+        dispatch =>
+            bindActionCreators(
+                {
+                    SetEditMode
+                },
+                dispatch
+            )
+    ),
     withStyles(styles)
 )(AppSpeedDial);

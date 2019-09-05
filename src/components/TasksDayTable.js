@@ -9,17 +9,27 @@ import {
 import { range } from 'lodash';
 import { number } from 'prop-types';
 import React from 'react';
-import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import { bindActionCreators } from 'redux';
 import RFLabel from './RFLabel';
 import RFTextField from './RFTextField';
+import { getEditMode } from '../ducks/Week';
 
 const fieldName = (week, day, lesson, property) =>
     `tasks.${week}.${day}.${lesson}.${property}`;
 
-const isEditMode = location => (location.search || '').match('edit=1');
+const EditableField = ({ name, isEdit }) =>
+    isEdit ? <RFTextField name={name} /> : <RFLabel name={name} />;
 
-const TasksDayTable = ({ week, day, lessonsCount, classes, location }) => {
+const TasksDayTable = ({
+    week,
+    day,
+    lessonsCount,
+    classes,
+    location,
+    editMode
+}) => {
     return (
         <Table>
             <TableHead>
@@ -41,7 +51,8 @@ const TasksDayTable = ({ week, day, lessonsCount, classes, location }) => {
                     <TableRow key={lesson}>
                         <TableCell padding="none">{lesson + 1}</TableCell>
                         <TableCell padding="none">
-                            <RFLabel
+                            <EditableField
+                                isEdit={editMode.full}
                                 name={fieldName(
                                     week,
                                     day,
@@ -51,28 +62,14 @@ const TasksDayTable = ({ week, day, lessonsCount, classes, location }) => {
                             />
                         </TableCell>
                         <TableCell>
-                            {isEditMode(location) ? (
-                                <RFTextField
-                                    name={fieldName(
-                                        week,
-                                        day,
-                                        lesson,
-                                        'taskText'
-                                    )}
-                                />
-                            ) : (
-                                <RFLabel
-                                    name={fieldName(
-                                        week,
-                                        day,
-                                        lesson,
-                                        'taskText'
-                                    )}
-                                />
-                            )}
+                            <EditableField
+                                isEdit={editMode.tasks || editMode.full}
+                                name={fieldName(week, day, lesson, 'taskText')}
+                            />
                         </TableCell>
                         <TableCell padding="none">
-                            <RFLabel
+                            <EditableField
+                                isEdit={editMode.full}
                                 name={fieldName(
                                     week,
                                     day,
@@ -96,17 +93,19 @@ TasksDayTable.propTypes = {
 
 const styles = theme => ({
     tdNumber: {
-        width: theme.spacing.unit * 2
+        width: theme.spacing(2)
     },
     tdLocation: {
-        width: theme.spacing.unit * 2
+        width: theme.spacing(2)
     },
     tdName: {
-        width: theme.spacing.unit * 10
+        width: theme.spacing(10)
     }
 });
 
 export default compose(
-    withRouter,
+    connect(state => ({
+        editMode: getEditMode(state)
+    })),
     withStyles(styles)
 )(TasksDayTable);

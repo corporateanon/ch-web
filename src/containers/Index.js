@@ -53,7 +53,7 @@ const styles = theme => ({
         maxWidth: 1200
     },
     tabContainer: {
-        marginTop: 3 * theme.spacing.unit
+        marginTop: theme.spacing(3)
     }
 });
 
@@ -95,7 +95,7 @@ class Index extends Component {
         const isDay = !!day;
 
         return (
-            <Fragment>
+            <>
                 <Bar title="Домашние задания" />
                 <HistoryDialog />
                 <div className={classes.main}>
@@ -110,24 +110,26 @@ class Index extends Component {
                         component="div"
                         className={classes.tabContainer}
                     >
-                        <Week
-                            week={currentWeekId}
-                            day={onlyDay}
-                            showSingleDay={isDay}
-                            isClosedWeek={isClosedWeek}
-                            isSyncing={isSyncing}
-                            isTaskTextEditable={canManageTasks}
-                            isLessonNameEditable={canManageTasksLessons}
-                            onFillSchedule={FillSchedule}
-                            onLessonMore={onLessonMore}
-                            onDeleteLesson={DeleteLesson}
-                            onAddLesson={AddLesson}
-                            lessonsPerDay={weekLessonsPerDay}
-                        />
+                        {currentWeekId ? (
+                            <Week
+                                week={currentWeekId}
+                                day={onlyDay}
+                                showSingleDay={isDay}
+                                isClosedWeek={isClosedWeek}
+                                isSyncing={isSyncing}
+                                isTaskTextEditable={canManageTasks}
+                                isLessonNameEditable={canManageTasksLessons}
+                                onFillSchedule={FillSchedule}
+                                onLessonMore={onLessonMore}
+                                onDeleteLesson={DeleteLesson}
+                                onAddLesson={AddLesson}
+                                lessonsPerDay={weekLessonsPerDay}
+                            />
+                        ) : null}
                     </Typography>
                 </div>
                 <AppSpeedDial></AppSpeedDial>
-            </Fragment>
+            </>
         );
     }
 }

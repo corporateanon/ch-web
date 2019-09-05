@@ -18,16 +18,16 @@ import EditIcon from '@material-ui/icons/Edit';
 const labelFormat = lesson => value => `${(lesson | 0) + 1}. ${value || ''}`;
 
 const Lesson = withStyles(theme => ({
-    hbox: { display: 'flex', marginTop: theme.spacing.unit * 4 },
+    hbox: { display: 'flex', marginTop: theme.spacing(4) },
     icon: {
         alignSelf: 'flex-end',
-        marginLeft: theme.spacing.unit
+        marginLeft: theme.spacing(1)
     },
     textarea: {
         flex: 1
     },
     lessonName: {
-        fontSize: theme.spacing.unit * 3,
+        fontSize: theme.spacing(3),
         fontWeight: 500
     }
 }))(

@@ -76,8 +76,8 @@ const UserFormSection = ({ id, classes, myUid }) => {
 export default compose(
     withStyles(theme => ({
         main: {
-            padding: theme.spacing.unit * 4,
-            marginBottom: theme.spacing.unit * 2
+            padding: theme.spacing(4),
+            marginBottom: theme.spacing(2)
         }
     }))
 )(UserFormSection);

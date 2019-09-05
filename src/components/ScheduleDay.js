@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import Paper from '@material-ui/core/Paper/Paper';
+import Paper from '@material-ui/core/Paper';
 import { FieldArray } from 'redux-form';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid/Grid';
@@ -23,11 +23,11 @@ const mapDispatchToProps = dispatch => {
 const styles = theme => {
     return {
         paper: {
-            padding: 4 * theme.spacing.unit,
-            marginBottom: theme.spacing.unit
+            padding: theme.spacing(4),
+            marginBottom: theme.spacing(1)
         },
         title: {
-            marginBottom: 4 * theme.spacing.unit
+            marginBottom: theme.spacing(4)
         }
     };
 };

@@ -75,22 +75,20 @@ class Week extends Component {
                         <Day
                             {...dayProps}
                             day={day}
-                            lessonsCount={lessonsPerDay[day]}
+                            lessonsCount={lessonsPerDay[day] || 0}
                         />
                     </Grid>
                 ) : (
-                    <Fragment>
-                        <Grid item xs={12}>
-                            {range(0, 7).map(day => (
-                                <Day
-                                    key={day}
-                                    {...dayProps}
-                                    day={day}
-                                    lessonsCount={lessonsPerDay[day]}
-                                />
-                            ))}
-                        </Grid>
-                    </Fragment>
+                    <Grid item xs={12}>
+                        {range(0, 7).map(day => (
+                            <Day
+                                key={day}
+                                {...dayProps}
+                                day={day}
+                                lessonsCount={lessonsPerDay[day] || 0}
+                            />
+                        ))}
+                    </Grid>
                 )}
             </Grid>
         );
