@@ -12,6 +12,13 @@ export default function* syncDays() {
         }),
         writeFormFieldToDb({
             form: 'currentWeek',
+            fieldPath: 'tasks.:week.:day.:lesson.lessonLocation',
+            update: (state, value, week, day, lesson) => ({
+                [`/tasks/${week}/${day}/${lesson}/lessonLocation`]: value
+            })
+        }),
+        writeFormFieldToDb({
+            form: 'currentWeek',
             fieldPath: 'tasks.:week.:day.:lesson.taskText',
             update: (state, value, week, day, lesson) => {
                 const { auth: { user: { uid } = {} } } = state;

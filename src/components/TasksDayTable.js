@@ -4,10 +4,13 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    withStyles
+    withStyles,
+    TableFooter,
+    Button,
+    Typography
 } from '@material-ui/core';
 import { range } from 'lodash';
-import { number } from 'prop-types';
+import { number, func } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -15,6 +18,8 @@ import { bindActionCreators } from 'redux';
 import RFLabel from './RFLabel';
 import RFTextField from './RFTextField';
 import { getEditMode } from '../ducks/Week';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const fieldName = (week, day, lesson, property) =>
     `tasks.${week}.${day}.${lesson}.${property}`;
@@ -27,68 +32,118 @@ const TasksDayTable = ({
     day,
     lessonsCount,
     classes,
-    location,
+    onAddLesson,
+    onDeleteLesson,
     editMode
 }) => {
     return (
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell className={classes.tdNumber} padding="none">
-                        #
-                    </TableCell>
-                    <TableCell className={classes.tdName} padding="none">
-                        Предмет
-                    </TableCell>
-                    <TableCell>Задание</TableCell>
-                    <TableCell className={classes.tdLocation} padding="none">
-                        Кабинет
-                    </TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {range(0, lessonsCount).map(lesson => (
-                    <TableRow key={lesson}>
-                        <TableCell padding="none">{lesson + 1}</TableCell>
-                        <TableCell padding="none">
-                            <EditableField
-                                isEdit={editMode.full}
-                                name={fieldName(
-                                    week,
-                                    day,
-                                    lesson,
-                                    'lessonName'
-                                )}
-                            />
-                        </TableCell>
-                        <TableCell>
-                            <EditableField
-                                isEdit={editMode.tasks || editMode.full}
-                                name={fieldName(week, day, lesson, 'taskText')}
-                            />
-                        </TableCell>
-                        <TableCell padding="none">
-                            <EditableField
-                                isEdit={editMode.full}
-                                name={fieldName(
-                                    week,
-                                    day,
-                                    lesson,
-                                    'lessonLocation'
-                                )}
-                            />
-                        </TableCell>
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
+        <>
+            {lessonsCount ? (
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell
+                                className={classes.tdNumber}
+                                padding="none"
+                            >
+                                #
+                            </TableCell>
+                            <TableCell
+                                className={classes.tdName}
+                                padding="none"
+                            >
+                                Предмет
+                            </TableCell>
+                            <TableCell>Задание</TableCell>
+                            <TableCell
+                                className={classes.tdLocation}
+                                padding="none"
+                            >
+                                Кабинет
+                            </TableCell>
+                            {editMode.full ? (
+                                <TableCell
+                                    className={classes.tdAction}
+                                    padding="none"
+                                ></TableCell>
+                            ) : null}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {range(0, lessonsCount).map(lesson => (
+                            <TableRow key={lesson}>
+                                <TableCell padding="none">
+                                    {lesson + 1}
+                                </TableCell>
+                                <TableCell padding="none">
+                                    <EditableField
+                                        isEdit={editMode.full}
+                                        name={fieldName(
+                                            week,
+                                            day,
+                                            lesson,
+                                            'lessonName'
+                                        )}
+                                    />
+                                </TableCell>
+                                <TableCell>
+                                    <EditableField
+                                        isEdit={editMode.tasks || editMode.full}
+                                        name={fieldName(
+                                            week,
+                                            day,
+                                            lesson,
+                                            'taskText'
+                                        )}
+                                    />
+                                </TableCell>
+                                <TableCell padding="none">
+                                    <EditableField
+                                        isEdit={editMode.full}
+                                        name={fieldName(
+                                            week,
+                                            day,
+                                            lesson,
+                                            'lessonLocation'
+                                        )}
+                                    />
+                                </TableCell>
+                                {editMode.full ? (
+                                    <TableCell padding="none">
+                                        <Button
+                                            size="small"
+                                            onClick={() =>
+                                                onDeleteLesson(
+                                                    week,
+                                                    day,
+                                                    lesson
+                                                )
+                                            }
+                                        >
+                                            <DeleteIcon />
+                                        </Button>
+                                    </TableCell>
+                                ) : null}
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            ) : <Typography variant="h6">Уроков нет</Typography>}
+            {editMode.full ? (
+                <Button variant="contained" size="small" onClick={onAddLesson}>
+                    <AddCircleIcon className={classes.buttonIcon} />
+                    Добавить урок
+                </Button>
+            ) : null}
+        </>
     );
 };
 
 TasksDayTable.propTypes = {
     day: number.isRequired,
     week: number.isRequired,
-    lessonsCount: number.isRequired
+    lessonsCount: number.isRequired,
+    onAddLesson: func.isRequired
 };
 
 const styles = theme => ({
@@ -100,6 +155,12 @@ const styles = theme => ({
     },
     tdName: {
         width: theme.spacing(10)
+    },
+    tdAction: {
+        width: theme.spacing(2)
+    },
+    buttonIcon: {
+        marginRight: theme.spacing(1)
     }
 });
 

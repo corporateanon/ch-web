@@ -60,14 +60,6 @@ class Day extends Component {
         const date = weekAndDayToDate(week, day);
         const weekDayStr = moment(date).format('dddd');
         const dateStr = moment(date).format('D MMMM');
-        const lessonProps = {
-            week,
-            day,
-            isLessonNameEditable,
-            isTaskTextEditable,
-            onMore: onLessonMore,
-            onDeleteLesson
-        };
 
         const dayClasses = isExpanded ? classes.expandedDay : classes.day;
         return (
@@ -89,6 +81,8 @@ class Day extends Component {
                         day={day}
                         week={week}
                         lessonsCount={lessonsCount}
+                        onAddLesson={handleAddLesson}
+                        onDeleteLesson={onDeleteLesson}
                     ></TasksDayTable>
                 </Grid>
             </Paper>
