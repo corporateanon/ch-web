@@ -6,6 +6,7 @@ import StorageOutlinedIcon from '@material-ui/icons/StorageOutlined';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+import withConfirm from 'material-ui-confirm';
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -25,7 +26,8 @@ const AppSpeedDial = ({
     classes,
     canManageTasks,
     canManageTasksLessons,
-    canManageSchedule
+    canManageSchedule,
+    confirm
 }) => {
     const [open, setOpen] = React.useState(false);
     const handleClick = () => {
@@ -84,7 +86,11 @@ const AppSpeedDial = ({
         {
             name: 'Заполнить расписание из текущей недели',
             icon: <StorageOutlinedIcon />,
-            click: handleFillScheduleFromTasks,
+            click: confirm(handleFillScheduleFromTasks, {
+                title: 'Вы уверены?',
+                description:
+                    'Вы собираетесь перезаписать расписание. Это действие нельзя будет отменить'
+            }),
             visible: canManageSchedule
         }
     ].filter(item => item.visible);
@@ -151,5 +157,6 @@ export default compose(
                 dispatch
             )
     ),
-    withStyles(styles)
+    withStyles(styles),
+    withConfirm
 )(AppSpeedDial);

@@ -1,5 +1,6 @@
 import {
     Button,
+    Grid,
     Table,
     TableBody,
     TableCell,
@@ -11,6 +12,7 @@ import {
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { range } from 'lodash';
+import withConfirm from 'material-ui-confirm';
 import { func, number } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -36,7 +38,8 @@ const TasksDayTable = ({
     classes,
     onAddLesson,
     onDeleteLesson,
-    editMode
+    editMode,
+    confirm
 }) => {
     return (
         <>
@@ -63,12 +66,6 @@ const TasksDayTable = ({
                             >
                                 Кабинет
                             </TableCell>
-                            {editMode.full ? (
-                                <TableCell
-                                    className={classes.tdAction}
-                                    padding="none"
-                                ></TableCell>
-                            ) : null}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -112,22 +109,6 @@ const TasksDayTable = ({
                                         )}
                                     />
                                 </TableCell>
-                                {editMode.full ? (
-                                    <TableCell padding="none">
-                                        <Button
-                                            size="small"
-                                            onClick={() =>
-                                                onDeleteLesson(
-                                                    week,
-                                                    day,
-                                                    lesson
-                                                )
-                                            }
-                                        >
-                                            <DeleteIcon />
-                                        </Button>
-                                    </TableCell>
-                                ) : null}
                             </TableRow>
                         ))}
                     </TableBody>
@@ -136,10 +117,37 @@ const TasksDayTable = ({
                 <Typography variant="h6">Уроков нет</Typography>
             )}
             {editMode.full ? (
-                <Button variant="contained" size="small" onClick={onAddLesson}>
-                    <AddCircleIcon className={classes.buttonIcon} />
-                    Добавить урок
-                </Button>
+                <Grid container>
+                    <Grid item>
+                        <Button
+                            variant="contained"
+                            size="small"
+                            onClick={onAddLesson}
+                        >
+                            <AddCircleIcon className={classes.buttonIcon} />
+                            Добавить урок
+                        </Button>
+                    </Grid>
+                    <Grid item xs></Grid>
+                    <Grid item>
+                        <Button
+                            variant="outlined"
+                            size="small"
+                            onClick={confirm(
+                                () =>
+                                    onDeleteLesson(week, day, lessonsCount - 1),
+                                {
+                                    title: 'Вы уверены?',
+                                    description:
+                                        'Удаление урока нельзя будет отменить'
+                                }
+                            )}
+                        >
+                            <DeleteIcon className={classes.buttonIcon} />
+                            Удалить последний урок
+                        </Button>
+                    </Grid>
+                </Grid>
             ) : null}
         </>
     );
@@ -174,5 +182,6 @@ export default compose(
     connect(state => ({
         editMode: getEditMode(state)
     })),
-    withStyles(styles)
+    withStyles(styles),
+    withConfirm
 )(TasksDayTable);

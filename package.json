@@ -39,6 +39,7 @@
         "firebase": "^4.9.1",
         "firebase-tools": "^4.2.1",
         "lodash": "^4.17.5",
+        "material-ui-confirm": "^1.0.1",
         "mixpanel-browser": "^2.18.0",
         "moment": "^2.20.1",
         "notistack": "^0.9.0",
