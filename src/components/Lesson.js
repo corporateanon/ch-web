@@ -18,16 +18,16 @@ import EditIcon from '@material-ui/icons/Edit';
 const labelFormat = lesson => value => `${(lesson | 0) + 1}. ${value || ''}`;
 
 const Lesson = withStyles(theme => ({
-    hbox: { display: 'flex', marginTop: theme.spacing.unit * 4 },
+    hbox: { display: 'flex', marginTop: theme.spacing(4) },
     icon: {
         alignSelf: 'flex-end',
-        marginLeft: theme.spacing.unit
+        marginLeft: theme.spacing(1)
     },
     textarea: {
         flex: 1
     },
     lessonName: {
-        fontSize: theme.spacing.unit * 3,
+        fontSize: theme.spacing(3),
         fontWeight: 500
     }
 }))(
@@ -49,6 +49,12 @@ const Lesson = withStyles(theme => ({
                 props: { day, lesson, week }
             } = this;
             return `tasks.${week}.${day}.${lesson}.lessonName`;
+        };
+        getLessonLocationKey = () => {
+            const {
+                props: { day, lesson, week }
+            } = this;
+            return `tasks.${week}.${day}.${lesson}.lessonLocation`;
         };
         getTaskTextKey = () => {
             const {
@@ -89,16 +95,24 @@ const Lesson = withStyles(theme => ({
                 handleLessonDeleteClick
             } = this;
             const lessonNameKey = this.getLessonNameKey();
+            const lessonLocationKey = this.getLessonLocationKey();
             const taskTextKey = this.getTaskTextKey();
             return (
-                <Grid item xs={12}>
-                    <div className={classes.hbox}>
+                <>
+                    <Grid item xs={11}>
                         <Dialog
                             open={editingLesson}
                             onClose={handleEditDialogClose}
                         >
                             <DialogContent>
-                                <RFTextField name={lessonNameKey} />
+                                <RFTextField
+                                    name={lessonNameKey}
+                                    label="Урок"
+                                />
+                                <RFTextField
+                                    name={lessonLocationKey}
+                                    label="Кабинет"
+                                />
                             </DialogContent>
                             <DialogActions>
                                 <Button
@@ -122,6 +136,8 @@ const Lesson = withStyles(theme => ({
                                 className: classes.lessonName
                             }}
                         />
+                    </Grid>
+                    <Grid item xs={1}>
                         <MenuButton
                             button={onClick => (
                                 <IconButton
@@ -155,7 +171,7 @@ const Lesson = withStyles(theme => ({
                                             <EditIcon />
                                         </ListItemIcon>
                                         <ListItemText>
-                                            Изменить название урока
+                                            Изменить урок
                                         </ListItemText>
                                     </MenuItem>
                                 ) : null,
@@ -176,8 +192,8 @@ const Lesson = withStyles(theme => ({
                                 ) : null
                             ]}
                         </MenuButton>
-                    </div>
-                </Grid>
+                    </Grid>
+                </>
             );
         }
     }

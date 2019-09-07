@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
-import Paper from '@material-ui/core/Paper/Paper';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import LockOutlineIcon from '@material-ui/icons/LockOutlined';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button/Button';
 
 const styles = theme => ({
-    root: { padding: theme.spacing.unit * 4 },
+    root: { padding: theme.spacing(4) },
     helpText: {
-        marginTop: theme.spacing.unit * 4,
-        marginBottom: theme.spacing.unit * 4
+        marginTop: theme.spacing(4),
+        marginBottom: theme.spacing(4)
     }
 });
 
 class ClosedWeek extends Component {
     render() {
-        const { props: { classes, onFillSchedule, canFill } } = this;
+        const {
+            props: { classes, onFillTasksFromSchedule, canFill }
+        } = this;
         return (
             <Paper className={classes.root}>
-                <Typography variant="display3" align="center">
-                    <LockOutlineIcon fontSize />
+                <Typography variant="h1" align="center">
+                    <LockOutlineIcon fontSize="large" />
                 </Typography>
-                <Typography variant="display2" align="center">
+                <Typography variant="h3" align="center">
                     Неделя ещё не открыта
                 </Typography>
                 <Typography
@@ -35,9 +37,9 @@ class ClosedWeek extends Component {
                     {!canFill && 'У вас нет прав для заполнения расписания'}
                     {canFill && (
                         <Button
-                            onClick={onFillSchedule}
-                            variant="raised"
+                            onClick={onFillTasksFromSchedule}
                             color="primary"
+                            variant="contained"
                         >
                             Заполнить
                         </Button>

@@ -1,5 +1,6 @@
 // Actions
-export const FILL_SCHEDULE = 'Schedule/FILL_SCHEDULE';
+export const FILL_TASKS_FROM_SCHEDULE = 'Schedule/FILL_TASKS_FROM_SCHEDULE';
+export const FILL_SCHEDULE_FROM_TASKS = 'Schedule/FILL_SCHEDULE_FROM_TASKS';
 
 // Reducer
 export default function reducer(state = {}, action) {
@@ -10,7 +11,11 @@ export default function reducer(state = {}, action) {
 }
 
 // Action Creators
-export const FillSchedule = week => ({
-    type: FILL_SCHEDULE,
+export const FillTasksFromSchedule = week => ({
+    type: FILL_TASKS_FROM_SCHEDULE,
     payload: week
+});
+
+export const FillScheduleFromTasks = () => ({
+    type: FILL_SCHEDULE_FROM_TASKS
 });
