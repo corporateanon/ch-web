@@ -10,11 +10,13 @@ import loadHistory from './sagas/loadHistory';
 import pullLog from './sagas/pullLog';
 import lessonOperations from './sagas/lessonOperations';
 import syncUsers from './sagas/syncUsers';
+import mobileBlurHelper from './sagas/mobileBlurHelper';
 
 // notice how we now only export the rootSaga
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
+        mobileBlurHelper(),
         fillSchedule(),
         syncDays(),
         syncSchedule(),

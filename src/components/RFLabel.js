@@ -5,7 +5,8 @@ import { makeStyles, createStyles } from '@material-ui/core';
 const useStyles = makeStyles(theme =>
     createStyles({
         label: {
-            whiteSpace: 'pre'
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word'
         }
     })
 );
