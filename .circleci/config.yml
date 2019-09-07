@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:10.16.3
+      - image: circleci/node:8
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -29,6 +29,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
+      - run: sudo npm -g i npm@6
       - run: npm --version
       - run: npm ci && cd ./functions && npm ci
 
