@@ -2,6 +2,7 @@ import { withStyles } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 import EditIcon from '@material-ui/icons/Edit';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import StorageOutlinedIcon from '@material-ui/icons/StorageOutlined';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
@@ -69,12 +70,6 @@ const AppSpeedDial = ({
 
     const menuItems = [
         {
-            name: 'Заполнить расписание из текущей недели',
-            icon: <EditIcon />,
-            click: handleFillScheduleFromTasks,
-            visible: canManageSchedule
-        },
-        {
             name: 'Редактировать задания',
             icon: <EditIcon />,
             click: handleEditTasks,
@@ -85,6 +80,12 @@ const AppSpeedDial = ({
             icon: <EditOutlinedIcon />,
             click: handleEditFull,
             visible: canManageTasksLessons
+        },
+        {
+            name: 'Заполнить расписание из текущей недели',
+            icon: <StorageOutlinedIcon />,
+            click: handleFillScheduleFromTasks,
+            visible: canManageSchedule
         }
     ].filter(item => item.visible);
 

@@ -8,6 +8,7 @@ import { database } from '../fb-app';
 import * as ref from '../lib/ref';
 import migrateSchedule from '../lib/migrateSchedule';
 import { getWeek } from '../ducks/Week';
+import { enqueueSnackbar } from '../services/notifier';
 
 const makeTasksFromSchedule = schedule => {
     return Object.keys(schedule).map(dayOfWeek => {
@@ -19,7 +20,15 @@ const makeTasksFromSchedule = schedule => {
     });
 };
 
-function* writeScheduleToDatabase(weekId) {
+const makeScheduleFromTasks = tasks =>
+    tasks.map(day =>
+        day.map(({ lessonName = null, lessonLocation = null }) => ({
+            lessonName,
+            lessonLocation
+        }))
+    );
+
+function* convertScheduleToTasks(weekId) {
     const weekTasks = (yield call(() =>
         database.ref(ref.tasksByWeek(weekId)).once('value')
     )).val();
@@ -39,16 +48,29 @@ function* writeScheduleToDatabase(weekId) {
     yield call(() => database.ref(ref.tasksByWeek(weekId)).set(newTasks));
 }
 
-function* convertTaskToScedule(weekId) {
+function* convertTasksToSchedule(weekId) {
     const weekTasks = (yield call(() =>
         database.ref(ref.tasksByWeek(weekId)).once('value')
     )).val();
-    debugger;
+    if (!weekTasks) {
+        throw new Error('EMPTY_SOURCE');
+    }
+    const newSchedule = makeScheduleFromTasks(weekTasks);
+    yield call(() => database.ref(ref.schedule()).set(newSchedule));
+    yield call(() =>
+        enqueueSnackbar('Расписание сохранено!', {
+            variant: 'success',
+            anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'center'
+            }
+        })
+    );
 }
 
 function* fillTasksFromSchedule({ payload: weekId }) {
     try {
-        yield writeScheduleToDatabase(weekId);
+        yield convertScheduleToTasks(weekId);
     } catch (e) {
         console.error(e);
     }
@@ -56,11 +78,9 @@ function* fillTasksFromSchedule({ payload: weekId }) {
 }
 
 function* fillScheduleFromTasks() {
-    debugger;
-
     const weekId = yield select(getWeek);
     try {
-        yield convertTaskToScedule(weekId);
+        yield convertTasksToSchedule(weekId);
     } catch (e) {
         console.error(e);
     }
