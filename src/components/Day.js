@@ -15,9 +15,6 @@ const styles = theme => ({
         padding: theme.spacing(2)
     },
     expandedDay: {
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        maxWidth: 600,
         padding: theme.spacing(2)
     },
     link: {
