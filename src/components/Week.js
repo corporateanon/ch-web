@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
 import Grid from '@material-ui/core/Grid/Grid';
-import Day from './Day';
-import { reduxForm } from 'redux-form';
-import { compose } from 'recompose';
-import ClosedWeek from './ClosedWeek';
-import { number, bool, func, arrayOf } from 'prop-types';
 import { range } from 'lodash';
+import { arrayOf, bool, func, number } from 'prop-types';
+import React, { Component } from 'react';
+import { compose } from 'recompose';
+import { reduxForm } from 'redux-form';
+import ClosedWeek from './ClosedWeek';
+import Day from './Day';
 
 class Week extends Component {
     static propTypes = {

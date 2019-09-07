@@ -10,52 +10,56 @@ import store from './store';
 import Route from './components/router/TrackableRoute';
 import Log from './containers/Log';
 import Users from './containers/Users';
+import { ThemeProvider } from '@material-ui/styles';
+import { theme } from './components/theme';
 
 class App extends Component {
     render() {
         return (
-            <Provider store={store}>
-                <BrowserRouter>
-                    <Switch>
-                        <Route
-                            exact
-                            path="/"
-                            component={Index}
-                            name="ThisWeek"
-                        />
-                        <Route
-                            exact
-                            path="/next"
-                            component={Index}
-                            name="NextWeek"
-                        />
-                        <Route
-                            exact
-                            path="/prev"
-                            component={Index}
-                            name="PrevWeek"
-                        />
-                        <Route
-                            exact
-                            path="/tasks/week/:week/day/:day"
-                            component={Index}
-                            name="Day"
-                        />
-                        <Route path="/auth" component={Auth} name="Auth" />
-                        <Route
-                            path="/schedule"
-                            component={Schedule}
-                            name="Schedule"
-                        />
-                        <Route path="/log" component={Log} name="Log" />
-                        <Route
-                            path="/users"
-                            component={Users}
-                            name="Users"
-                        />
-                    </Switch>
-                </BrowserRouter>
-            </Provider>
+            <ThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <BrowserRouter>
+                        <Switch>
+                            <Route
+                                exact
+                                path="/"
+                                component={Index}
+                                name="ThisWeek"
+                            />
+                            <Route
+                                exact
+                                path="/next"
+                                component={Index}
+                                name="NextWeek"
+                            />
+                            <Route
+                                exact
+                                path="/prev"
+                                component={Index}
+                                name="PrevWeek"
+                            />
+                            <Route
+                                exact
+                                path="/tasks/week/:week/day/:day"
+                                component={Index}
+                                name="Day"
+                            />
+                            <Route path="/auth" component={Auth} name="Auth" />
+                            <Route
+                                path="/schedule"
+                                component={Schedule}
+                                name="Schedule"
+                            />
+                            <Route path="/log" component={Log} name="Log" />
+                            <Route
+                                path="/users"
+                                component={Users}
+                                name="Users"
+                            />
+                        </Switch>
+                    </BrowserRouter>
+                </Provider>
+            </ThemeProvider>
         );
     }
 }

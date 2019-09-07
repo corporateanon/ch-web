@@ -1,31 +1,33 @@
 import {
+    Button,
     Table,
     TableBody,
     TableCell,
     TableHead,
     TableRow,
-    withStyles,
-    TableFooter,
-    Button,
-    Typography
+    Typography,
+    withStyles
 } from '@material-ui/core';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { range } from 'lodash';
-import { number, func } from 'prop-types';
+import { func, number } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { bindActionCreators } from 'redux';
+import { getEditMode } from '../ducks/Week';
 import RFLabel from './RFLabel';
 import RFTextField from './RFTextField';
-import { getEditMode } from '../ducks/Week';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 const fieldName = (week, day, lesson, property) =>
     `tasks.${week}.${day}.${lesson}.${property}`;
 
-const EditableField = ({ name, isEdit }) =>
-    isEdit ? <RFTextField name={name} /> : <RFLabel name={name} />;
+const EditableField = ({ name, isEdit, InputProps }) =>
+    isEdit ? (
+        <RFTextField name={name} {...InputProps} />
+    ) : (
+        <RFLabel name={name} />
+    );
 
 const TasksDayTable = ({
     week,
@@ -89,6 +91,8 @@ const TasksDayTable = ({
                                 <TableCell>
                                     <EditableField
                                         isEdit={editMode.tasks || editMode.full}
+                                        multiline
+                                        InputProps={{ multiline: true }}
                                         name={fieldName(
                                             week,
                                             day,
@@ -128,7 +132,9 @@ const TasksDayTable = ({
                         ))}
                     </TableBody>
                 </Table>
-            ) : <Typography variant="h6">Уроков нет</Typography>}
+            ) : (
+                <Typography variant="h6">Уроков нет</Typography>
+            )}
             {editMode.full ? (
                 <Button variant="contained" size="small" onClick={onAddLesson}>
                     <AddCircleIcon className={classes.buttonIcon} />

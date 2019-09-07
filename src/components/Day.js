@@ -19,6 +19,9 @@ const styles = theme => ({
         marginRight: 'auto',
         maxWidth: 600,
         padding: theme.spacing(2)
+    },
+    link: {
+        color: theme.palette.primary.main
     }
 });
 
@@ -48,10 +51,7 @@ class Day extends Component {
                 classes,
                 day,
                 week,
-                isLessonNameEditable,
-                isTaskTextEditable,
                 isExpanded,
-                onLessonMore,
                 onDeleteLesson,
                 lessonsCount
             },
@@ -66,15 +66,20 @@ class Day extends Component {
             <Paper className={dayClasses} elevation={10}>
                 <Grid container>
                     <Grid item xs={12}>
-                        <Typography variant="h5">
-                            {isExpanded ? (
-                                weekDayStr
-                            ) : (
-                                <Link to={`/tasks/week/${week}/day/${day}`}>
+                        {isExpanded ? (
+                            <Typography variant="h5" color="primary">
+                                {weekDayStr}
+                            </Typography>
+                        ) : (
+                            <Link
+                                to={`/tasks/week/${week}/day/${day}`}
+                                className={classes.link}
+                            >
+                                <Typography variant="h5">
                                     {weekDayStr}
-                                </Link>
-                            )}
-                        </Typography>
+                                </Typography>
+                            </Link>
+                        )}
                         <Typography variant="caption">{dateStr}</Typography>
                     </Grid>
                     <TasksDayTable

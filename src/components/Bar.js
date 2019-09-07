@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
+import IconButton from '@material-ui/core/IconButton';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import LoginWidget from './LoginWidget';
+import React, { Component } from 'react';
 import { compose } from 'recompose';
-import withStyles from '@material-ui/core/styles/withStyles';
+import LoginWidget from './LoginWidget';
 import SideMenu from './SideMenu';
 
 const styles = {
@@ -35,7 +35,7 @@ class Bar extends Component {
             handleDrawerClose
         } = this;
         return (
-            <AppBar color="primary">
+            <AppBar color="primary" position="static">
                 <Toolbar color="primary">
                     <IconButton
                         color="inherit"

@@ -1,32 +1,28 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { compose } from 'recompose';
-import withStyles from '@material-ui/core/styles/withStyles';
-
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-
 import AppBar from '@material-ui/core/AppBar/AppBar';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography/Typography';
-
-import { currentWeekId as getCurrentWeek } from '../lib/dateUtils';
-import {
-    getWeek,
-    isClosedWeek,
-    getWeekLessonsPerDay,
-    AddLesson,
-    DeleteLesson
-} from '../ducks/Week';
-import { canManageTasks, canManageTasksLessons } from '../ducks/Auth';
-import { isFormSyncing } from '../ducks/Sync';
-import { FillSchedule } from '../ducks/Schedule';
-import { OpenDialog } from '../ducks/History';
-
-import Week from '../components/Week';
-import Bar from '../components/Bar';
-import HistoryDialog from './HistoryDialog';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { bindActionCreators } from 'redux';
 import AppSpeedDial from '../components/AppSpeedDial';
+import Bar from '../components/Bar';
+import Week from '../components/Week';
+import { canManageTasks, canManageTasksLessons } from '../ducks/Auth';
+import { OpenDialog } from '../ducks/History';
+import { FillSchedule } from '../ducks/Schedule';
+import { isFormSyncing } from '../ducks/Sync';
+import {
+    AddLesson,
+    DeleteLesson,
+    getWeek,
+    getWeekLessonsPerDay,
+    isClosedWeek
+} from '../ducks/Week';
+import { currentWeekId as getCurrentWeek } from '../lib/dateUtils';
+import HistoryDialog from './HistoryDialog';
 
 const mapStateToProps = (state, props) => {
     return {
@@ -47,7 +43,7 @@ const mapDispatchToProps = dispatch => {
 
 const styles = theme => ({
     main: {
-        marginTop: 70,
+        // marginTop: 70,
         marginLeft: 'auto',
         marginRight: 'auto',
         maxWidth: 1200
@@ -99,7 +95,7 @@ class Index extends Component {
                 <Bar title="Домашние задания" />
                 <HistoryDialog />
                 <div className={classes.main}>
-                    <AppBar position="static" color="default">
+                    <AppBar position="sticky" color="default">
                         <Tabs value={url} onChange={handleTab}>
                             <Tab value="/prev" label="Прошлая неделя" />
                             <Tab value="/" label="Эта неделя" />
