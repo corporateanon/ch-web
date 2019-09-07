@@ -12,7 +12,7 @@ import Bar from '../components/Bar';
 import Week from '../components/Week';
 import { canManageTasks, canManageTasksLessons } from '../ducks/Auth';
 import { OpenDialog } from '../ducks/History';
-import { FillSchedule } from '../ducks/Schedule';
+import { FillTasksFromSchedule } from '../ducks/Schedule';
 import { isFormSyncing } from '../ducks/Sync';
 import {
     AddLesson,
@@ -36,7 +36,7 @@ const mapStateToProps = (state, props) => {
 };
 const mapDispatchToProps = dispatch => {
     return bindActionCreators(
-        { FillSchedule, OpenDialog, AddLesson, DeleteLesson },
+        { FillTasksFromSchedule, OpenDialog, AddLesson, DeleteLesson },
         dispatch
     );
 };
@@ -79,7 +79,7 @@ class Index extends Component {
                     url,
                     params: { day }
                 },
-                FillSchedule,
+                FillTasksFromSchedule,
                 AddLesson,
                 DeleteLesson
             },
@@ -115,7 +115,7 @@ class Index extends Component {
                                 isSyncing={isSyncing}
                                 isTaskTextEditable={canManageTasks}
                                 isLessonNameEditable={canManageTasksLessons}
-                                onFillSchedule={FillSchedule}
+                                onFillTasksFromSchedule={FillTasksFromSchedule}
                                 onLessonMore={onLessonMore}
                                 onDeleteLesson={DeleteLesson}
                                 onAddLesson={AddLesson}

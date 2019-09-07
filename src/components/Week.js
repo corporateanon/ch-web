@@ -14,18 +14,18 @@ class Week extends Component {
         isSyncing: bool.isRequired,
         isTaskTextEditable: bool.isRequired,
         isLessonNameEditable: bool.isRequired,
-        onFillSchedule: func.isRequired,
+        onFillTasksFromSchedule: func.isRequired,
         showSingleDay: bool,
         day: number,
         onLessonMore: func,
         lessonsPerDay: arrayOf(number)
     };
 
-    handleFillSchedule = () => {
+    handleFillTasksFromSchedule = () => {
         const {
-            props: { week, onFillSchedule }
+            props: { week, onFillTasksFromSchedule }
         } = this;
-        onFillSchedule(week);
+        onFillTasksFromSchedule(week);
     };
 
     render() {
@@ -43,7 +43,7 @@ class Week extends Component {
                 showSingleDay,
                 week
             },
-            handleFillSchedule
+            handleFillTasksFromSchedule
         } = this;
         if (isSyncing) {
             return '';
@@ -66,7 +66,7 @@ class Week extends Component {
         return isClosedWeek ? (
             <ClosedWeek
                 canFill={isTaskTextEditable}
-                onFillSchedule={handleFillSchedule}
+                onFillTasksFromSchedule={handleFillTasksFromSchedule}
             />
         ) : (
             <Grid container>

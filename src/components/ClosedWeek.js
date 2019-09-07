@@ -16,14 +16,14 @@ const styles = theme => ({
 class ClosedWeek extends Component {
     render() {
         const {
-            props: { classes, onFillSchedule, canFill }
+            props: { classes, onFillTasksFromSchedule, canFill }
         } = this;
         return (
             <Paper className={classes.root}>
-                <Typography variant="display3" align="center">
+                <Typography variant="h1" align="center">
                     <LockOutlineIcon fontSize="large" />
                 </Typography>
-                <Typography variant="display2" align="center">
+                <Typography variant="h3" align="center">
                     Неделя ещё не открыта
                 </Typography>
                 <Typography
@@ -37,9 +37,9 @@ class ClosedWeek extends Component {
                     {!canFill && 'У вас нет прав для заполнения расписания'}
                     {canFill && (
                         <Button
-                            onClick={onFillSchedule}
-                            variant="raised"
+                            onClick={onFillTasksFromSchedule}
                             color="primary"
+                            variant="contained"
                         >
                             Заполнить
                         </Button>
