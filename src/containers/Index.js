@@ -96,7 +96,12 @@ class Index extends Component {
                 <HistoryDialog />
                 <div className={classes.main}>
                     <AppBar position="sticky" color="default">
-                        <Tabs value={url} onChange={handleTab}>
+                        <Tabs
+                            variant="scrollable"
+                            scrollButtons="on"
+                            value={url}
+                            onChange={handleTab}
+                        >
                             <Tab value="/prev" label="Прошлая неделя" />
                             <Tab value="/" label="Эта неделя" />
                             <Tab value="/next" label="Следующая неделя" />

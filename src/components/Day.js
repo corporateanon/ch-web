@@ -63,20 +63,18 @@ class Day extends Component {
             <Paper className={dayClasses} elevation={10}>
                 <Grid container>
                     <Grid item xs={12}>
-                        {isExpanded ? (
-                            <Typography variant="h5" color="primary">
-                                {weekDayStr}
-                            </Typography>
-                        ) : (
-                            <Link
-                                to={`/tasks/week/${week}/day/${day}`}
-                                className={classes.link}
-                            >
-                                <Typography variant="h5">
+                        <Typography variant="h5" color="primary">
+                            {isExpanded ? (
+                                weekDayStr
+                            ) : (
+                                <Link
+                                    to={`/tasks/week/${week}/day/${day}`}
+                                    className={classes.link}
+                                >
                                     {weekDayStr}
-                                </Typography>
-                            </Link>
-                        )}
+                                </Link>
+                            )}
+                        </Typography>
                         <Typography variant="caption">{dateStr}</Typography>
                     </Grid>
                     <TasksDayTable
