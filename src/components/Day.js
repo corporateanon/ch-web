@@ -55,8 +55,8 @@ class Day extends Component {
             handleAddLesson
         } = this;
         const date = weekAndDayToDate(week, day);
-        const weekDayStr = moment(date).format('dddd');
-        const dateStr = moment(date).format('D MMMM');
+        const weekDayStr = moment(date).add(2, 'h').format('dddd');
+        const dateStr = moment(date).add(2, 'h').format('D MMMM');
 
         const dayClasses = isExpanded ? classes.expandedDay : classes.day;
         return (
