@@ -7,3 +7,4 @@ admin.initializeApp();
 
 exports.createUserRecord = require('./createUserRecord')(admin);
 exports.createTaskHistoryRecord = require('./createTaskHistoryRecord')(admin);
+exports.ssr = require('./ssr')(admin);
