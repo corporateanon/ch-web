@@ -19,6 +19,8 @@
 .firebase
 
 *.log
+.cache
+dist
 
 # configs
 database.rules.json

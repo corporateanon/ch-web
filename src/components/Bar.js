@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-import LoginWidget from './LoginWidget';
+// import LoginWidget from './LoginWidget';
 import SideMenu from './SideMenu';
 
 const styles = {
@@ -27,10 +27,15 @@ class Bar extends Component {
         this.setState({ sideMenuOpen: false });
     };
 
+    async componentDidMount() {
+        const { default: LoginWidget } = await import('./LoginWidget');
+        this.setState({ LoginWidget });
+    }
+
     render() {
         const {
             props: { classes, title },
-            state: { sideMenuOpen },
+            state: { sideMenuOpen, LoginWidget },
             handleButtonClick,
             handleDrawerClose
         } = this;
@@ -51,7 +56,7 @@ class Bar extends Component {
                     >
                         {title}
                     </Typography>
-                    <LoginWidget isLink />
+                    {LoginWidget ? <LoginWidget isLink /> : null}
                 </Toolbar>
                 <SideMenu open={sideMenuOpen} onClose={handleDrawerClose} />
             </AppBar>

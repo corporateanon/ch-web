@@ -1,9 +1,13 @@
 import * as firebase from 'firebase';
 import config from './config';
-const app = firebase.initializeApp(config.firebase);
-const database = app.database();
+let app, database, auth;
 
-const auth = firebase.auth();
+if (typeof process === undefined || !process.versions.node) {
+    app = firebase.initializeApp(config.firebase);
+    database = app.database();
+
+    auth = firebase.auth();
+}
 
 export { database, auth };
 export default app;
