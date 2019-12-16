@@ -15,6 +15,7 @@ const middleware = [routerMiddleware(history), sagaMiddleware];
 
 const store = createStore(
     reducers,
+    window.$ssrReduxState,
     composeWithDevTools(applyMiddleware(...middleware))
 );
 

@@ -24,7 +24,6 @@ export default class Server {
         store.dispatch(SetWeek(weekId));
         store.dispatch(SyncCompleted('currentWeek'));
 
-        console.log(store.getState());
         const routeProps = {
             match: {
                 url: '/',
@@ -47,8 +46,13 @@ export default class Server {
         );
 
         const css = sheets.toString();
-        return this._renderFullPage(html, css);
+
+        const state = store.getState();
+        return this._renderFullPage(html, css, state);
     }
+    /**
+     * converts tasks from firebase format {"0":{"0":{...}}, "1":{"0":{...}}}
+     */
     _tasksFromPseudoArrays(_tasks) {
         const tasks = JSON.parse(JSON.stringify(_tasks));
         function getLength(pseudoArray) {
@@ -74,10 +78,14 @@ export default class Server {
         const weekId = weekIdentifier(new Date());
         return this._weekPage(weekId, tasks);
     }
-    _renderFullPage(html, css) {
+    _renderFullPage(html, css, state) {
         return appHtml.replace(
             '<div id="root"></div>',
-            `<div id="root"><style id="jss-server-side">${css}</style>${html}</div>`
+            `<div id="root">
+            <style id="jss-server-side">${css}</style>
+            ${html}
+            <script>window.$ssrReduxState=${JSON.stringify(state)}</script>
+            </div>`
         );
     }
 }
