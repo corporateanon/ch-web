@@ -7,8 +7,12 @@
         "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
         "rewrites": [
             {
-                "source": "**",
+                "source": "/",
                 "function": "ssr"
+            },
+            {
+                "source": "**",
+                "destination": "/app.html"
             }
         ],
         "headers": [
