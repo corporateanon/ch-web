@@ -46,9 +46,9 @@ class Week extends Component {
             handleFillTasksFromSchedule
         } = this;
 
-        if (isSyncing) {
-            return '';
-        }
+        // if (isSyncing) {
+        //     return '';
+        // }
         if (showSingleDay && day > 7) {
             return 'День не найден';
         }
@@ -87,6 +87,7 @@ class Week extends Component {
                                 {...dayProps}
                                 day={day}
                                 lessonsCount={lessonsPerDay[day] || 0}
+                                isSyncing={isSyncing}
                             />
                         ))}
                     </Grid>

@@ -32,7 +32,8 @@ class Day extends Component {
         onLessonMore: func,
         onDeleteLesson: func,
         lessonsCount: number,
-        onAddLesson: func
+        onAddLesson: func,
+        isSyncing: bool
     };
 
     handleAddLesson = () => {
@@ -50,15 +51,23 @@ class Day extends Component {
                 week,
                 isExpanded,
                 onDeleteLesson,
-                lessonsCount
+                lessonsCount,
+                isSyncing
             },
             handleAddLesson
         } = this;
         const date = weekAndDayToDate(week, day);
-        const weekDayStr = moment(date).add(2, 'h').format('dddd');
-        const dateStr = moment(date).add(2, 'h').format('D MMMM');
+        const weekDayStr = moment(date)
+            .add(2, 'h')
+            .format('dddd');
+        const dateStr = moment(date)
+            .add(2, 'h')
+            .format('D MMMM');
 
         const dayClasses = isExpanded ? classes.expandedDay : classes.day;
+        if (isSyncing && lessonsCount === 0) {
+            return null;
+        }
         return (
             <Paper className={dayClasses} elevation={10}>
                 <Grid container>
@@ -83,6 +92,7 @@ class Day extends Component {
                         lessonsCount={lessonsCount}
                         onAddLesson={handleAddLesson}
                         onDeleteLesson={onDeleteLesson}
+                        isSyncing={isSyncing}
                     ></TasksDayTable>
                 </Grid>
             </Paper>
