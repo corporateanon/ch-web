@@ -45,6 +45,7 @@ class Week extends Component {
             },
             handleFillTasksFromSchedule
         } = this;
+
         if (isSyncing) {
             return '';
         }

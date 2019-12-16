@@ -136,9 +136,6 @@ class Index extends Component {
 }
 
 export default compose(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    ),
+    connect(mapStateToProps, mapDispatchToProps),
     withStyles(styles)
 )(Index);

@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "build": "npm run build-database-rules && react-scripts build",
+        "build": "npm run build-database-rules && react-scripts build && mv build/index.html build/app.html",
         "build-database-rules": "node ./db-rules/dump > database.rules.json",
         "build-storybook": "build-storybook -s public",
         "deploy-circleci": "./deploy.circleci.sh",

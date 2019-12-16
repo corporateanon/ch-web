@@ -3,6 +3,7 @@ import { renderToString } from 'react-dom/server';
 import * as functions from 'firebase-functions';
 import express from 'express';
 import { weekIdentifier } from './lib/weekId';
+import Server from '../../src/server';
 
 /**
  * @param {import("firebase-admin")} admin
@@ -18,14 +19,16 @@ export default admin => {
             .ref(`/tasks/${weekId}`)
             .once('value');
 
-        return { tasks };
+        return tasks;
     }
 
     const app = express();
-    app.get('/', async (req, res) => res.json(await getCurrentWeekTasks()));
-    app.get('/react', async (req, res) => {
-        const App = () => <h1>hello world</h1>;
-        res.send(renderToString(<App />));
+    app.get('/', async (req, res) => {
+        res.set('Cache-Control', 'public, max-age=300, s-maxage=300');
+
+        const tasks = await getCurrentWeekTasks();
+        const server = new Server();
+        res.send(server.currentWeekPage(tasks));
     });
     return functions.https.onRequest(app);
 };

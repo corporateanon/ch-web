@@ -10,10 +10,14 @@ module.exports = {
         main: './src/main.js',
         serverTest: '../src/serverTest.js'
     },
+    devtool: 'source-map',
     optimization: {
         minimize: false
     },
     output: {
+        devtoolModuleFilenameTemplate: '..//[absolute-resource-path]',
+        devtoolFallbackModuleFilenameTemplate:
+            '..//[absolute-resource-path]?[hash]',
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js',
         libraryTarget: 'commonjs2'
@@ -36,6 +40,14 @@ module.exports = {
                         ]
                     }
                 }
+            },
+            {
+                test: /\.(html)$/i,
+                use: [
+                    {
+                        loader: 'raw-loader'
+                    }
+                ]
             }
         ]
     }
