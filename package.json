@@ -41,7 +41,7 @@
         "lodash": "^4.17.5",
         "material-ui-confirm": "^1.0.1",
         "mixpanel-browser": "^2.18.0",
-        "moment": "^2.20.1",
+        "moment": "^2.29.4",
         "notistack": "^0.9.0",
         "object-path-immutable": "^1.0.1",
         "path-to-regexp": "^2.4.0",
